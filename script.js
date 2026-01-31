@@ -1,12 +1,33 @@
-// Lock screen logic 🔐
+// ===== ELEMENT REFERENCES =====
+const startBtn = document.getElementById("startBtn");
+const sections = document.querySelectorAll("section");
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
+const revealBtn = document.getElementById("revealBtn");
+const secretText = document.getElementById("secretText");
+const timer = document.getElementById("timer");
 const unlockBtn = document.getElementById("unlockBtn");
 const lockScreen = document.getElementById("lockScreen");
 const mainContent = document.getElementById("mainContent");
 
+// ===== MUSIC CONTROL =====
+let isPlaying = false;
+
+musicBtn.addEventListener("click", () => {
+  if (!isPlaying) {
+    music.play().catch(e => console.log(e));
+    musicBtn.textContent = "⏸ Pause Music";
+  } else {
+    music.pause();
+    musicBtn.textContent = "🎶 Play Music";
+  }
+  isPlaying = !isPlaying;
+});
+
+// ===== LOCK SCREEN =====
 unlockBtn.addEventListener("click", () => {
   lockScreen.style.display = "none";
   mainContent.classList.remove("hidden");
-  music.play();
 });
 
 // Elements
