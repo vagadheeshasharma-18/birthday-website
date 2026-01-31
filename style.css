@@ -146,3 +146,35 @@ video {
     opacity: 0;
   }
 }
+/* 🔐 Lock Screen */
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ffd6e8, #e7d9ff, #d6f0ff);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  text-align: center;
+}
+
+#lockScreen h1 {
+  font-size: 2.2rem;
+  color: #ff5fa2;
+}
+
+#lockScreen p {
+  margin: 15px 0 25px;
+  font-size: 1rem;
+}
+
+#lockScreen button {
+  background: #ff5fa2;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}

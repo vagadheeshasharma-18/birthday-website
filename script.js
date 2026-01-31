@@ -1,3 +1,13 @@
+// Lock screen logic 🔐
+const unlockBtn = document.getElementById("unlockBtn");
+const lockScreen = document.getElementById("lockScreen");
+const mainContent = document.getElementById("mainContent");
+
+unlockBtn.addEventListener("click", () => {
+  lockScreen.style.display = "none";
+  mainContent.classList.remove("hidden");
+});
+
 // Elements
 const startBtn = document.getElementById("startBtn");
 const sections = document.querySelectorAll("section");
