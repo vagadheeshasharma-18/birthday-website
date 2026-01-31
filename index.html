@@ -26,13 +26,13 @@
 <!-- MAIN CONTENT -->
 <div id="mainContent" class="hidden">
 
-  <!-- 🎉 HERO -->
-  <section class="hero active">
+  <!-- 🎉 HERO (VISIBLE FIRST) -->
+  <section class="hero">
     <h1>🎂 Happy Birthday 🎂</h1>
     <p class="subtitle">Today is not just a day… it’s a celebration of YOU ✨</p>
 
     <button id="startBtn">Start Surprise 🎁</button>
-    <button id="nextBtn" style="margin-top:15px; display:none;">
+    <button id="nextBtn" class="hidden" style="margin-top:15px;">
       Next Surprise ▶️
     </button>
     <button id="musicBtn" style="margin-top:15px;">
@@ -41,7 +41,7 @@
   </section>
 
   <!-- 💌 LETTER -->
-  <section class="letter">
+  <section class="letter hidden">
     <h2>💖 A Letter for You</h2>
     <p>
       My Dearest Madiha Tabassum 💖,<br><br>
@@ -80,7 +80,7 @@
   </section>
 
   <!-- 🖼️ GALLERY -->
-  <section class="gallery">
+  <section class="gallery hidden">
     <h2>📸 Beautiful Memories</h2>
     <div class="images">
       <img src="images/photo1.jpg">
@@ -90,7 +90,7 @@
   </section>
 
   <!-- 🎥 VIDEO -->
-  <section class="video">
+  <section class="video hidden">
     <h2>🎥 A Special Message</h2>
     <video controls width="300">
       <source src="videos/birthday-video.mp4" type="video/mp4">
@@ -98,22 +98,22 @@
   </section>
 
   <!-- ⏳ COUNTDOWN -->
-  <section class="countdown">
+  <section class="countdown hidden">
     <h2>⏳ Countdown to Your Day</h2>
     <p id="timer">Loading...</p>
   </section>
 
   <!-- 🎁 SECRET -->
-  <section class="secret">
+  <section class="secret hidden">
     <h2>🎁 One Last Surprise</h2>
     <button id="revealBtn">Reveal Message 💫</button>
-    <p id="secretText" style="display:none;">
+    <p id="secretText" class="hidden">
       You are loved, valued, and never alone 💖
     </p>
   </section>
 
   <!-- ✨ FINAL -->
-  <section class="final">
+  <section class="final hidden">
     <h2>✨ My Final Wish</h2>
     <p>Happy Birthday once again 🎉💝</p>
   </section>
