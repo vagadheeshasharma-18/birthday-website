@@ -1,4 +1,6 @@
-// ===== ELEMENT REFERENCES =====
+
+document.addEventListener("DOMContentLoaded", () => {
+    // ===== ELEMENT REFERENCES =====
 const startBtn = document.getElementById("startBtn");
 const sections = document.querySelectorAll("section");
 const music = document.getElementById("bgMusic");
@@ -107,3 +109,4 @@ function createHeart() {
 }
 
 setInterval(createHeart, 500);
+});
