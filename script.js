@@ -6,6 +6,7 @@ const mainContent = document.getElementById("mainContent");
 unlockBtn.addEventListener("click", () => {
   lockScreen.style.display = "none";
   mainContent.classList.remove("hidden");
+  music.play();
 });
 
 // Elements
