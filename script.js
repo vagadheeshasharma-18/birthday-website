@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mainContent.classList.remove("hidden");
 
     // ensure hero is visible
-    sections[0].classList.remove("hidden");
+    sections[0].classList.add("active");
   });
 
   // ===== MUSIC CONTROL =====
@@ -41,11 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== START SURPRISE =====
   startBtn.addEventListener("click", () => {
+  sections[0].classList.remove("active"); // hide hero
   currentSection = 1;
 
-  sections[currentSection].classList.remove("hidden");
-  sections[currentSection].style.display = "flex"; // FORCE VISIBILITY
-
+  sections[currentSection].classList.add("active"); // show letter
   startBtn.style.display = "none";
   nextBtn.classList.remove("hidden");
 
@@ -54,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     spread: 120,
     origin: { y: 0.6 }
   });
+});
+
 });
 
   // ===== NEXT SURPRISE =====

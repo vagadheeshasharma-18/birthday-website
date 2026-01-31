@@ -26,13 +26,13 @@
 <!-- MAIN CONTENT -->
 <div id="mainContent" class="hidden">
 
-  <!-- 🎉 HERO SECTION (VISIBLE AFTER UNLOCK) -->
-  <section class="hero">
+  <!-- 🎉 HERO -->
+  <section class="hero active">
     <h1>🎂 Happy Birthday 🎂</h1>
     <p class="subtitle">Today is not just a day… it’s a celebration of YOU ✨</p>
 
     <button id="startBtn">Start Surprise 🎁</button>
-    <button id="nextBtn" class="hidden" style="margin-top:15px;">
+    <button id="nextBtn" style="margin-top:15px; display:none;">
       Next Surprise ▶️
     </button>
     <button id="musicBtn" style="margin-top:15px;">
@@ -40,8 +40,8 @@
     </button>
   </section>
 
-  <!-- 💌 BIRTHDAY LETTER -->
-  <section class="letter hidden">
+  <!-- 💌 LETTER -->
+  <section class="letter">
     <h2>💖 A Letter for You</h2>
     <p>
       My Dearest Madiha Tabassum 💖,<br><br>
@@ -75,71 +75,52 @@
       and feelings that don’t need explanation.
       That’s rare. That’s precious. That’s us ✨<br><br>
 
-      Aaj nee birthday roju,
-      nenu okate cheppali anukuntunna —
-      you deserve all the love,
-      all the happiness,
-      and all the beautiful things this world can offer 💫<br><br>
-
-      No matter where life takes us,
-      no matter how much time passes,
-      our bond will always stay special.
-      Because some connections are forever 💞<br><br>
-
       Happy Birthday once again 🎉💖
     </p>
   </section>
 
-  <!-- 🖼️ MEMORY GALLERY -->
-  <section class="gallery hidden">
+  <!-- 🖼️ GALLERY -->
+  <section class="gallery">
     <h2>📸 Beautiful Memories</h2>
     <div class="images">
-      <img src="images/photo1.jpg" alt="Memory 1">
-      <img src="images/photo2.jpg" alt="Memory 2">
-      <img src="images/photo3.jpg" alt="Memory 3">
+      <img src="images/photo1.jpg">
+      <img src="images/photo2.jpg">
+      <img src="images/photo3.jpg">
     </div>
   </section>
 
-  <!-- 🎥 VIDEO SURPRISE (REAL VIDEO) -->
-  <section class="video hidden">
+  <!-- 🎥 VIDEO -->
+  <section class="video">
     <h2>🎥 A Special Message</h2>
-    <p>Click play when you’re ready 💌</p>
-
     <video controls width="300">
       <source src="videos/birthday-video.mp4" type="video/mp4">
-      Your browser does not support video.
     </video>
   </section>
 
   <!-- ⏳ COUNTDOWN -->
-  <section class="countdown hidden">
+  <section class="countdown">
     <h2>⏳ Countdown to Your Day</h2>
     <p id="timer">Loading...</p>
   </section>
 
-  <!-- 🎁 SECRET SURPRISE -->
-  <section class="secret hidden">
+  <!-- 🎁 SECRET -->
+  <section class="secret">
     <h2>🎁 One Last Surprise</h2>
     <button id="revealBtn">Reveal Message 💫</button>
-    <p id="secretText" class="hidden">
-      No matter where life takes you, remember —
-      you are loved, valued, and never alone 💖
+    <p id="secretText" style="display:none;">
+      You are loved, valued, and never alone 💖
     </p>
   </section>
 
-  <!-- ✨ FINAL WISH -->
-  <section class="final hidden">
+  <!-- ✨ FINAL -->
+  <section class="final">
     <h2>✨ My Final Wish</h2>
-    <p>
-      May this year bring you endless smiles,
-      beautiful moments, and dreams that come true.
-      Happy Birthday once again 🎉💝
-    </p>
+    <p>Happy Birthday once again 🎉💝</p>
   </section>
 
 </div>
 
-<!-- 🎶 BACKGROUND MUSIC -->
+<!-- 🎶 MUSIC -->
 <audio id="bgMusic" loop>
   <source src="music/birthday-music.mp3" type="audio/mpeg">
 </audio>
