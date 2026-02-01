@@ -18,6 +18,8 @@ const openFinalBtn=document.getElementById("openFinalBtn");
 const finalEnd=document.getElementById("finalEnd");
 const dimOverlay=document.getElementById("dimOverlay");
 
+const floatingContainer=document.getElementById("floating-container");
+
 let index=0;
 
 /* 🔐 Unlock */
@@ -49,24 +51,21 @@ nextBtn.onclick=()=>{
     sections[index].after(nextWrapper);
     sections[index].scrollIntoView({behavior:"smooth"});
 
-    // 🖼️ IMAGE FADE-IN (2s gap)
     if(sections[index].id==="imagesSection"){
       const imgs=document.querySelectorAll(".gallery img");
       imgs.forEach((img,i)=>{
         setTimeout(()=>img.classList.add("show"), i*2000);
       });
     }
-
   }else{
     nextWrapper.style.display="none";
   }
 };
 
-/* 🌟 FINAL MESSAGE + BLAST (unchanged) */
+/* 🌟 FINAL MESSAGE */
 openFinalBtn.onclick=()=>{
   document.body.style.overflow="hidden";
   dimOverlay.classList.add("active");
-
   finalEnd.classList.remove("hidden");
   finalEnd.scrollIntoView({behavior:"smooth"});
 
@@ -89,5 +88,17 @@ openFinalBtn.onclick=()=>{
     document.body.style.overflow="auto";
   },3000);
 };
+
+/* ✨ FLOATING BACKGROUND PARTICLES */
+const particles=["💖","🎈","✨","💜","🎉"];
+setInterval(()=>{
+  const p=document.createElement("span");
+  p.textContent=particles[Math.floor(Math.random()*particles.length)];
+  p.style.left=Math.random()*100+"vw";
+  p.style.fontSize=(Math.random()*22+16)+"px";
+  p.style.animationDuration=(Math.random()*10+12)+"s";
+  floatingContainer.appendChild(p);
+  setTimeout(()=>p.remove(),20000);
+},900);
 
 });
