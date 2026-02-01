@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded",()=>{
 
 const PASSWORD="13022006";
-const birthdayDate=new Date("February 13, 2026 00:00:00").getTime();
 
 const lockScreen=document.getElementById("lockScreen");
 const mainContent=document.getElementById("mainContent");
@@ -15,10 +14,11 @@ const nextBtn=document.getElementById("nextBtn");
 const nextWrapper=document.getElementById("nextWrapper");
 
 const music=document.getElementById("bgMusic");
-const countdownEl=document.getElementById("countdown");
+const openFinalBtn=document.getElementById("openFinalBtn");
+const finalEnd=document.getElementById("finalEnd");
+const dimOverlay=document.getElementById("dimOverlay");
 
 let index=0;
-let musicStarted=false;
 
 /* 🔐 Unlock */
 unlockBtn.onclick=()=>{
@@ -38,11 +38,7 @@ startBtn.onclick=()=>{
   nextWrapper.classList.remove("hidden");
   sections[index].after(nextWrapper);
   sections[index].scrollIntoView({behavior:"smooth"});
-
-  if(!musicStarted){
-    music.play();
-    musicStarted=true;
-  }
+  music.play();
 };
 
 /* ➡ Next */
@@ -57,17 +53,32 @@ nextBtn.onclick=()=>{
   }
 };
 
-/* ⏳ Countdown */
-setInterval(()=>{
-  const diff=birthdayDate-Date.now();
-  if(diff<=0){
-    countdownEl.textContent="🎉 HAPPY BIRTHDAY 🎂💖";
-    return;
-  }
-  const d=Math.floor(diff/(1000*60*60*24));
-  const h=Math.floor((diff/(1000*60*60))%24);
-  const m=Math.floor((diff/(1000*60))%60);
-  countdownEl.textContent=`${d} Days ${h} Hours ${m} Minutes`;
-},1000);
+/* 🌟 FINAL MESSAGE + HEAVY BLAST */
+openFinalBtn.onclick=()=>{
+  document.body.style.overflow="hidden";
+  dimOverlay.classList.add("active");
+
+  finalEnd.classList.remove("hidden");
+  finalEnd.scrollIntoView({behavior:"smooth"});
+
+  const end = Date.now() + 3000;
+  (function blast(){
+    confetti({
+      particleCount: 50,
+      spread: 180,
+      startVelocity: 65,
+      origin:{y:0.6}
+    });
+    if(Date.now() < end){
+      requestAnimationFrame(blast);
+    }
+  })();
+
+  setTimeout(()=>{
+    finalEnd.classList.add("showFinal");
+    dimOverlay.classList.remove("active");
+    document.body.style.overflow="auto";
+  },3000);
+};
 
 });

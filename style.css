@@ -2,56 +2,30 @@
 html{scroll-behavior:smooth;}
 body{
   background:radial-gradient(circle at top,#14142d,#0a0a12);
-  color:#fff;text-align:center;overflow-x:hidden;
+  color:#fff;
+  text-align:center;
+  overflow-x:hidden;
 }
 .hidden{display:none;}
 
-#lockScreen{
-  position:fixed;inset:0;z-index:1000;
-  background:radial-gradient(circle,#1a1a3a,#0a0a12);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-}
-
-#passwordInput{
-  padding:12px 20px;border-radius:30px;
-  border:1px solid #7b5cff;background:transparent;color:#fff;margin:15px 0;
-}
-
 section{
-  min-height:100vh;padding:80px 20px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:100vh;
+  padding:80px 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
 .subtitle{color:#cfcfea;margin-bottom:20px;}
 
 .card{
   background:rgba(255,255,255,.08);
-  padding:30px;border-radius:20px;
-  max-width:650px;line-height:1.7;
+  padding:30px;
+  border-radius:20px;
+  max-width:650px;
+  line-height:1.7;
 }
-
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
-  max-width:1100px;
-  margin-top:30px;
-}
-
-.gallery img{
-  width:100%;
-  height:280px;
-  object-fit:contain;
-  background:rgba(255,255,255,.04);
-  padding:10px;
-  border-radius:18px;
-}
-
-.countdown{
-  font-size:2rem;color:#ffd6ff;
-}
-
-.gentle{color:#e7e7ff;font-size:1.1rem;}
 
 button{
   background:linear-gradient(135deg,#7b5cff,#b38bff);
@@ -70,4 +44,41 @@ button:hover{
   box-shadow:0 18px 35px rgba(123,92,255,.55);
 }
 
-#nextWrapper{padding:40px 0 60px;}
+#nextWrapper{
+  padding:40px 0 60px;
+}
+
+/* 🌑 DIM OVERLAY */
+#dimOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  opacity:0;
+  pointer-events:none;
+  transition:.6s;
+  z-index:10;
+}
+#dimOverlay.active{
+  opacity:1;
+}
+
+/* 🌸 FINAL MESSAGE */
+#finalEnd{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.final-line{
+  font-size:2rem;
+  line-height:1.6;
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity 1.5s ease,transform 1.5s ease;
+}
+
+.showFinal .final-line{
+  opacity:1;
+  transform:translateY(0);
+}

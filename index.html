@@ -18,7 +18,8 @@
   <p id="errorText" class="hidden">Wrong password 🥺 Try again</p>
 </div>
 
-<div id="floating-container"></div>
+<!-- 🌑 DIM OVERLAY -->
+<div id="dimOverlay"></div>
 
 <div id="mainContent" class="hidden">
 
@@ -79,38 +80,6 @@
     </div>
   </section>
 
-  <!-- IMAGES -->
-  <section class="hidden">
-    <h2>📸 Beautiful Memories</h2>
-    <div class="gallery">
-      <img src="images/photo1.jpg">
-      <img src="images/photo2.jpg">
-      <img src="images/photo3.jpg">
-      <img src="images/photo4.jpg">
-      <img src="images/photo5.jpg">
-      <img src="images/photo6.jpg">
-      <img src="images/photo7.jpg">
-      <img src="images/photo8.jpg">
-      <img src="images/photo9.jpg">
-      <img src="images/photo10.jpg">
-      <img src="images/photo11.jpg">
-    </div>
-  </section>
-
-  <!-- COUNTDOWN -->
-  <section class="hidden">
-    <h2>⏳ Countdown to Your Day</h2>
-    <div id="countdown" class="countdown">Loading...</div>
-  </section>
-
-  <!-- PRE MESSAGE -->
-  <section class="hidden">
-    <p class="gentle">
-      A message from the person you loved the most,<br>
-      and who will always love you the most.
-    </p>
-  </section>
-
   <!-- GRANDMA MESSAGE -->
   <section class="hidden">
     <h2>🌸 A Blessing That Will Always Stay 🤍</h2>
@@ -135,22 +104,24 @@
       to yaad rakhna —  
       tum akeli nahi ho.<br><br>
 
-      Main tumhari har khushi mein hoon,  
-      har kamyabi mein hoon,  
-      aur har mushkil ke waqt bhi  
-      tumhare paas hoon.<br><br>
-
-      Khush rehna meri jaan.  
-      Mazboot rehna.  
-      Apne dil ko hamesha pyaar, sabr  
-      aur achhai se bhara rakhna.<br><br>
-
-      <b>Tum hamesha meri duaon mein rahogi.</b><br><br>
-
       <i>Nee meeda naa ashirwaadam eppudu untundi ra bangaram.</i><br><br>
 
       <b>— Makhtumbee Dadi Amma ka pyaar aur ashirwaad 🤍</b>
     </div>
+
+    <button id="openFinalBtn" style="margin-top:30px;">
+      A final message is here for you 🤍
+    </button>
+  </section>
+
+  <!-- FINAL MESSAGE -->
+  <section id="finalEnd" class="hidden">
+    <h2 class="final-line">
+      You are deeply loved,<br>
+      endlessly blessed,<br>
+      and never alone.<br><br>
+      Happy Birthday 🤍
+    </h2>
   </section>
 
 </div>
@@ -163,6 +134,7 @@
   <source src="music/birthday-music.mp3" type="audio/mpeg">
 </audio>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
