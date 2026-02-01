@@ -181,3 +181,26 @@ button{
   opacity:1;
   transform:translateY(0);
 }
+/* 🎂 CAKE */
+#cake{
+  width:240px;
+  height:160px;
+  position:relative;
+  cursor:pointer;
+  margin-top:30px;
+}
+
+.cake-half{
+  position:absolute;
+  width:50%;
+  height:100%;
+  background:linear-gradient(#7b5cff,#3c2c7a);
+  border-radius:15px;
+  transition:transform 1s ease;
+}
+
+.cake-half.left{left:0;}
+.cake-half.right{right:0;}
+
+#cake.cut .left{transform:translateX(-40px) rotate(-8deg);}
+#cake.cut .right{transform:translateX(40px) rotate(8deg);}

@@ -14,6 +14,9 @@ const startBtn=document.getElementById("startBtn");
 const nextBtn=document.getElementById("nextBtn");
 const nextWrapper=document.getElementById("nextWrapper");
 
+const cake=document.getElementById("cake");
+const cakeSection=document.getElementById("cakeSection");
+
 const openFinalBtn=document.getElementById("openFinalBtn");
 const finalEnd=document.getElementById("finalEnd");
 
@@ -25,6 +28,7 @@ const floatingContainer=document.getElementById("floating-container");
 
 let index=0;
 let musicStarted=false;
+let cakeCut=false;
 
 /* 🔐 Unlock */
 unlockBtn.onclick=()=>{
@@ -54,6 +58,8 @@ startBtn.onclick=()=>{
 
 /* ➡ Next */
 nextBtn.onclick=()=>{
+  if(sections[index].id==="cakeSection" && !cakeCut) return;
+
   index++;
   if(index<sections.length){
     sections[index].classList.remove("hidden");
@@ -73,30 +79,32 @@ nextBtn.onclick=()=>{
   }
 };
 
-/* 🌸 FINAL MESSAGE FLOW */
+/* 🎂 Cake Cut */
+cake.onclick=()=>{
+  if(cakeCut) return;
+  cakeCut=true;
+  cake.classList.add("cut");
+
+  confetti({
+    particleCount:200,
+    spread:120,
+    origin:{y:0.6}
+  });
+};
+
+/* 🌸 FINAL MESSAGE */
 openFinalBtn.onclick=()=>{
   document.body.style.overflow="hidden";
   dimOverlay.classList.add("active");
-  blastSound.currentTime=0;
   blastSound.play();
 
   finalEnd.style.display="flex";
   finalEnd.scrollIntoView({behavior:"smooth"});
 
-  const duration=3000;
-  const end=Date.now()+duration;
-
+  const end=Date.now()+3000;
   (function blast(){
-    confetti({
-      particleCount:18,
-      spread:140,
-      startVelocity:55,
-      gravity:0.9,
-      colors:["#ffffff","#ffd6ff","#cdb4ff"]
-    });
-    if(Date.now()<end){
-      requestAnimationFrame(blast);
-    }
+    confetti({particleCount:18,spread:140,startVelocity:55});
+    if(Date.now()<end) requestAnimationFrame(blast);
   })();
 
   setTimeout(()=>{
@@ -119,7 +127,7 @@ setInterval(()=>{
   countdownEl.textContent=`${d} Days ${h} Hours ${m} Minutes`;
 },1000);
 
-/* 🎈 Floating magic */
+/* 🎈 Floating */
 const items=["🎈","💖","✨","💜","🎉"];
 setInterval(()=>{
   const s=document.createElement("span");
