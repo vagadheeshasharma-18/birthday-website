@@ -1,115 +1,70 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-html { scroll-behavior: smooth; }
-
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+html { scroll-behavior:smooth; }
 body {
   background: radial-gradient(circle at top, #14142d, #0a0a12);
-  color: white;
-  text-align: center;
-  overflow-x: hidden;
+  color:#fff; text-align:center; overflow-x:hidden;
 }
-
-.hidden { display: none; }
+.hidden { display:none; }
 
 /* Lock Screen */
-#lockScreen {
-  position: fixed;
-  inset: 0;
+#lockScreen{
+  position:fixed; inset:0; z-index:1000;
   background: radial-gradient(circle, #1a1a3a, #0a0a12);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
-
-#passwordInput {
-  padding: 12px 20px;
-  border-radius: 30px;
-  border: 1px solid #7b5cff;
-  background: transparent;
-  color: white;
-  margin: 15px 0;
+#passwordInput{
+  padding:12px 20px; border-radius:30px; border:1px solid #7b5cff;
+  background:transparent; color:#fff; margin:15px 0;
 }
 
 /* Sections */
-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 2;
+section{
+  min-height:100vh; padding:80px 20px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; z-index:2;
 }
+.subtitle{ color:#cfcfea; margin-bottom:20px; }
 
-.subtitle { color: #cfcfea; margin-bottom: 20px; }
-
-.card {
-  background: rgba(255,255,255,0.08);
-  padding: 30px;
-  border-radius: 20px;
-  max-width: 650px;
-  line-height: 1.7;
+.card{
+  background:rgba(255,255,255,.08);
+  padding:30px; border-radius:20px; max-width:650px; line-height:1.7;
 }
 
 /* Gallery */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 18px;
-  max-width: 900px;
+.gallery{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:18px; max-width:900px;
 }
-
-.gallery img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 16px;
+.gallery img{
+  width:100%; height:160px; object-fit:cover; border-radius:16px;
 }
 
 /* Countdown */
-.countdown {
-  font-size: 2rem;
-  color: #ffd6ff;
-  animation: reveal 1.2s ease;
+.countdown{
+  font-size:2rem; color:#ffd6ff;
+  animation:reveal 1.2s ease;
 }
+@keyframes reveal{ from{opacity:0; transform:scale(.8)} to{opacity:1; transform:scale(1)} }
 
-@keyframes reveal {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
+/* Gentle line before blessing */
+.gentle{
+  color:#e7e7ff; font-size:1.1rem; line-height:1.6; opacity:.9;
 }
 
 /* Buttons */
-button {
-  background: #7b5cff;
-  border: none;
-  padding: 14px 30px;
-  border-radius: 30px;
-  color: white;
-  cursor: pointer;
+button{
+  background:#7b5cff; border:none; padding:14px 30px;
+  border-radius:30px; color:#fff; cursor:pointer; font-size:1rem;
 }
+#nextWrapper{ padding:40px 0 60px; }
 
-/* Next */
-#nextWrapper { padding: 40px 0 60px; }
-
-/* Floating */
-#floating-container span {
-  position: fixed;
-  bottom: -40px;
-  pointer-events: none;
-  animation: floatUp linear infinite;
-  z-index: 1;
+/* Floating magic */
+#floating-container span{
+  position:fixed; bottom:-40px; pointer-events:none;
+  animation:floatUp linear infinite; z-index:1;
 }
-
-@keyframes floatUp {
-  from { transform: translateY(0) scale(0.8); opacity: 0; }
-  10% { opacity: 1; }
-  to { transform: translateY(-120vh) scale(1.3); opacity: 0; }
+@keyframes floatUp{
+  from{ transform:translateY(0) scale(.8); opacity:0 }
+  10%{ opacity:1 }
+  to{ transform:translateY(-120vh) scale(1.3); opacity:0 }
 }

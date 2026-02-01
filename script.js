@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const music = document.getElementById("bgMusic");
   const floatingContainer = document.getElementById("floating-container");
   const countdownEl = document.getElementById("countdown");
-  const finalSection = document.getElementById("finalSection");
 
   let index = 0;
   let musicStarted = false;
   let confettiDone = false;
 
+  // Unlock
   unlockBtn.onclick = () => {
     if (passwordInput.value === PASSWORD) {
       lockScreen.style.display = "none";
@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Start
   startBtn.onclick = () => {
     index = 1;
     sections[index].classList.remove("hidden");
@@ -47,14 +48,24 @@ document.addEventListener("DOMContentLoaded", () => {
     sections[index].scrollIntoView({ behavior: "smooth" });
   };
 
+  // Next
   nextBtn.onclick = () => {
     index++;
     if (index < sections.length) {
       sections[index].classList.remove("hidden");
+
+      // Button text change right before blessing
+      if (sections[index].id === "preBlessing") {
+        nextBtn.textContent = "Open a very special message 🤍";
+      } else {
+        nextBtn.textContent = "Next Surprise ▶️";
+      }
+
       sections[index].after(nextWrapper);
       sections[index].scrollIntoView({ behavior: "smooth" });
 
-      if (sections[index] === finalSection && !confettiDone) {
+      // Confetti only on the slide BEFORE preBlessing (celebration end)
+      if (!confettiDone && sections[index].id === "preBlessing") {
         confettiDone = true;
         confetti({ particleCount: 250, spread: 140 });
       }
@@ -63,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Countdown
   setInterval(() => {
     const diff = birthdayDate - Date.now();
     if (diff <= 0) {
@@ -70,21 +82,22 @@ document.addEventListener("DOMContentLoaded", () => {
       confetti({ particleCount: 300, spread: 160 });
       return;
     }
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const m = Math.floor((diff / (1000 * 60)) % 60);
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff / (1000*60*60)) % 24);
+    const m = Math.floor((diff / (1000*60)) % 60);
     countdownEl.textContent = `${d} Days ${h} Hours ${m} Minutes`;
   }, 1000);
 
+  // Floating magic
   const symbols = ["💖","🎈","✨","💜","🎉"];
   setInterval(() => {
     const s = document.createElement("span");
     s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-    s.style.left = Math.random()*100+"vw";
-    s.style.fontSize = Math.random()*20+18+"px";
-    s.style.animationDuration = Math.random()*6+6+"s";
+    s.style.left = Math.random()*100 + "vw";
+    s.style.fontSize = Math.random()*20 + 18 + "px";
+    s.style.animationDuration = Math.random()*6 + 6 + "s";
     floatingContainer.appendChild(s);
-    setTimeout(()=>s.remove(),12000);
+    setTimeout(() => s.remove(), 12000);
   }, 500);
 
 });
