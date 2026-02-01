@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fakeYT = document.getElementById("fakeYT");
   const fakePlay = document.getElementById("fakePlay");
+
   const lockScreen = document.getElementById("lockScreen");
   const unlockBtn = document.getElementById("unlockBtn");
   const passwordInput = document.getElementById("passwordInput");
@@ -14,12 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const startBtn = document.getElementById("startBtn");
   const nextBtn = document.getElementById("nextBtn");
 
-  const musicBtn = document.getElementById("musicBtn");
-  const music = document.getElementById("bgMusic");
-
   const revealBtn = document.getElementById("revealBtn");
   const secretText = document.getElementById("secretText");
-  const timer = document.getElementById("timer");
+
+  const music = document.getElementById("bgMusic");
+  const musicBtn = document.getElementById("musicBtn");
 
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let index = 0;
   let playing = false;
-  const CORRECT_PASSWORD = "13022006";
+  const PASSWORD = "13022006";
 
-  /* AUTO LOAD IMAGES (1 to 20 supported) */
+  // Load images (up to 20)
   for (let i = 1; i <= 20; i++) {
     const img = document.createElement("img");
     img.src = `images/photo${i}.jpg`;
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   unlockBtn.onclick = () => {
-    if (passwordInput.value === CORRECT_PASSWORD) {
+    if (passwordInput.value === PASSWORD) {
       lockScreen.style.display = "none";
       mainContent.classList.remove("hidden");
     } else {
@@ -68,17 +68,16 @@ document.addEventListener("DOMContentLoaded", () => {
   startBtn.onclick = () => {
     index = 1;
     sections[index].classList.remove("hidden");
-    sections[index].after(nextBtn);
     nextBtn.classList.remove("hidden");
     startBtn.style.display = "none";
     sections[index].scrollIntoView({ behavior: "smooth" });
+    confetti();
   };
 
   nextBtn.onclick = () => {
     index++;
     if (index < sections.length) {
       sections[index].classList.remove("hidden");
-      sections[index].after(nextBtn);
       sections[index].scrollIntoView({ behavior: "smooth" });
     } else {
       nextBtn.style.display = "none";
@@ -90,12 +89,4 @@ document.addEventListener("DOMContentLoaded", () => {
     revealBtn.style.display = "none";
   };
 
-  const target = new Date("Feb 13, 2026 00:00:00").getTime();
-  setInterval(() => {
-    const diff = target - Date.now();
-    timer.textContent =
-      diff <= 0
-        ? "🎉 HAPPY BIRTHDAY 🎉"
-        : Math.floor(diff / 86400000) + " Days";
-  }, 1000);
 });
