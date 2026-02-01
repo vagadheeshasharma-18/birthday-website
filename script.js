@@ -71,21 +71,30 @@ nextBtn.onclick=()=>{
   }
 };
 
-/* 🌸 Open Final Message */
+/* 🌸 FINAL MESSAGE FLOW */
 openFinalBtn.onclick=()=>{
-  finalEnd.classList.remove("hidden");
+  finalEnd.style.display="flex";
   finalEnd.scrollIntoView({behavior:"smooth"});
 
-  setTimeout(()=>{
+  const duration=3000;
+  const end=Date.now()+duration;
+
+  (function frame(){
     confetti({
-      particleCount:200,
-      spread:100,
-      startVelocity:45,
+      particleCount:12,
+      spread:120,
+      startVelocity:50,
       gravity:0.9,
-      ticks:320,
       colors:["#ffffff","#ffd6ff","#cdb4ff"]
     });
-  },500);
+    if(Date.now()<end){
+      requestAnimationFrame(frame);
+    }
+  })();
+
+  setTimeout(()=>{
+    finalEnd.classList.add("showFinal");
+  },3000);
 };
 
 /* ⏳ Countdown */
