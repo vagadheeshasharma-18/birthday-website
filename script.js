@@ -15,10 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextWrapper = document.getElementById("nextWrapper");
 
   const music = document.getElementById("bgMusic");
-  const musicBtn = document.getElementById("musicBtn");
 
   let currentIndex = 0;
-  let isPlaying = false;
+  let musicStarted = false;
 
   // 🔐 Unlock
   unlockBtn.addEventListener("click", () => {
@@ -30,28 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🎶 Manual Music Toggle
-  musicBtn.addEventListener("click", () => {
-    if (!isPlaying) {
-      music.play();
-      musicBtn.textContent = "⏸ Pause Music";
-    } else {
-      music.pause();
-      musicBtn.textContent = "🎶 Play Music";
-    }
-    isPlaying = !isPlaying;
-  });
-
-  // ▶️ Start Surprise (AUTO-START MUSIC HERE)
+  // ▶️ Start Surprise (AUTO MUSIC)
   startBtn.addEventListener("click", () => {
     currentIndex = 1;
     sections[currentIndex].classList.remove("hidden");
 
-    // auto-start music
-    if (!isPlaying) {
+    if (!musicStarted) {
       music.play();
-      musicBtn.textContent = "⏸ Pause Music";
-      isPlaying = true;
+      musicStarted = true;
     }
 
     startBtn.style.display = "none";
