@@ -5,7 +5,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: radial-gradient(circle at top, #14142d, #0a0a12);
@@ -13,7 +15,7 @@ body {
   text-align: center;
 }
 
-/* Fake YT */
+/* Fake YouTube */
 #fakeYT {
   position: fixed;
   inset: 0;
@@ -23,17 +25,20 @@ body {
   align-items: center;
   z-index: 999;
 }
+
 .yt-card {
   background: #111;
   padding: 30px;
   border-radius: 16px;
 }
+
 .yt-thumb {
   width: 280px;
   height: 160px;
   background: #222;
   margin-bottom: 15px;
 }
+
 #fakeYT button {
   background: #ff0000;
   border: none;
@@ -42,7 +47,7 @@ body {
   cursor: pointer;
 }
 
-/* Lock */
+/* Lock Screen */
 #lockScreen {
   position: fixed;
   inset: 0;
@@ -54,7 +59,39 @@ body {
   z-index: 998;
 }
 
-.hidden { display: none; }
+#lockScreen h1 {
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+#lockScreen p {
+  color: #cfcfea;
+  margin-bottom: 15px;
+}
+
+#passwordInput {
+  background: transparent;
+  border: 1px solid #7b5cff;
+  padding: 12px 18px;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+#passwordInput::placeholder {
+  color: #b9a7ff;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+}
+
+.hidden {
+  display: none;
+}
 
 /* Sections */
 section {
@@ -71,7 +108,11 @@ section {
   font-size: 3rem;
   color: #d4af37;
 }
-.subtitle { color: #cfcfea; }
+
+.subtitle {
+  color: #cfcfea;
+  margin-bottom: 20px;
+}
 
 /* Buttons */
 button {
@@ -83,12 +124,13 @@ button {
   margin: 10px;
   cursor: pointer;
 }
+
 button.ghost {
   background: transparent;
   border: 1px solid #7b5cff;
 }
 
-/* Cards */
+/* Card */
 .card {
   background: rgba(255,255,255,0.08);
   padding: 30px;
@@ -102,6 +144,7 @@ button.ghost {
   display: flex;
   gap: 20px;
 }
+
 .gallery img {
   width: 140px;
   height: 140px;
@@ -127,6 +170,7 @@ video {
   bottom: -20px;
   animation: floatUp 6s linear infinite;
 }
+
 @keyframes floatUp {
   to {
     transform: translateY(-120vh);

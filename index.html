@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Just a video</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -18,11 +19,20 @@
   </div>
 </div>
 
-<!-- 🔐 LOCK SCREEN -->
+<!-- 🔐 LOCK SCREEN WITH PASSWORD -->
 <div id="lockScreen" class="hidden">
   <h1>🖤 A Surprise is Waiting</h1>
-  <p>Click when you’re ready</p>
-  <button id="unlockBtn">Unlock 💜</button>
+  <p>Enter the special date to unlock 💜</p>
+
+  <input
+    type="password"
+    id="passwordInput"
+    placeholder="DDMMYYYY"
+    maxlength="8"
+  />
+
+  <button id="unlockBtn">Unlock 💫</button>
+  <p id="errorText" class="error hidden">Wrong password 🥺 Try again</p>
 </div>
 
 <div class="floating-hearts"></div>
@@ -116,5 +126,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

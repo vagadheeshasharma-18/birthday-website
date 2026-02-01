@@ -5,11 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const fakePlay = document.getElementById("fakePlay");
   const lockScreen = document.getElementById("lockScreen");
   const unlockBtn = document.getElementById("unlockBtn");
+  const passwordInput = document.getElementById("passwordInput");
+  const errorText = document.getElementById("errorText");
+
   const mainContent = document.getElementById("mainContent");
   const startBtn = document.getElementById("startBtn");
   const nextBtn = document.getElementById("nextBtn");
+
   const musicBtn = document.getElementById("musicBtn");
   const music = document.getElementById("bgMusic");
+
   const revealBtn = document.getElementById("revealBtn");
   const secretText = document.getElementById("secretText");
   const timer = document.getElementById("timer");
@@ -17,21 +22,33 @@ document.addEventListener("DOMContentLoaded", () => {
   let index = 0;
   let playing = false;
 
+  const CORRECT_PASSWORD = "13022006"; // DDMMYYYY
+
+  // Fake YouTube -> Lock
   fakePlay.onclick = () => {
     fakeYT.style.display = "none";
     lockScreen.classList.remove("hidden");
   };
 
+  // Password Unlock
   unlockBtn.onclick = () => {
-    lockScreen.style.display = "none";
-    mainContent.classList.remove("hidden");
+    if (passwordInput.value === CORRECT_PASSWORD) {
+      errorText.classList.add("hidden");
+      lockScreen.style.display = "none";
+      mainContent.classList.remove("hidden");
+    } else {
+      errorText.classList.remove("hidden");
+      passwordInput.value = "";
+    }
   };
 
+  // Music
   musicBtn.onclick = () => {
     playing ? music.pause() : music.play();
     playing = !playing;
   };
 
+  // Start Story
   startBtn.onclick = () => {
     index = 1;
     sections[index].classList.remove("hidden");
@@ -42,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     confetti();
   };
 
+  // Next Surprise
   nextBtn.onclick = () => {
     index++;
     if (index < sections.length) {
@@ -54,11 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Secret reveal
   revealBtn.onclick = () => {
     secretText.classList.remove("hidden");
     revealBtn.style.display = "none";
   };
 
+  // Countdown
   const target = new Date("Feb 13, 2026 00:00:00").getTime();
   setInterval(() => {
     const diff = target - Date.now();
