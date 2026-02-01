@@ -31,7 +31,7 @@ section{
   max-width:650px;line-height:1.7;
 }
 
-/* 🖼️ IMAGES */
+/* GALLERY */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -47,9 +47,7 @@ section{
   background:rgba(255,255,255,.04);
   padding:8px;
   border-radius:18px;
-  box-shadow:
-    0 0 25px rgba(123,92,255,.25),
-    0 0 60px rgba(123,92,255,.12);
+  box-shadow:0 0 25px rgba(123,92,255,.25);
   opacity:0;
   transform:translateY(25px) scale(.98);
   transition:opacity .9s ease,transform .9s ease;
@@ -60,341 +58,75 @@ section{
   transform:translateY(0) scale(1);
 }
 
-@media(max-width:600px){
-  .gallery img{height:220px;}
+/* CAKE DELIVERY */
+#delivery{width:300px;margin:40px auto;}
+.truck{font-size:3rem;animation:drive 3s ease forwards;}
+@keyframes drive{from{transform:translateX(-120vw);}to{transform:translateX(0);}}
+.parcel{font-size:3rem;cursor:pointer;margin-top:10px;}
+#delivery.delivered .truck{display:none;}
+
+/* CAKE */
+#cake{position:relative;width:260px;margin-top:-60px;cursor:pointer;}
+.cake-layer{
+  width:100%;height:48px;border-radius:50%;
+  margin-top:-14px;
+  background:linear-gradient(#ffb3d9,#ff5fa2);
+  box-shadow:0 10px 25px rgba(255,95,162,.45);
 }
+.cake-layer.middle{background:linear-gradient(#ffd6e8,#ff8dc7);}
+.cake-layer.bottom{background:linear-gradient(#ff9bd4,#ff6fb7);}
+.cake-name{text-align:center;color:#fff;font-size:1.4rem;margin-bottom:10px;}
 
-.countdown{
-  font-size:2rem;color:#ffd6ff;
-  animation:reveal 1.2s ease;
+.candles{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;margin-bottom:10px;
 }
-
-@keyframes reveal{
-  from{opacity:0;transform:scale(.8)}
-  to{opacity:1;transform:scale(1)}
+.candles span{
+  width:6px;height:26px;background:#fff;border-radius:4px;opacity:.2;
 }
+.candles span.lit{opacity:1;}
 
-.gentle{color:#e7e7ff;font-size:1.1rem;line-height:1.6;opacity:.9;}
-
-button{
-  background:#7b5cff;border:none;
-  padding:14px 30px;border-radius:30px;
-  color:#fff;cursor:pointer;font-size:1rem;
-}
-
-#nextWrapper{padding:40px 0 60px;}
-
-/* 🎈 FLOATING MAGIC */
-#floating-container span{
-  position:fixed;
-  bottom:-80px;
-  pointer-events:none;
-  z-index:1;
+#knife{
+  position:absolute;right:-40px;top:10px;
+  width:6px;height:120px;
+  background:linear-gradient(#ccc,#eee);
   opacity:0;
+}
+#knife.cutting{
+  opacity:1;
+  animation:cut 1s forwards;
+}
+@keyframes cut{to{transform:translateX(-120px);}}
+
+/* COUNTDOWN */
+.countdown{font-size:2rem;color:#ffd6ff;}
+
+/* FLOATING */
+#floating-container span{
+  position:fixed;bottom:-80px;
+  pointer-events:none;
   animation:floatUp linear forwards;
 }
-
 @keyframes floatUp{
   0%{transform:translateY(0) scale(.8);opacity:0;}
   10%{opacity:.9;}
   100%{transform:translateY(-120vh) scale(1.4);opacity:0;}
 }
 
-/* 🌸 FINAL END MESSAGE */
-#finalEnd{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
+/* FINAL */
+#finalEnd{display:none;min-height:100vh;align-items:center;justify-content:center;}
 .final-line{
-  font-size:2rem;
-  line-height:1.6;
-  text-align:center;
-  color:#ffffff;
-  opacity:0;
-  animation:fadeInFinal 2s ease forwards;
-}
-
-@keyframes fadeInFinal{
-  from{opacity:0;transform:translateY(30px);}
-  to{opacity:1;transform:translateY(0);}
-}
-/* FINAL MESSAGE LOCK */
-#finalEnd{
-  display:none;
-  min-height:100vh;
-  align-items:center;
-  justify-content:center;
-}
-
-.final-line{
-  font-size:2rem;
-  line-height:1.6;
-  text-align:center;
-  color:#ffffff;
-  opacity:0;
+  font-size:2rem;line-height:1.6;
+  opacity:0;transform:translateY(25px);
   transition:opacity 1.5s ease,transform 1.5s ease;
-  transform:translateY(25px);
 }
+.showFinal .final-line{opacity:1;transform:translateY(0);}
 
-.showFinal .final-line{
-  opacity:1;
-  transform:translateY(0);
-}
-/* 🌑 DIM OVERLAY */
 #dimOverlay{
-  position:fixed;
-  inset:0;
+  position:fixed;inset:0;
   background:rgba(0,0,0,.65);
-  opacity:0;
-  pointer-events:none;
+  opacity:0;pointer-events:none;
   transition:opacity .6s ease;
-  z-index:5;
 }
-
-#dimOverlay.active{
-  opacity:1;
-}
-
-/* FINAL MESSAGE LOCK */
-#finalEnd{
-  display:none;
-  min-height:100vh;
-  align-items:center;
-  justify-content:center;
-  z-index:6;
-}
-
-.final-line{
-  font-size:2rem;
-  line-height:1.6;
-  text-align:center;
-  color:#ffffff;
-  opacity:0;
-  transform:translateY(25px);
-  transition:opacity 1.5s ease,transform 1.5s ease;
-}
-
-.showFinal .final-line{
-  opacity:1;
-  transform:translateY(0);
-}
-/* 🎂 CAKE */
-#cake{
-  width:240px;
-  height:160px;
-  position:relative;
-  cursor:pointer;
-  margin-top:30px;
-}
-
-.cake-half{
-  position:absolute;
-  width:50%;
-  height:100%;
-  background:linear-gradient(#7b5cff,#3c2c7a);
-  border-radius:15px;
-  transition:transform 1s ease;
-}
-
-.cake-half.left{left:0;}
-.cake-half.right{right:0;}
-
-#cake.cut .left{transform:translateX(-40px) rotate(-8deg);}
-#cake.cut .right{transform:translateX(40px) rotate(8deg);}
-/* 🎁 CAKE BOX */
-#cakeBox{
-  width:260px;
-  height:180px;
-  position:relative;
-  margin-top:30px;
-  cursor:pointer;
-}
-
-.box-base{
-  width:100%;
-  height:120px;
-  background:linear-gradient(#2a1f3d,#120b1f);
-  border-radius:0 0 18px 18px;
-}
-
-.box-lid{
-  position:absolute;
-  top:0;
-  width:100%;
-  height:60px;
-  background:linear-gradient(#3c2c7a,#1c1335);
-  border-radius:18px 18px 0 0;
-  transform-origin:top;
-  transition:transform 1s ease;
-}
-
-#cakeBox.open .box-lid{
-  transform:rotateX(110deg);
-}
-
-/* 🎂 CAKE */
-#cake{
-  width:220px;
-  margin-top:-90px;
-}
-
-.cake-layer{
-  width:100%;
-  height:42px;
-  border-radius:50%;
-  background:linear-gradient(#ff9bd4,#ff5fa2);
-  margin-top:-12px;
-  box-shadow:0 8px 20px rgba(255,95,162,.45);
-}
-
-.cake-layer.middle{background:linear-gradient(#ffd6e8,#ff8dc7);}
-.cake-layer.bottom{background:linear-gradient(#ffb3d9,#ff6fb7);}
-
-/* 🕯️ CANDLES */
-.candles{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  margin-bottom:10px;
-}
-
-.candles span{
-  width:8px;
-  height:28px;
-  background:#fff;
-  border-radius:4px;
-  position:relative;
-}
-
-.candles span::after{
-  content:"";
-  position:absolute;
-  top:-8px;
-  left:50%;
-  transform:translateX(-50%);
-  width:8px;
-  height:8px;
-  background:radial-gradient(circle,#ffd700,#ff9f00);
-  border-radius:50%;
-  animation:flicker .6s infinite alternate;
-}
-
-@keyframes flicker{
-  from{opacity:.6;}
-  to{opacity:1;}
-}
-
-/* 🔪 CUT EFFECT */
-#cake.cut{
-  animation:shake .4s ease;
-}
-
-@keyframes shake{
-  0%{transform:rotate(0deg);}
-  25%{transform:rotate(1deg);}
-  50%{transform:rotate(-1deg);}
-  100%{transform:rotate(0deg);}
-}
-/* 🎂 REALISTIC CAKE */
-#cake{
-  position:relative;
-  width:260px;
-  margin-top:-90px;
-  filter:drop-shadow(0 15px 30px rgba(0,0,0,.45));
-}
-
-/* Cake layers */
-.cake-layer{
-  width:100%;
-  height:48px;
-  border-radius:50%;
-  margin-top:-14px;
-  background:linear-gradient(180deg,#ffb3d9,#ff5fa2);
-  box-shadow:
-    inset 0 -6px 10px rgba(0,0,0,.15),
-    0 10px 20px rgba(255,95,162,.35);
-}
-
-.cake-layer.middle{
-  background:linear-gradient(180deg,#ffd6e8,#ff8dc7);
-}
-
-.cake-layer.bottom{
-  background:linear-gradient(180deg,#ff9bd4,#ff6fb7);
-}
-
-/* Name on cake */
-.cake-name{
-  position:absolute;
-  top:38px;
-  width:100%;
-  text-align:center;
-  font-size:1.4rem;
-  color:#fff;
-  text-shadow:0 2px 6px rgba(0,0,0,.4);
-  z-index:2;
-}
-
-/* Candles */
-.candles{
-  display:grid;
-  grid-template-columns:repeat(10,1fr);
-  gap:6px;
-  justify-items:center;
-  margin-bottom:10px;
-}
-
-.candles span{
-  width:6px;
-  height:26px;
-  background:#fff;
-  border-radius:4px;
-  position:relative;
-}
-
-.candles span::after{
-  content:"";
-  position:absolute;
-  top:-8px;
-  left:50%;
-  transform:translateX(-50%);
-  width:8px;
-  height:8px;
-  background:radial-gradient(circle,#ffd700,#ff9f00);
-  border-radius:50%;
-  animation:flicker .6s infinite alternate;
-}
-
-@keyframes flicker{
-  from{opacity:.6;}
-  to{opacity:1;}
-}
-
-/* Knife */
-#knife{
-  position:absolute;
-  right:-40px;
-  top:10px;
-  width:6px;
-  height:120px;
-  background:linear-gradient(#ccc,#eee);
-  border-radius:3px;
-  transform:rotate(20deg);
-  opacity:0;
-}
-
-#cake.cut #knife{
-  opacity:1;
-}
-
-#knife.cutting{
-  animation:knifeCut 1s ease forwards;
-}
-
-@keyframes knifeCut{
-  from{transform:translateX(0) rotate(20deg);}
-  to{transform:translateX(-120px) rotate(0deg);}
-}
+#dimOverlay.active{opacity:1;}

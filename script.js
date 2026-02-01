@@ -14,9 +14,11 @@ const startBtn=document.getElementById("startBtn");
 const nextBtn=document.getElementById("nextBtn");
 const nextWrapper=document.getElementById("nextWrapper");
 
+const delivery=document.getElementById("delivery");
+const parcel=document.querySelector(".parcel");
 const cake=document.getElementById("cake");
-const cakeBox=document.getElementById("cakeBox");
 const cakeHint=document.getElementById("cakeHint");
+const candlesContainer=document.getElementById("candles");
 const knife=document.getElementById("knife");
 
 const openFinalBtn=document.getElementById("openFinalBtn");
@@ -31,6 +33,7 @@ const floatingContainer=document.getElementById("floating-container");
 let index=0;
 let musicStarted=false;
 let cakeStage=0;
+const AGE=20;
 
 /* 🔐 Unlock */
 unlockBtn.onclick=()=>{
@@ -80,32 +83,39 @@ nextBtn.onclick=()=>{
   }
 };
 
-/* 🎁 Cake Box */
-cakeBox.onclick=()=>{
+/* 🎁 Cake Delivery */
+parcel.onclick=()=>{
   if(cakeStage!==0) return;
-  cakeBox.classList.add("open");
+
+  delivery.classList.add("delivered");
   cake.classList.remove("hidden");
-  cakeHint.textContent="Make a wish & tap the cake 🎂";
+  cakeHint.textContent="Candles lighting up… 🕯️";
+
+  for(let i=0;i<AGE;i++){
+    const c=document.createElement("span");
+    candlesContainer.appendChild(c);
+    setTimeout(()=>c.classList.add("lit"),i*180);
+  }
+
   cakeStage=1;
 };
 
 /* 🔪 Cake Cut */
 cake.onclick=()=>{
   if(cakeStage!==1) return;
-  cakeStage=2;
-  cake.classList.add("cut");
-  knife.classList.add("cutting");
 
+  cakeStage=2;
+  knife.classList.add("cutting");
   blastSound.play();
 
-  for(let i=0;i<4;i++){
+  for(let i=0;i<5;i++){
     setTimeout(()=>{
       confetti({
-        particleCount:240,
-        spread:160,
+        particleCount:280,
+        spread:170,
         origin:{y:0.6}
       });
-    },i*350);
+    },i*300);
   }
 
   cakeHint.textContent="With all my love 💖";
