@@ -21,9 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let index = 0;
   let musicStarted = false;
-  let finalConfettiDone = false;
+  let confettiDone = false;
 
-  // Unlock
   unlockBtn.onclick = () => {
     if (passwordInput.value === PASSWORD) {
       lockScreen.style.display = "none";
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Start
   startBtn.onclick = () => {
     index = 1;
     sections[index].classList.remove("hidden");
@@ -45,12 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     startBtn.style.display = "none";
     nextWrapper.classList.remove("hidden");
-
     sections[index].after(nextWrapper);
     sections[index].scrollIntoView({ behavior: "smooth" });
   };
 
-  // Next
   nextBtn.onclick = () => {
     index++;
     if (index < sections.length) {
@@ -58,35 +54,28 @@ document.addEventListener("DOMContentLoaded", () => {
       sections[index].after(nextWrapper);
       sections[index].scrollIntoView({ behavior: "smooth" });
 
-      // 🎉 Confetti on final
-      if (sections[index] === finalSection && !finalConfettiDone) {
-        finalConfettiDone = true;
-        confetti({ particleCount: 200, spread: 120, origin: { y: 0.6 } });
+      if (sections[index] === finalSection && !confettiDone) {
+        confettiDone = true;
+        confetti({ particleCount: 250, spread: 140 });
       }
     } else {
       nextWrapper.style.display = "none";
     }
   };
 
-  // Countdown logic
   setInterval(() => {
-    const now = Date.now();
-    const diff = birthdayDate - now;
-
+    const diff = birthdayDate - Date.now();
     if (diff <= 0) {
       countdownEl.textContent = "🎉 HAPPY BIRTHDAY 🎂💖";
       confetti({ particleCount: 300, spread: 160 });
       return;
     }
-
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
     const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const m = Math.floor((diff / (1000 * 60)) % 60);
-
     countdownEl.textContent = `${d} Days ${h} Hours ${m} Minutes`;
   }, 1000);
 
-  // Floating magic
   const symbols = ["💖","🎈","✨","💜","🎉"];
   setInterval(() => {
     const s = document.createElement("span");

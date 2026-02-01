@@ -74,7 +74,7 @@ section {
   border-radius: 16px;
 }
 
-/* Countdown animation */
+/* Countdown */
 .countdown {
   font-size: 2rem;
   color: #ffd6ff;
@@ -96,10 +96,10 @@ button {
   cursor: pointer;
 }
 
-/* Next Button */
+/* Next */
 #nextWrapper { padding: 40px 0 60px; }
 
-/* Floating magic */
+/* Floating */
 #floating-container span {
   position: fixed;
   bottom: -40px;
