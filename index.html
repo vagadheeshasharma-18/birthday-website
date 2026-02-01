@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- 🔐 LOCK SCREEN -->
 <div id="lockScreen">
   <h1>🖤 A Surprise is Waiting</h1>
   <p>Enter the special date 💜</p>
@@ -18,25 +17,23 @@
   <p id="errorText" class="hidden">Wrong password 🥺 Try again</p>
 </div>
 
-<!-- 🌑 DIM OVERLAY -->
 <div id="dimOverlay"></div>
-
-<!-- ✨ FLOATING BACKGROUND PARTICLES -->
 <div id="floating-container"></div>
 
 <div id="mainContent" class="hidden">
 
-  <!-- HERO -->
-  <section>
-    <h1>🎂 Happy Birthday 🎂</h1>
-    <p class="subtitle">Madiha Tabassum ✨</p>
-    <button id="startBtn">Start Surprise 🎁</button>
-  </section>
+<section>
+  <h1>🎂 Happy Birthday 🎂</h1>
+  <p class="subtitle">Madiha Tabassum ✨</p>
+  <button id="startBtn">Start Surprise 🎁</button>
+</section>
 
-  <!-- LETTER -->
-  <section class="hidden">
-    <h2>💖 A Letter for You</h2>
-    <div class="card">
+<!-- 💖 LETTER -->
+<section class="hidden">
+  <h2>💖 A Letter for You</h2>
+  <div class="card reveal-text" id="letterCard">
+    <span class="caret">|</span>
+    <div class="text-content">
       My Dearest Madiha Tabassum 💖,<br><br>
       Happy Birthday to the person who is not just my best friend,
       but one of the most beautiful chapters of my life 🎂✨<br><br>
@@ -72,67 +69,138 @@
       Because some connections are forever 💞<br><br>
       Happy Birthday once again 🎉💖
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- IMAGES -->
-  <section class="hidden" id="imagesSection">
-    <h2>📸 Beautiful Memories</h2>
-    <div class="gallery">
-      <img src="images/photo1.jpg">
-      <img src="images/photo2.jpg">
-      <img src="images/photo3.jpg">
-      <img src="images/photo4.jpg">
-      <img src="images/photo5.jpg">
-      <img src="images/photo6.jpg">
-      <img src="images/photo7.jpg">
-      <img src="images/photo8.jpg">
-      <img src="images/photo9.jpg">
-      <img src="images/photo10.jpg">
-      <img src="images/photo11.jpg">
+<!-- 📸 IMAGES -->
+<section class="hidden" id="imagesSection">
+  <h2>📸 Beautiful Memories</h2>
+  <div class="gallery">
+    <img src="images/photo1.jpg">
+    <img src="images/photo2.jpg">
+    <img src="images/photo3.jpg">
+    <img src="images/photo4.jpg">
+    <img src="images/photo5.jpg">
+    <img src="images/photo6.jpg">
+    <img src="images/photo7.jpg">
+    <img src="images/photo8.jpg">
+    <img src="images/photo9.jpg">
+    <img src="images/photo10.jpg">
+    <img src="images/photo11.jpg">
+  </div>
+</section>
+
+<!-- 🎧 VOICE MESSAGES -->
+<section class="hidden" id="voiceSection">
+  <h2>🎧 Her Voice, Her World</h2>
+
+  <div class="voice-card">
+    <p>😄 A few moments that still make me smile</p>
+    <button class="playBtn" data-audio="audio/funny.mp3">Play ▶️</button>
+  </div>
+
+  <div class="voice-card">
+    <p>📚 When you switch into serious mode</p>
+    <button class="playBtn" data-audio="audio/serious.mp3">Play ▶️</button>
+  </div>
+
+  <div class="voice-card">
+    <p>🎵 A voice that deserves to be heard</p>
+    <button class="playBtn" data-audio="audio/song.mp3">Play ▶️</button>
+  </div>
+</section>
+
+<!-- 🎂 CAKE SECTION -->
+<section class="hidden" id="cakeSection">
+  <div class="cake-wrapper">
+    <div class="cake cake-left"></div>
+    <div class="cake cake-right"></div>
+
+    <div class="candles">
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
+      <div class="candle"><span class="flame"></span><span class="smoke"></span></div>
     </div>
-  </section>
 
-  <!-- GRANDMA MESSAGE -->
-  <section class="hidden">
-    <h2>🌸 A Blessing That Will Always Stay 🤍</h2>
-    <div class="card">
+    <div class="cake-name" id="cakeName">Madiha Tabassum</div>
+  </div>
+
+  <p id="cutText">Press to cut the cake 🎂</p>
+  <button id="cutCakeBtn">Cut the Cake ✨</button>
+
+  <div id="fakeBug" class="hidden">
+    Loading emotions...<br>
+    <b>ERROR:</b> Too much love detected 🤍
+  </div>
+
+  <button id="dontClickBtn" class="hidden">Do NOT click this 😤</button>
+
+  <div id="dontClickMsg" class="hidden">
+    Okay… I warned you 😌<br>
+    You’re officially spoiled today 🤍
+  </div>
+</section>
+
+<section class="hidden" id="loveMessageSection">
+  <button id="toGrandmaBtn">
+    A message from your most loved person 🤍
+  </button>
+</section>
+
+<!-- 🌸 GRANDMA MESSAGE (FULL & FINAL) -->
+<section class="hidden" id="grandmaSection">
+  <h2>🌸 A Blessing That Will Always Stay 🤍</h2>
+
+  <div class="card reveal-text grandma-card" id="grandmaCard">
+    <span class="caret">|</span>
+
+    <div class="text-content">
       Meri pyari bacchi Madiha 💗,<br><br>
-      Tum mujhe yaad karti ho,  
+
+      Tum mujhe yaad karti ho,<br>
       aur main tumhe hamesha mehsoos karti hoon.<br><br>
-      <b>Makhtumbee Dadi Amma</b> ka pyaar  
-      sirf yaadon tak simit nahi hota,  
-      woh dua ban kar  
+
+      <b>Makhtumbee Dadi Amma</b> ka pyaar<br>
+      sirf yaadon tak simit nahi hota,<br>
+      woh dua ban kar<br>
       har pal tumhare saath rehta hai.<br><br>
-      Jab tum muskuraati ho na,  
+
+      Jab tum muskuraati ho na,<br>
       mujhe sukoon milta hai.<br><br>
-      Zindagi ke har mod par,  
+
+      Zindagi ke har mod par,<br>
       tum par meri dua aur hifazat rahegi.<br><br>
-      Agar kabhi dil bhaari lage,  
-      to yaad rakhna —  
+
+      Agar kabhi dil bhaari lage,<br>
+      to yaad rakhna —<br>
       tum akeli nahi ho.<br><br>
-      Main tumhari har khushi mein hoon,  
-      har kamyabi mein hoon,  
-      aur har mushkil ke waqt bhi  
+
+      Main tumhari har khushi mein hoon,<br>
+      har kamyabi mein hoon,<br>
+      aur har mushkil ke waqt bhi<br>
       tumhare paas hoon.<br><br>
+
       <b>Tum hamesha meri duaon mein rahogi.</b><br><br>
+
       <i>Nee meeda naa ashirwaadam eppudu untundi ra bangaram.</i><br><br>
+
       <b>— Makhtumbee Dadi Amma ka pyaar aur ashirwaad 🤍</b>
     </div>
+  </div>
 
-    <button id="openFinalBtn" style="margin-top:30px;">
-      A final message is here for you 🤍
-    </button>
-  </section>
+  <button id="openFinalBtn" style="margin-top:30px;">
+    A final message is here for you 🤍
+  </button>
+</section>
 
-  <!-- FINAL MESSAGE -->
-  <section id="finalEnd" class="hidden">
-    <h2 class="final-line">
-      You are deeply loved,<br>
-      endlessly blessed,<br>
-      and never alone.<br><br>
-      Happy Birthday 🤍
-    </h2>
-  </section>
+<section id="finalEnd" class="hidden">
+  <h2 class="final-line">
+    You are deeply loved,<br>
+    endlessly blessed,<br>
+    and never alone.<br><br>
+    Happy Birthday 🤍
+  </h2>
+</section>
 
 </div>
 
@@ -143,6 +211,8 @@
 <audio id="bgMusic" loop>
   <source src="music/birthday-music.mp3" type="audio/mpeg">
 </audio>
+
+<audio id="voicePlayer"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script src="script.js"></script>
