@@ -143,3 +143,41 @@ button{
   opacity:1;
   transform:translateY(0);
 }
+/* 🌑 DIM OVERLAY */
+#dimOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .6s ease;
+  z-index:5;
+}
+
+#dimOverlay.active{
+  opacity:1;
+}
+
+/* FINAL MESSAGE LOCK */
+#finalEnd{
+  display:none;
+  min-height:100vh;
+  align-items:center;
+  justify-content:center;
+  z-index:6;
+}
+
+.final-line{
+  font-size:2rem;
+  line-height:1.6;
+  text-align:center;
+  color:#ffffff;
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity 1.5s ease,transform 1.5s ease;
+}
+
+.showFinal .final-line{
+  opacity:1;
+  transform:translateY(0);
+}

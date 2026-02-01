@@ -18,6 +18,8 @@ const openFinalBtn=document.getElementById("openFinalBtn");
 const finalEnd=document.getElementById("finalEnd");
 
 const music=document.getElementById("bgMusic");
+const blastSound=document.getElementById("blastSound");
+const dimOverlay=document.getElementById("dimOverlay");
 const countdownEl=document.getElementById("countdown");
 const floatingContainer=document.getElementById("floating-container");
 
@@ -73,27 +75,34 @@ nextBtn.onclick=()=>{
 
 /* 🌸 FINAL MESSAGE FLOW */
 openFinalBtn.onclick=()=>{
+  document.body.style.overflow="hidden";
+  dimOverlay.classList.add("active");
+  blastSound.currentTime=0;
+  blastSound.play();
+
   finalEnd.style.display="flex";
   finalEnd.scrollIntoView({behavior:"smooth"});
 
   const duration=3000;
   const end=Date.now()+duration;
 
-  (function frame(){
+  (function blast(){
     confetti({
-      particleCount:12,
-      spread:120,
-      startVelocity:50,
+      particleCount:18,
+      spread:140,
+      startVelocity:55,
       gravity:0.9,
       colors:["#ffffff","#ffd6ff","#cdb4ff"]
     });
     if(Date.now()<end){
-      requestAnimationFrame(frame);
+      requestAnimationFrame(blast);
     }
   })();
 
   setTimeout(()=>{
     finalEnd.classList.add("showFinal");
+    dimOverlay.classList.remove("active");
+    document.body.style.overflow="auto";
   },3000);
 };
 
