@@ -16,6 +16,7 @@ const nextWrapper=document.getElementById("nextWrapper");
 
 const music=document.getElementById("bgMusic");
 const countdownEl=document.getElementById("countdown");
+const floatingContainer=document.getElementById("floating-container");
 
 let index=0;
 let musicStarted=false;
@@ -58,9 +59,7 @@ nextBtn.onclick=()=>{
     if(sections[index].querySelector(".gallery")){
       const imgs=document.querySelectorAll(".gallery img");
       imgs.forEach((img,i)=>{
-        setTimeout(()=>{
-          img.classList.add("show");
-        }, i * 2500); // ⭐ 2.5 seconds per image
+        setTimeout(()=>img.classList.add("show"),i*2500);
       });
     }
 
@@ -81,5 +80,17 @@ setInterval(()=>{
   const m=Math.floor((diff/(1000*60))%60);
   countdownEl.textContent=`${d} Days ${h} Hours ${m} Minutes`;
 },1000);
+
+/* 🎈 Floating magic */
+const items=["🎈","💖","✨","💜","🎉"];
+setInterval(()=>{
+  const s=document.createElement("span");
+  s.textContent=items[Math.floor(Math.random()*items.length)];
+  s.style.left=Math.random()*100+"vw";
+  s.style.fontSize=(Math.random()*24+18)+"px";
+  s.style.animationDuration=(Math.random()*8+10)+"s";
+  floatingContainer.appendChild(s);
+  setTimeout(()=>s.remove(),20000);
+},1200);
 
 });
