@@ -1,78 +1,72 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-  const PASSWORD = "13022006";
-  const birthdayDate = new Date("February 13, 2026 00:00:00").getTime();
+const PASSWORD="13022006";
+const birthdayDate=new Date("February 13, 2026 00:00:00").getTime();
 
-  const lockScreen = document.getElementById("lockScreen");
-  const mainContent = document.getElementById("mainContent");
-  const unlockBtn = document.getElementById("unlockBtn");
-  const passwordInput = document.getElementById("passwordInput");
-  const errorText = document.getElementById("errorText");
+const lockScreen=document.getElementById("lockScreen");
+const mainContent=document.getElementById("mainContent");
+const unlockBtn=document.getElementById("unlockBtn");
+const passwordInput=document.getElementById("passwordInput");
+const errorText=document.getElementById("errorText");
 
-  const sections = document.querySelectorAll("section");
-  const startBtn = document.getElementById("startBtn");
-  const nextBtn = document.getElementById("nextBtn");
-  const nextWrapper = document.getElementById("nextWrapper");
+const sections=document.querySelectorAll("section");
+const startBtn=document.getElementById("startBtn");
+const nextBtn=document.getElementById("nextBtn");
+const nextWrapper=document.getElementById("nextWrapper");
 
-  const music = document.getElementById("bgMusic");
-  const countdownEl = document.getElementById("countdown");
+const music=document.getElementById("bgMusic");
+const countdownEl=document.getElementById("countdown");
 
-  let index = 0;
-  let musicStarted = false;
+let index=0;
+let musicStarted=false;
 
-  unlockBtn.onclick = () => {
-    if (passwordInput.value === PASSWORD) {
-      lockScreen.style.display = "none";
-      mainContent.classList.remove("hidden");
-    } else {
-      errorText.classList.remove("hidden");
-    }
-  };
+unlockBtn.onclick=()=>{
+  if(passwordInput.value===PASSWORD){
+    lockScreen.style.display="none";
+    mainContent.classList.remove("hidden");
+  }else{
+    errorText.classList.remove("hidden");
+  }
+};
 
-  startBtn.onclick = () => {
-    index = 1;
+startBtn.onclick=()=>{
+  index=1;
+  sections[index].classList.remove("hidden");
+  if(!musicStarted){music.play();musicStarted=true;}
+  startBtn.style.display="none";
+  nextWrapper.classList.remove("hidden");
+  sections[index].after(nextWrapper);
+  sections[index].scrollIntoView({behavior:"smooth"});
+};
+
+nextBtn.onclick=()=>{
+  index++;
+  if(index<sections.length){
     sections[index].classList.remove("hidden");
-
-    if (!musicStarted) {
-      music.play();
-      musicStarted = true;
-    }
-
-    startBtn.style.display = "none";
-    nextWrapper.classList.remove("hidden");
     sections[index].after(nextWrapper);
-    sections[index].scrollIntoView({ behavior: "smooth" });
-  };
+    sections[index].scrollIntoView({behavior:"smooth"});
 
-  nextBtn.onclick = () => {
-    index++;
-    if (index < sections.length) {
-      sections[index].classList.remove("hidden");
-      sections[index].after(nextWrapper);
-      sections[index].scrollIntoView({ behavior: "smooth" });
-
-      // Image fade-in trigger
-      if (sections[index].classList.contains("gallery-section")) {
-        const imgs = sections[index].querySelectorAll(".fade-img");
-        imgs.forEach((img, i) => {
-          setTimeout(() => img.classList.add("show"), i * 150);
-        });
-      }
-    } else {
-      nextWrapper.style.display = "none";
+    if(sections[index].querySelector(".gallery")){
+      const imgs=document.querySelectorAll(".gallery img");
+      imgs.forEach((img,i)=>{
+        setTimeout(()=>img.classList.add("show"),i*120);
+      });
     }
-  };
+  }else{
+    nextWrapper.style.display="none";
+  }
+};
 
-  setInterval(() => {
-    const diff = birthdayDate - Date.now();
-    if (diff <= 0) {
-      countdownEl.textContent = "🎉 HAPPY BIRTHDAY 🎂💖";
-      return;
-    }
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff / (1000*60*60)) % 24);
-    const m = Math.floor((diff / (1000*60)) % 60);
-    countdownEl.textContent = `${d} Days ${h} Hours ${m} Minutes`;
-  }, 1000);
+setInterval(()=>{
+  const diff=birthdayDate-Date.now();
+  if(diff<=0){
+    countdownEl.textContent="🎉 HAPPY BIRTHDAY 🎂💖";
+    return;
+  }
+  const d=Math.floor(diff/(1000*60*60*24));
+  const h=Math.floor((diff/(1000*60*60))%24);
+  const m=Math.floor((diff/(1000*60))%60);
+  countdownEl.textContent=`${d} Days ${h} Hours ${m} Minutes`;
+},1000);
 
 });
