@@ -20,6 +20,7 @@ const countdownEl=document.getElementById("countdown");
 let index=0;
 let musicStarted=false;
 
+/* 🔐 Unlock */
 unlockBtn.onclick=()=>{
   if(passwordInput.value===PASSWORD){
     lockScreen.style.display="none";
@@ -29,16 +30,23 @@ unlockBtn.onclick=()=>{
   }
 };
 
+/* ▶ Start */
 startBtn.onclick=()=>{
   index=1;
   sections[index].classList.remove("hidden");
-  if(!musicStarted){music.play();musicStarted=true;}
+
+  if(!musicStarted){
+    music.play();
+    musicStarted=true;
+  }
+
   startBtn.style.display="none";
   nextWrapper.classList.remove("hidden");
   sections[index].after(nextWrapper);
   sections[index].scrollIntoView({behavior:"smooth"});
 };
 
+/* ➡ Next */
 nextBtn.onclick=()=>{
   index++;
   if(index<sections.length){
@@ -46,17 +54,22 @@ nextBtn.onclick=()=>{
     sections[index].after(nextWrapper);
     sections[index].scrollIntoView({behavior:"smooth"});
 
+    /* 🖼️ Slow image reveal (2.5s each) */
     if(sections[index].querySelector(".gallery")){
       const imgs=document.querySelectorAll(".gallery img");
       imgs.forEach((img,i)=>{
-        setTimeout(()=>img.classList.add("show"),i*120);
+        setTimeout(()=>{
+          img.classList.add("show");
+        }, i * 2500); // ⭐ 2.5 seconds per image
       });
     }
+
   }else{
     nextWrapper.style.display="none";
   }
 };
 
+/* ⏳ Countdown */
 setInterval(()=>{
   const diff=birthdayDate-Date.now();
   if(diff<=0){
