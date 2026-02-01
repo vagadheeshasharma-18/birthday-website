@@ -15,7 +15,8 @@ const nextBtn=document.getElementById("nextBtn");
 const nextWrapper=document.getElementById("nextWrapper");
 
 const cake=document.getElementById("cake");
-const cakeSection=document.getElementById("cakeSection");
+const cakeBox=document.getElementById("cakeBox");
+const cakeHint=document.getElementById("cakeHint");
 
 const openFinalBtn=document.getElementById("openFinalBtn");
 const finalEnd=document.getElementById("finalEnd");
@@ -28,7 +29,7 @@ const floatingContainer=document.getElementById("floating-container");
 
 let index=0;
 let musicStarted=false;
-let cakeCut=false;
+let cakeStage=0;
 
 /* 🔐 Unlock */
 unlockBtn.onclick=()=>{
@@ -58,7 +59,7 @@ startBtn.onclick=()=>{
 
 /* ➡ Next */
 nextBtn.onclick=()=>{
-  if(sections[index].id==="cakeSection" && !cakeCut) return;
+  if(sections[index].id==="cakeSection" && cakeStage<2) return;
 
   index++;
   if(index<sections.length){
@@ -67,8 +68,7 @@ nextBtn.onclick=()=>{
     sections[index].scrollIntoView({behavior:"smooth"});
 
     if(sections[index].querySelector(".gallery")){
-      const imgs=document.querySelectorAll(".gallery img");
-      imgs.forEach((img,i)=>{
+      document.querySelectorAll(".gallery img").forEach((img,i)=>{
         setTimeout(()=>img.classList.add("show"),i*2500);
       });
     }
@@ -79,17 +79,29 @@ nextBtn.onclick=()=>{
   }
 };
 
-/* 🎂 Cake Cut */
-cake.onclick=()=>{
-  if(cakeCut) return;
-  cakeCut=true;
-  cake.classList.add("cut");
+/* 🎂 Cake Box */
+cakeBox.onclick=()=>{
+  if(cakeStage!==0) return;
+  cakeBox.classList.add("open");
+  cake.classList.remove("hidden");
+  cakeHint.textContent="Tap the cake to cut 🎂";
+  cakeStage=1;
+};
 
-  confetti({
-    particleCount:200,
-    spread:120,
-    origin:{y:0.6}
-  });
+/* 🔪 Cake Cut */
+cake.onclick=()=>{
+  if(cakeStage!==1) return;
+  cake.classList.add("cut");
+  cakeHint.textContent="Made with love 💖";
+  cakeStage=2;
+
+  blastSound.play();
+
+  for(let i=0;i<3;i++){
+    setTimeout(()=>{
+      confetti({particleCount:200,spread:160,origin:{y:0.6}});
+    },i*400);
+  }
 };
 
 /* 🌸 FINAL MESSAGE */

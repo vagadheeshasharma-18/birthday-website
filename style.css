@@ -204,3 +204,97 @@ button{
 
 #cake.cut .left{transform:translateX(-40px) rotate(-8deg);}
 #cake.cut .right{transform:translateX(40px) rotate(8deg);}
+/* 🎁 CAKE BOX */
+#cakeBox{
+  width:260px;
+  height:180px;
+  position:relative;
+  margin-top:30px;
+  cursor:pointer;
+}
+
+.box-base{
+  width:100%;
+  height:120px;
+  background:linear-gradient(#2a1f3d,#120b1f);
+  border-radius:0 0 18px 18px;
+}
+
+.box-lid{
+  position:absolute;
+  top:0;
+  width:100%;
+  height:60px;
+  background:linear-gradient(#3c2c7a,#1c1335);
+  border-radius:18px 18px 0 0;
+  transform-origin:top;
+  transition:transform 1s ease;
+}
+
+#cakeBox.open .box-lid{
+  transform:rotateX(110deg);
+}
+
+/* 🎂 CAKE */
+#cake{
+  width:220px;
+  margin-top:-90px;
+}
+
+.cake-layer{
+  width:100%;
+  height:42px;
+  border-radius:50%;
+  background:linear-gradient(#ff9bd4,#ff5fa2);
+  margin-top:-12px;
+  box-shadow:0 8px 20px rgba(255,95,162,.45);
+}
+
+.cake-layer.middle{background:linear-gradient(#ffd6e8,#ff8dc7);}
+.cake-layer.bottom{background:linear-gradient(#ffb3d9,#ff6fb7);}
+
+/* 🕯️ CANDLES */
+.candles{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin-bottom:10px;
+}
+
+.candles span{
+  width:8px;
+  height:28px;
+  background:#fff;
+  border-radius:4px;
+  position:relative;
+}
+
+.candles span::after{
+  content:"";
+  position:absolute;
+  top:-8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:8px;
+  height:8px;
+  background:radial-gradient(circle,#ffd700,#ff9f00);
+  border-radius:50%;
+  animation:flicker .6s infinite alternate;
+}
+
+@keyframes flicker{
+  from{opacity:.6;}
+  to{opacity:1;}
+}
+
+/* 🔪 CUT EFFECT */
+#cake.cut{
+  animation:shake .4s ease;
+}
+
+@keyframes shake{
+  0%{transform:rotate(0deg);}
+  25%{transform:rotate(1deg);}
+  50%{transform:rotate(-1deg);}
+  100%{transform:rotate(0deg);}
+}
