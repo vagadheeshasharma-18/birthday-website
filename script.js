@@ -1,145 +1,101 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-html { scroll-behavior: smooth; }
+  const sections = document.querySelectorAll("section");
+  const galleryGrid = document.getElementById("galleryGrid");
 
-body {
-  background: radial-gradient(circle at top, #14142d, #0a0a12);
-  color: #fff;
-  text-align: center;
-}
+  const fakeYT = document.getElementById("fakeYT");
+  const fakePlay = document.getElementById("fakePlay");
+  const lockScreen = document.getElementById("lockScreen");
+  const unlockBtn = document.getElementById("unlockBtn");
+  const passwordInput = document.getElementById("passwordInput");
+  const errorText = document.getElementById("errorText");
 
-.hidden { display: none; }
+  const mainContent = document.getElementById("mainContent");
+  const startBtn = document.getElementById("startBtn");
+  const nextBtn = document.getElementById("nextBtn");
 
-/* Fake YT */
-#fakeYT {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
+  const musicBtn = document.getElementById("musicBtn");
+  const music = document.getElementById("bgMusic");
 
-.yt-card {
-  background: #111;
-  padding: 30px;
-  border-radius: 16px;
-}
+  const revealBtn = document.getElementById("revealBtn");
+  const secretText = document.getElementById("secretText");
+  const timer = document.getElementById("timer");
 
-.yt-thumb {
-  width: 280px;
-  height: 160px;
-  background: #222;
-  margin-bottom: 15px;
-}
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightboxImg");
+  const closeLightbox = document.getElementById("closeLightbox");
 
-/* Lock */
-#lockScreen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle, #1a1a3a, #0a0a12);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 998;
-}
+  let index = 0;
+  let playing = false;
+  const CORRECT_PASSWORD = "13022006";
 
-#passwordInput {
-  background: transparent;
-  border: 1px solid #7b5cff;
-  padding: 12px 18px;
-  border-radius: 30px;
-  color: white;
-  margin-bottom: 15px;
-}
+  /* AUTO LOAD IMAGES (1 to 20 supported) */
+  for (let i = 1; i <= 20; i++) {
+    const img = document.createElement("img");
+    img.src = `images/photo${i}.jpg`;
+    img.onerror = () => img.remove();
+    img.onclick = () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.remove("hidden");
+    };
+    galleryGrid.appendChild(img);
+  }
 
-/* Sections */
-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  closeLightbox.onclick = () => {
+    lightbox.classList.add("hidden");
+  };
 
-/* Buttons */
-button {
-  background: #7b5cff;
-  border: none;
-  padding: 12px 26px;
-  border-radius: 30px;
-  color: white;
-  margin: 10px;
-  cursor: pointer;
-}
+  fakePlay.onclick = () => {
+    fakeYT.style.display = "none";
+    lockScreen.classList.remove("hidden");
+  };
 
-button.ghost {
-  background: transparent;
-  border: 1px solid #7b5cff;
-}
+  unlockBtn.onclick = () => {
+    if (passwordInput.value === CORRECT_PASSWORD) {
+      lockScreen.style.display = "none";
+      mainContent.classList.remove("hidden");
+    } else {
+      errorText.classList.remove("hidden");
+      passwordInput.value = "";
+    }
+  };
 
-/* Card */
-.card {
-  background: rgba(255,255,255,0.08);
-  padding: 30px;
-  border-radius: 20px;
-  max-width: 650px;
-  line-height: 1.7;
-}
+  musicBtn.onclick = () => {
+    playing ? music.pause() : music.play();
+    playing = !playing;
+  };
 
-/* Gallery */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 22px;
-  max-width: 900px;
-  margin-top: 30px;
-}
+  startBtn.onclick = () => {
+    index = 1;
+    sections[index].classList.remove("hidden");
+    sections[index].after(nextBtn);
+    nextBtn.classList.remove("hidden");
+    startBtn.style.display = "none";
+    sections[index].scrollIntoView({ behavior: "smooth" });
+  };
 
-.gallery-grid img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.6);
-  cursor: pointer;
-  transition: transform 0.4s ease;
-}
+  nextBtn.onclick = () => {
+    index++;
+    if (index < sections.length) {
+      sections[index].classList.remove("hidden");
+      sections[index].after(nextBtn);
+      sections[index].scrollIntoView({ behavior: "smooth" });
+    } else {
+      nextBtn.style.display = "none";
+    }
+  };
 
-.gallery-grid img:hover {
-  transform: scale(1.08);
-}
+  revealBtn.onclick = () => {
+    secretText.classList.remove("hidden");
+    revealBtn.style.display = "none";
+  };
 
-/* Lightbox */
-#lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-#lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 20px;
-}
-
-#closeLightbox {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 30px;
-  cursor: pointer;
-  color: white;
-}
+  const target = new Date("Feb 13, 2026 00:00:00").getTime();
+  setInterval(() => {
+    const diff = target - Date.now();
+    timer.textContent =
+      diff <= 0
+        ? "🎉 HAPPY BIRTHDAY 🎉"
+        : Math.floor(diff / 86400000) + " Days";
+  }, 1000);
+});
