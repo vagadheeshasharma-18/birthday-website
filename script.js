@@ -10,11 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const sections = document.querySelectorAll("section");
   const startBtn = document.getElementById("startBtn");
+
   const nextBtn = document.getElementById("nextBtn");
+  const nextWrapper = document.getElementById("nextWrapper");
 
-  let index = 0;
+  let currentIndex = 0;
 
-  // Unlock
+  // 🔐 Unlock
   unlockBtn.addEventListener("click", () => {
     if (passwordInput.value === PASSWORD) {
       lockScreen.style.display = "none";
@@ -24,21 +26,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Start
+  // ▶️ Start Surprise
   startBtn.addEventListener("click", () => {
-    index = 1;
-    sections[index].classList.remove("hidden");
-    nextBtn.classList.remove("hidden");
+    currentIndex = 1;
+    sections[currentIndex].classList.remove("hidden");
+
     startBtn.style.display = "none";
+    nextWrapper.classList.remove("hidden");
+
+    sections[currentIndex].after(nextWrapper);
+    sections[currentIndex].scrollIntoView({ behavior: "smooth" });
   });
 
-  // Next Surprise
+  // ▶️ Next Surprise
   nextBtn.addEventListener("click", () => {
-    index++;
-    if (index < sections.length) {
-      sections[index].classList.remove("hidden");
+    currentIndex++;
+
+    if (currentIndex < sections.length) {
+      sections[currentIndex].classList.remove("hidden");
+
+      sections[currentIndex].after(nextWrapper);
+      sections[currentIndex].scrollIntoView({ behavior: "smooth" });
     } else {
-      nextBtn.style.display = "none";
+      nextWrapper.style.display = "none";
     }
   });
 

@@ -5,6 +5,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: radial-gradient(circle at top, #14142d, #0a0a12);
   color: white;
@@ -35,15 +39,7 @@ body {
   margin: 15px 0;
 }
 
-button {
-  background: #7b5cff;
-  border: none;
-  padding: 12px 26px;
-  border-radius: 30px;
-  color: white;
-  cursor: pointer;
-}
-
+/* Sections */
 section {
   min-height: 100vh;
   padding: 80px 20px;
@@ -58,6 +54,7 @@ section {
   margin-bottom: 20px;
 }
 
+/* Card */
 .card {
   background: rgba(255,255,255,0.08);
   padding: 30px;
@@ -66,7 +63,7 @@ section {
   line-height: 1.7;
 }
 
-/* Simple Gallery */
+/* Gallery */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -79,4 +76,20 @@ section {
   height: 160px;
   object-fit: cover;
   border-radius: 16px;
+}
+
+/* Buttons */
+button {
+  background: #7b5cff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Next Button Wrapper */
+#nextWrapper {
+  padding: 40px 0 60px;
 }
