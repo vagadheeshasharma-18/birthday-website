@@ -242,10 +242,24 @@ dontClickBtn.onclick=()=>{
 /* 💌 Grandma */
 toGrandmaBtn.onclick=()=>{
   cakeFireworksActive=false;
-  grandmaSection.classList.remove("hidden");
-  grandmaSection.scrollIntoView({behavior:"smooth"});
+
+  const current = sections[index];
+  const next = grandmaSection;
+
+  current.classList.remove("page-active");
+  current.classList.add("page-exit");
+
+  next.classList.remove("hidden","page-hidden","page-exit");
+  next.classList.add("page-active");
+
+  next.appendChild(nextWrapper);
+  next.scrollIntoView({behavior:"smooth", block:"center"});
+
+  index = sections.indexOf(next);
+
   initReveal("grandmaCard");
 };
+
 
 /* 🌟 Final message */
 openFinalBtn.onclick=()=>{
