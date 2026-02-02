@@ -84,56 +84,63 @@ unlockBtn.onclick=()=>{
   }
 };
 
-/* ▶ Start */
+/* ▶ Start — INIT BOOK MODE */
 startBtn.onclick=()=>{
+  document.body.classList.add("book-mode");
+
+  sections.forEach(sec=>{
+    sec.classList.add("page-hidden");
+  });
+
   index=1;
-  sections[index].classList.remove("hidden");
+  sections[index].classList.remove("hidden","page-hidden");
+  sections[index].classList.add("page-active");
+
   startBtn.style.display="none";
   nextWrapper.classList.remove("hidden");
   sections[index].after(nextWrapper);
-  sections[index].scrollIntoView({behavior:"smooth"});
+
   initReveal("letterCard");
 };
 
-/* ➡ Next */
+/* ➡ Next — PAGE TURN */
 nextBtn.onclick=()=>{
-  index++;
-  if(index<sections.length){
-    sections[index].classList.remove("hidden");
-    sections[index].after(nextWrapper);
-    sections[index].scrollIntoView({behavior:"smooth"});
+  const current=sections[index];
+  const next=sections[index+1];
 
-    /* 📸 IMAGE SECTION */
-    if(sections[index].id==="imagesSection"){
-
-      const imgs=document.querySelectorAll(".gallery img");
-
-      imgs.forEach(img=>{
-        img.classList.remove("show");
-      });
-
-      imgs.forEach((img,i)=>{
-        setTimeout(()=>{
-          img.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-          });
-          img.classList.add("show");
-
-          /* 🛑 STOP BG MUSIC AFTER LAST IMAGE */
-          if(i===imgs.length-1){
-            setTimeout(()=>{
-              bgMusic.pause();
-              bgMusic.currentTime=0;
-            },2000);
-          }
-
-        },i*2000);
-      });
-    }
-
-  }else{
+  if(!next){
     nextWrapper.style.display="none";
+    return;
+  }
+
+  current.classList.remove("page-active");
+  current.classList.add("page-exit");
+
+  next.classList.remove("hidden","page-hidden");
+  next.classList.add("page-active");
+
+  index++;
+
+  /* 📸 IMAGE SECTION */
+  if(next.id==="imagesSection"){
+
+    const imgs=document.querySelectorAll(".gallery img");
+    imgs.forEach(img=>img.classList.remove("show"));
+
+    imgs.forEach((img,i)=>{
+      setTimeout(()=>{
+        img.scrollIntoView({behavior:"smooth",block:"center"});
+        img.classList.add("show");
+
+        /* 🛑 STOP BG MUSIC AFTER LAST IMAGE */
+        if(i===imgs.length-1){
+          setTimeout(()=>{
+            bgMusic.pause();
+            bgMusic.currentTime=0;
+          },2000);
+        }
+      },i*2000);
+    });
   }
 };
 
@@ -186,9 +193,7 @@ playBtns.forEach(btn=>{
   };
 });
 
-voicePlayer.onended=()=>{
-  resetVoiceButtons();
-};
+voicePlayer.onended=resetVoiceButtons;
 
 function resetVoiceButtons(){
   playBtns.forEach(b=>{
@@ -251,7 +256,6 @@ openFinalBtn.onclick=()=>{
   document.body.style.overflow="hidden";
   dimOverlay.classList.add("active");
   finalEnd.classList.remove("hidden");
-  finalEnd.scrollIntoView({behavior:"smooth"});
 
   const end=Date.now()+3500;
   (function blast(){
@@ -277,7 +281,6 @@ function initReveal(cardId){
   if(!card || card.dataset.revealed) return;
 
   card.dataset.revealed="true";
-
   const caret=card.querySelector(".caret");
   const content=card.querySelector(".text-content");
   const blocks=content.innerHTML.split("<br><br>");

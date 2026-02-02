@@ -635,3 +635,58 @@ body{
     padding-bottom:40px; /* ensures text stays on screen */
   }
 }
+/* ============================= */
+/* 📖 BOOK PAGE TURN EXPERIENCE  */
+/* ============================= */
+
+/* Sections behave like pages */
+section{
+  position:relative;
+  width:100%;
+  will-change:transform, opacity;
+}
+
+/* Page states */
+.page-hidden{
+  opacity:0;
+  transform:translateX(60px);
+  pointer-events:none;
+}
+
+.page-active{
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+
+.page-exit{
+  opacity:0;
+  transform:translateX(-60px);
+  pointer-events:none;
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Lock scrolling for book feel */
+body.book-mode{
+  overflow:hidden;
+}
+
+/* Slight depth illusion (subtle, premium) */
+.page-active::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  box-shadow:inset -12px 0 30px rgba(0,0,0,0.15);
+}
+
+/* Mobile fine-tuning */
+@media (max-width:600px){
+  .page-hidden{
+    transform:translateX(40px);
+  }
+  .page-exit{
+    transform:translateX(-40px);
+  }
+}
