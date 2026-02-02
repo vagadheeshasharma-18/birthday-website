@@ -108,44 +108,39 @@ startBtn.onclick=()=>{
 };
 
 /* ➡ Next — PAGE TURN (FINAL & COMPLETE FIX) */
-nextBtn.onclick=()=>{
-  const current=sections[index];
-  const next=sections[index+1];
+nextBtn.onclick = () => {
+  const current = sections[index];
+  const next = sections[index + 1];
 
-  if(!next){
-    nextWrapper.style.display="none";
-    return;
-  }
+  if (!next) return;
 
-  current.classList.remove("page-active");
-  current.classList.add("page-exit");
+  current.classList.add("hidden");
+  next.classList.remove("hidden");
 
-  next.classList.remove("hidden","page-hidden","page-exit");
-  next.classList.add("page-active");
-
-  /* 🔥 FINAL FIX — FORCE PAGE INTO VIEW */
-  next.scrollIntoView({behavior:"smooth",block:"center"});
-
-  next.appendChild(nextWrapper);
   index++;
 
-  if(next.id==="imagesSection"){
-    const imgs=document.querySelectorAll(".gallery img");
-    imgs.forEach(img=>img.classList.remove("show"));
+  // 📸 Images animation
+  if (next.id === "imagesSection") {
+    const imgs = document.querySelectorAll(".gallery img");
+    imgs.forEach(img => img.classList.remove("show"));
 
-    imgs.forEach((img,i)=>{
-      setTimeout(()=>{
-        img.scrollIntoView({behavior:"smooth",block:"center"});
+    imgs.forEach((img, i) => {
+      setTimeout(() => {
         img.classList.add("show");
 
-        if(i===imgs.length-1){
-          setTimeout(()=>{
+        if (i === imgs.length - 1) {
+          setTimeout(() => {
             bgMusic.pause();
-            bgMusic.currentTime=0;
-          },2000);
+            bgMusic.currentTime = 0;
+          }, 2000);
         }
-      },i*2000);
+      }, i * 2000);
     });
+  }
+
+  // 🛑 REMOVE NEXT BUTTON AFTER VOICE SECTION
+  if (next.id === "voiceSection") {
+    nextWrapper.remove();
   }
 };
 
@@ -240,45 +235,49 @@ dontClickBtn.onclick=()=>{
 };
 
 /* 💌 Grandma */
-toGrandmaBtn.onclick=()=>{
-  cakeFireworksActive=false;
+toGrandmaBtn.onclick = () => {
+  cakeFireworksActive = false;
 
-  const current = sections[index];
-  const next = grandmaSection;
-
-  current.classList.remove("page-active");
-  current.classList.add("page-exit");
-
-  next.classList.remove("hidden","page-hidden","page-exit");
-  next.classList.add("page-active");
-
-  next.appendChild(nextWrapper);
-  next.scrollIntoView({behavior:"smooth", block:"center"});
-
-  index = sections.indexOf(next);
+  grandmaSection.classList.remove("hidden");
+  grandmaSection.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 
   initReveal("grandmaCard");
 };
 
 
-/* 🌟 Final message */
-openFinalBtn.onclick=()=>{
-  document.body.style.overflow="hidden";
-  dimOverlay.classList.add("active");
-  finalEnd.classList.remove("hidden");
 
-  const end=Date.now()+3500;
-  (function blast(){
-    confetti({particleCount:90,spread:180,startVelocity:65,origin:{y:0.6}});
-    if(Date.now()<end) requestAnimationFrame(blast);
+/* 🌟 Final message */
+openFinalBtn.onclick = () => {
+  document.body.style.overflow = "hidden";
+  dimOverlay.classList.add("active");
+
+  finalEnd.classList.remove("hidden");
+  finalEnd.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
+
+  const end = Date.now() + 3500;
+  (function blast() {
+    confetti({
+      particleCount: 90,
+      spread: 180,
+      startVelocity: 65,
+      origin: { y: 0.6 }
+    });
+    if (Date.now() < end) requestAnimationFrame(blast);
   })();
 
-  setTimeout(()=>{
+  setTimeout(() => {
     finalEnd.classList.add("showFinal");
     dimOverlay.classList.remove("active");
-    document.body.style.overflow="auto";
-  },3000);
+    document.body.style.overflow = "auto";
+  }, 3000);
 };
+
 
 /* ✍️ Reveal text */
 function initReveal(cardId){
