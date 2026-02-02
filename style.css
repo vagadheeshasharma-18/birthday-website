@@ -690,3 +690,83 @@ body.book-mode{
     transform:translateX(-40px);
   }
 }
+/* ============================= */
+/* 📖 LETTER SCROLL FIX (BOOK)   */
+/* ============================= */
+
+/* Allow long text to scroll inside the card */
+#letterCard{
+  max-height:65vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-right:10px;
+}
+
+/* Smooth scrollbar (mobile-friendly) */
+#letterCard::-webkit-scrollbar{
+  width:4px;
+}
+#letterCard::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.3);
+  border-radius:4px;
+}
+
+/* Small hint for user */
+#letterCard::after{
+  content:"⬇ Swipe to read";
+  position:sticky;
+  bottom:0;
+  display:block;
+  font-size:0.75rem;
+  padding:6px 0;
+  color:rgba(255,255,255,0.6);
+  background:linear-gradient(to top,rgba(20,20,45,0.9),transparent);
+}
+/* ============================= */
+/* 📖 OPTION A — BOOK LETTER FIX */
+/* ============================= */
+
+/* Disable page scroll in book mode */
+body.book-mode{
+  overflow:hidden;
+}
+
+/* Allow ONLY the letter card to scroll */
+#letterCard{
+  max-height:65vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-right:10px;
+}
+
+/* Soft scrollbar (mobile friendly) */
+#letterCard::-webkit-scrollbar{
+  width:4px;
+}
+#letterCard::-webkit-scrollbar-thumb{
+  background:rgba(255,255,255,0.35);
+  border-radius:4px;
+}
+
+/* Subtle scroll hint */
+#letterCard::after{
+  content:"⬇ Swipe to read";
+  position:sticky;
+  bottom:0;
+  display:block;
+  padding:6px 0;
+  font-size:0.75rem;
+  color:rgba(255,255,255,0.6);
+  background:linear-gradient(
+    to top,
+    rgba(10,10,18,0.95),
+    transparent
+  );
+}
+
+/* Mobile fine-tune */
+@media (max-width:600px){
+  #letterCard{
+    max-height:70vh;
+  }
+}
