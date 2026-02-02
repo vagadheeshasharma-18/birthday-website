@@ -619,3 +619,19 @@ body{
   50%{opacity:0.9;}
   100%{opacity:0.4;}
 }
+/* 📱 FORCE VOLUME HINT VISIBILITY ON PHONES */
+@media (max-width:600px){
+
+  .volume-hint{
+    display:block;
+    margin-top:18px;
+    font-size:0.95rem;
+    color:#ffffff;
+    opacity:0.9;
+    text-shadow:0 0 8px rgba(255,255,255,0.35);
+  }
+
+  #lockScreen{
+    padding-bottom:40px; /* ensures text stays on screen */
+  }
+}
