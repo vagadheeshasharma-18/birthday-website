@@ -96,21 +96,27 @@ function handleSwipe() {
   const delta = touchStartY - touchEndY;
   const currentSection = sections[currentIndex];
 
-  const atTop = currentSection.scrollTop === 0;
-  const atBottom =
-    Math.ceil(currentSection.scrollTop + currentSection.clientHeight) >=
-    currentSection.scrollHeight;
+  const scrollable = currentSection.scrollHeight > currentSection.clientHeight;
 
-  // Swipe up → next
+  const atTop =
+    currentSection.scrollTop <= 2;
+
+  const atBottom =
+    !scrollable ||
+    currentSection.scrollTop + currentSection.clientHeight >=
+    currentSection.scrollHeight - 2;
+
+  // Swipe UP → next section
   if (delta > 60 && atBottom) {
     swipeNext();
   }
 
-  // Swipe down → previous
+  // Swipe DOWN → previous section
   if (delta < -60 && atTop) {
     swipePrev();
   }
 }
+
 
 /* ---------------- NAVIGATION ---------------- */
 function goToSection(index) {
