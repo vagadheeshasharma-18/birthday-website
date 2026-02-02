@@ -560,3 +560,49 @@ body{
       0 0 90px rgba(123,92,255,.45);
   }
 }
+/* ============================= */
+/* 🔐 UNLOCK SCREEN ANIMATIONS   */
+/* ============================= */
+
+/* Initial hidden state for main content */
+.main-hidden{
+  opacity:0;
+  transform:translateY(40px);
+}
+
+/* Main content reveal */
+.main-show{
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity 1s ease, transform 1s ease;
+}
+
+/* Lock screen exit animation */
+.lock-exit{
+  animation:lockExit 0.9s ease forwards;
+}
+
+@keyframes lockExit{
+  0%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+  100%{
+    opacity:0;
+    transform:translateY(-60px) scale(0.96);
+  }
+}
+
+/* Wrong password shake */
+.shake{
+  animation:shakeX 0.45s ease;
+}
+
+@keyframes shakeX{
+  0%{transform:translateX(0);}
+  20%{transform:translateX(-10px);}
+  40%{transform:translateX(10px);}
+  60%{transform:translateX(-8px);}
+  80%{transform:translateX(8px);}
+  100%{transform:translateX(0);}
+}

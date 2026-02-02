@@ -9,6 +9,9 @@ const unlockBtn=document.getElementById("unlockBtn");
 const passwordInput=document.getElementById("passwordInput");
 const errorText=document.getElementById("errorText");
 
+/* 🎶 Background music */
+const bgMusic=document.getElementById("bgMusic");
+
 /* Sections & navigation */
 const sections=document.querySelectorAll("section");
 const startBtn=document.getElementById("startBtn");
@@ -57,6 +60,12 @@ unlockBtn.onclick=()=>{
   if(passwordInput.value===PASSWORD){
 
     errorText.classList.add("hidden");
+
+    /* 🎶 START BG MUSIC */
+    bgMusic.volume=0.35;
+    bgMusic.currentTime=0;
+    bgMusic.play().catch(()=>{});
+
     lockScreen.classList.add("lock-exit");
 
     setTimeout(()=>{
@@ -94,7 +103,7 @@ nextBtn.onclick=()=>{
     sections[index].after(nextWrapper);
     sections[index].scrollIntoView({behavior:"smooth"});
 
-    /* 📸 IMAGE SECTION — UPDATED ONLY HERE */
+    /* 📸 IMAGE SECTION */
     if(sections[index].id==="imagesSection"){
 
       const imgs=document.querySelectorAll(".gallery img");
@@ -107,10 +116,19 @@ nextBtn.onclick=()=>{
         setTimeout(()=>{
           img.scrollIntoView({
             behavior:"smooth",
-            block:"center"   // center of phone screen
+            block:"center"
           });
           img.classList.add("show");
-        }, i * 2000);        // 2 sec fade-in gap
+
+          /* 🛑 STOP BG MUSIC AFTER LAST IMAGE */
+          if(i===imgs.length-1){
+            setTimeout(()=>{
+              bgMusic.pause();
+              bgMusic.currentTime=0;
+            },2000);
+          }
+
+        },i*2000);
       });
     }
 
@@ -121,6 +139,7 @@ nextBtn.onclick=()=>{
 
 /* 🎵 Special song */
 songToggleBtn.onclick=()=>{
+  bgMusic.pause();
   voicePlayer.pause();
   resetVoiceButtons();
 
@@ -143,6 +162,7 @@ playBtns.forEach(btn=>{
   btn.onclick=()=>{
     const src=btn.dataset.audio;
 
+    bgMusic.pause();
     specialSong.pause();
     songToggleBtn.textContent="Play ▶️";
 
