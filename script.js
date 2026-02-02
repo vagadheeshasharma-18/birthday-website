@@ -2,34 +2,48 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 const PASSWORD="13022006";
 
+/* 🔐 Lock screen */
 const lockScreen=document.getElementById("lockScreen");
 const mainContent=document.getElementById("mainContent");
 const unlockBtn=document.getElementById("unlockBtn");
 const passwordInput=document.getElementById("passwordInput");
 const errorText=document.getElementById("errorText");
 
+/* Sections & navigation */
 const sections=document.querySelectorAll("section");
 const startBtn=document.getElementById("startBtn");
 const nextBtn=document.getElementById("nextBtn");
 const nextWrapper=document.getElementById("nextWrapper");
 
-const music=document.getElementById("bgMusic");
+/* 🎵 Special song */
+const specialSong=document.getElementById("specialSong");
+const songToggleBtn=document.getElementById("songToggleBtn");
+
+/* 🎧 Voice messages */
+const voicePlayer=document.getElementById("voicePlayer");
+const playBtns=document.querySelectorAll(".playBtn");
+
+/* Final & overlay */
 const openFinalBtn=document.getElementById("openFinalBtn");
 const finalEnd=document.getElementById("finalEnd");
 const dimOverlay=document.getElementById("dimOverlay");
 
+/* Floating particles */
 const floatingContainer=document.getElementById("floating-container");
 
+/* 🎂 Cake */
 const cutBtn=document.getElementById("cutCakeBtn");
 const cakeLeft=document.querySelector(".cake-left");
 const cakeRight=document.querySelector(".cake-right");
 const cakeName=document.getElementById("cakeName");
 const smokes=document.querySelectorAll(".smoke");
 
+/* Fun elements */
 const fakeBug=document.getElementById("fakeBug");
 const dontClickBtn=document.getElementById("dontClickBtn");
 const dontClickMsg=document.getElementById("dontClickMsg");
 
+/* Grandma */
 const loveMessageSection=document.getElementById("loveMessageSection");
 const toGrandmaBtn=document.getElementById("toGrandmaBtn");
 const grandmaSection=document.getElementById("grandmaSection");
@@ -55,7 +69,6 @@ startBtn.onclick=()=>{
   nextWrapper.classList.remove("hidden");
   sections[index].after(nextWrapper);
   sections[index].scrollIntoView({behavior:"smooth"});
-  music.play();
 
   // ✍️ Letter reveal
   initReveal("letterCard");
@@ -77,6 +90,46 @@ nextBtn.onclick=()=>{
   }else{
     nextWrapper.style.display="none";
   }
+};
+
+/* 🎵 Special song toggle */
+songToggleBtn.onclick=()=>{
+  // stop any voice message
+  voicePlayer.pause();
+
+  if(specialSong.paused){
+    specialSong.volume=0.7;
+    specialSong.play();
+    songToggleBtn.textContent="Pause ⏸️";
+  }else{
+    specialSong.pause();
+    songToggleBtn.textContent="Play ▶️";
+  }
+};
+
+specialSong.onended=()=>{
+  songToggleBtn.textContent="Play ▶️";
+};
+
+/* 🎧 Voice messages */
+playBtns.forEach(btn=>{
+  btn.onclick=()=>{
+    // stop special song
+    specialSong.pause();
+    songToggleBtn.textContent="Play ▶️";
+
+    const src=btn.dataset.audio;
+    document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
+    btn.parentElement.classList.add("playing");
+
+    voicePlayer.src=src;
+    voicePlayer.volume=0.8;
+    voicePlayer.play();
+  };
+});
+
+voicePlayer.onended=()=>{
+  document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
 };
 
 /* 🎂 Cut Cake */
@@ -126,7 +179,6 @@ toGrandmaBtn.onclick=()=>{
   grandmaSection.classList.remove("hidden");
   grandmaSection.scrollIntoView({behavior:"smooth"});
 
-  // ✅ FIX: trigger grandma reveal HERE
   initReveal("grandmaCard");
 };
 
@@ -193,28 +245,3 @@ setInterval(()=>{
 },900);
 
 });
-// ADD THIS BELOW YOUR EXISTING CODE (inside DOMContentLoaded)
-
-const voicePlayer=document.getElementById("voicePlayer");
-const playBtns=document.querySelectorAll(".playBtn");
-
-playBtns.forEach(btn=>{
-  btn.onclick=()=>{
-    const src=btn.dataset.audio;
-
-    // stop bg music
-    music.pause();
-
-    // reset styles
-    document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
-    btn.parentElement.classList.add("playing");
-
-    voicePlayer.src=src;
-    voicePlayer.play();
-  };
-});
-
-voicePlayer.onended=()=>{
-  document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
-  music.play();
-};

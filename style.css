@@ -391,3 +391,13 @@ button{
 .voice-card.playing{
   box-shadow:0 0 45px rgba(255,200,255,.7);
 }
+/* 🎵 Song Section */
+#songSection{
+  gap:20px;
+}
+
+#songToggleBtn{
+  font-size:1.1rem;
+  padding:16px 44px;
+  box-shadow:0 0 35px rgba(255,200,255,.6);
+}
