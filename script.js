@@ -52,33 +52,25 @@ let index=0;
 let cakeFireworksActive=false;
 let currentVoiceBtn=null;
 
-/* 🔐 UNLOCK — SMOOTH ANIMATION ADDED */
+/* 🔐 Unlock */
 unlockBtn.onclick=()=>{
   if(passwordInput.value===PASSWORD){
 
     errorText.classList.add("hidden");
-
-    // exit animation
     lockScreen.classList.add("lock-exit");
 
     setTimeout(()=>{
       lockScreen.style.display="none";
-
       mainContent.classList.remove("hidden");
-
-      // smooth entry
       requestAnimationFrame(()=>{
         mainContent.classList.add("main-show");
       });
-
     },900);
 
   }else{
     errorText.classList.remove("hidden");
-
-    // shake animation
     lockScreen.classList.remove("shake");
-    void lockScreen.offsetWidth; // force reflow
+    void lockScreen.offsetWidth;
     lockScreen.classList.add("shake");
   }
 };
@@ -91,7 +83,6 @@ startBtn.onclick=()=>{
   nextWrapper.classList.remove("hidden");
   sections[index].after(nextWrapper);
   sections[index].scrollIntoView({behavior:"smooth"});
-
   initReveal("letterCard");
 };
 
@@ -103,17 +94,32 @@ nextBtn.onclick=()=>{
     sections[index].after(nextWrapper);
     sections[index].scrollIntoView({behavior:"smooth"});
 
+    /* 📸 IMAGE SECTION — UPDATED ONLY HERE */
     if(sections[index].id==="imagesSection"){
-      document.querySelectorAll(".gallery img").forEach((img,i)=>{
-        setTimeout(()=>img.classList.add("show"),i*2000);
+
+      const imgs=document.querySelectorAll(".gallery img");
+
+      imgs.forEach(img=>{
+        img.classList.remove("show");
+      });
+
+      imgs.forEach((img,i)=>{
+        setTimeout(()=>{
+          img.scrollIntoView({
+            behavior:"smooth",
+            block:"center"   // center of phone screen
+          });
+          img.classList.add("show");
+        }, i * 2000);        // 2 sec fade-in gap
       });
     }
+
   }else{
     nextWrapper.style.display="none";
   }
 };
 
-/* 🎵 Special song toggle */
+/* 🎵 Special song */
 songToggleBtn.onclick=()=>{
   voicePlayer.pause();
   resetVoiceButtons();
