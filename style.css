@@ -606,3 +606,16 @@ body{
   80%{transform:translateX(8px);}
   100%{transform:translateX(0);}
 }
+/* 🔊 Volume hint on lock screen */
+.volume-hint{
+  margin-top:14px;
+  font-size:0.9rem;
+  color:rgba(255,255,255,0.75);
+  animation:volumePulse 2.2s ease-in-out infinite;
+}
+
+@keyframes volumePulse{
+  0%{opacity:0.4;}
+  50%{opacity:0.9;}
+  100%{opacity:0.4;}
+}
