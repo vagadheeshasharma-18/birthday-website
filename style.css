@@ -401,3 +401,122 @@ button{
   padding:16px 44px;
   box-shadow:0 0 35px rgba(255,200,255,.6);
 }
+/* 🎧 Voice & Song */
+#voiceSection,#songSection{
+  gap:30px;
+}
+
+.voice-card{
+  background:rgba(255,255,255,.08);
+  padding:22px 30px;
+  border-radius:18px;
+  max-width:500px;
+  box-shadow:0 0 30px rgba(123,92,255,.25);
+}
+
+.voice-card.playing{
+  box-shadow:0 0 45px rgba(255,200,255,.7);
+}
+/* 📱 MOBILE FIRST FIX */
+html, body{
+  width:100%;
+  height:100%;
+  overscroll-behavior:none;
+}
+
+/* Prevent horizontal scroll */
+body{
+  max-width:100vw;
+}
+
+/* Main container behaves like phone screen */
+#mainContent, #lockScreen{
+  max-width:480px;          /* phone width */
+  margin:0 auto;
+}
+
+/* Center lock screen on phones */
+#lockScreen{
+  padding:30px 20px;
+}
+
+/* Better spacing on small screens */
+@media (max-width:600px){
+
+  section{
+    padding:60px 16px;
+  }
+
+  h1{
+    font-size:1.8rem;
+  }
+
+  h2{
+    font-size:1.4rem;
+  }
+
+  p{
+    font-size:0.95rem;
+    line-height:1.6;
+  }
+
+  .subtitle{
+    font-size:0.95rem;
+  }
+
+  button{
+    width:100%;
+    max-width:320px;
+    font-size:1rem;
+    padding:14px 0;
+  }
+
+  input{
+    width:100%;
+    max-width:320px;
+  }
+
+  .card{
+    padding:22px;
+    border-radius:18px;
+  }
+
+  /* Gallery mobile fix */
+  .gallery{
+    grid-template-columns:1fr;
+  }
+
+  .gallery img{
+    height:240px;
+  }
+
+  /* Cake resize */
+  .cake{
+    width:140px;
+    height:100px;
+  }
+
+  .cake-name{
+    font-size:0.95rem;
+  }
+
+  /* Voice cards */
+  .voice-card{
+    width:100%;
+    max-width:340px;
+  }
+
+  /* Final message */
+  .final-line{
+    font-size:1.4rem;
+    padding:0 10px;
+  }
+}
+
+/* 📱 Safe area support (iPhone notch) */
+@supports (padding: env(safe-area-inset-top)){
+  body{
+    padding-top:env(safe-area-inset-top);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+}

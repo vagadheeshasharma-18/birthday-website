@@ -50,14 +50,36 @@ const grandmaSection=document.getElementById("grandmaSection");
 
 let index=0;
 let cakeFireworksActive=false;
+let currentVoiceBtn=null;
 
-/* 🔐 Unlock */
+/* 🔐 UNLOCK — SMOOTH ANIMATION ADDED */
 unlockBtn.onclick=()=>{
   if(passwordInput.value===PASSWORD){
-    lockScreen.style.display="none";
-    mainContent.classList.remove("hidden");
+
+    errorText.classList.add("hidden");
+
+    // exit animation
+    lockScreen.classList.add("lock-exit");
+
+    setTimeout(()=>{
+      lockScreen.style.display="none";
+
+      mainContent.classList.remove("hidden");
+
+      // smooth entry
+      requestAnimationFrame(()=>{
+        mainContent.classList.add("main-show");
+      });
+
+    },900);
+
   }else{
     errorText.classList.remove("hidden");
+
+    // shake animation
+    lockScreen.classList.remove("shake");
+    void lockScreen.offsetWidth; // force reflow
+    lockScreen.classList.add("shake");
   }
 };
 
@@ -70,7 +92,6 @@ startBtn.onclick=()=>{
   sections[index].after(nextWrapper);
   sections[index].scrollIntoView({behavior:"smooth"});
 
-  // ✍️ Letter reveal
   initReveal("letterCard");
 };
 
@@ -94,8 +115,8 @@ nextBtn.onclick=()=>{
 
 /* 🎵 Special song toggle */
 songToggleBtn.onclick=()=>{
-  // stop any voice message
   voicePlayer.pause();
+  resetVoiceButtons();
 
   if(specialSong.paused){
     specialSong.volume=0.7;
@@ -114,23 +135,42 @@ specialSong.onended=()=>{
 /* 🎧 Voice messages */
 playBtns.forEach(btn=>{
   btn.onclick=()=>{
-    // stop special song
+    const src=btn.dataset.audio;
+
     specialSong.pause();
     songToggleBtn.textContent="Play ▶️";
 
-    const src=btn.dataset.audio;
-    document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
-    btn.parentElement.classList.add("playing");
+    if(currentVoiceBtn===btn && !voicePlayer.paused){
+      voicePlayer.pause();
+      btn.textContent="Play ▶️";
+      btn.parentElement.classList.remove("playing");
+      currentVoiceBtn=null;
+      return;
+    }
+
+    resetVoiceButtons();
 
     voicePlayer.src=src;
     voicePlayer.volume=0.8;
     voicePlayer.play();
+
+    btn.textContent="Pause ⏸️";
+    btn.parentElement.classList.add("playing");
+    currentVoiceBtn=btn;
   };
 });
 
 voicePlayer.onended=()=>{
-  document.querySelectorAll(".voice-card").forEach(v=>v.classList.remove("playing"));
+  resetVoiceButtons();
 };
+
+function resetVoiceButtons(){
+  playBtns.forEach(b=>{
+    b.textContent="Play ▶️";
+    b.parentElement.classList.remove("playing");
+  });
+  currentVoiceBtn=null;
+}
 
 /* 🎂 Cut Cake */
 cutBtn.onclick=()=>{
@@ -158,7 +198,6 @@ cutBtn.onclick=()=>{
 
   fakeBug.classList.remove("hidden");
   setTimeout(()=>fakeBug.classList.add("hidden"),2600);
-
   setTimeout(()=>dontClickBtn.classList.remove("hidden"),2800);
 
   setTimeout(()=>{
@@ -173,12 +212,11 @@ dontClickBtn.onclick=()=>{
   dontClickMsg.classList.remove("hidden");
 };
 
-/* 💌 Go to Grandma */
+/* 💌 Grandma */
 toGrandmaBtn.onclick=()=>{
   cakeFireworksActive=false;
   grandmaSection.classList.remove("hidden");
   grandmaSection.scrollIntoView({behavior:"smooth"});
-
   initReveal("grandmaCard");
 };
 
@@ -207,7 +245,7 @@ openFinalBtn.onclick=()=>{
   },3000);
 };
 
-/* ✍️ Line-by-line reveal with caret */
+/* ✍️ Reveal text */
 function initReveal(cardId){
   const card=document.getElementById(cardId);
   if(!card || card.dataset.revealed) return;
@@ -216,7 +254,6 @@ function initReveal(cardId){
 
   const caret=card.querySelector(".caret");
   const content=card.querySelector(".text-content");
-
   const blocks=content.innerHTML.split("<br><br>");
   content.innerHTML="";
 
@@ -227,7 +264,6 @@ function initReveal(cardId){
     line.className="reveal-line";
     line.innerHTML=block;
     content.appendChild(line);
-
     setTimeout(()=>line.classList.add("show"),2200+i*700);
   });
 }

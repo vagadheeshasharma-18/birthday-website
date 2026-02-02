@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>A Surprise</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- 🔐 LOCK SCREEN -->
 <div id="lockScreen">
   <h1>🖤 A Surprise is Waiting</h1>
   <p>Enter the special date 💜</p>
@@ -20,7 +21,8 @@
 <div id="dimOverlay"></div>
 <div id="floating-container"></div>
 
-<div id="mainContent" class="hidden">
+<!-- 🔹 ONLY CHANGE: added class main-hidden -->
+<div id="mainContent" class="hidden main-hidden">
 
 <section>
   <h1>🎂 Happy Birthday 🎂</h1>
@@ -90,7 +92,7 @@
   </div>
 </section>
 
-<!-- 🎵 SPECIAL SONG SECTION -->
+<!-- 🎵 SPECIAL SONG -->
 <section class="hidden" id="songSection">
   <h2>🎵 One of your most liked songs 🤍</h2>
   <p class="subtitle">Just press play and enjoy this moment ✨</p>
@@ -205,7 +207,7 @@
   <button id="nextBtn">Next Surprise ▶️</button>
 </div>
 
-<!-- 🎵 Special Song Audio -->
+<!-- 🎵 Audios -->
 <audio id="specialSong">
   <source src="music/birthday-music.mp3" type="audio/mpeg">
 </audio>
