@@ -1,81 +1,66 @@
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
 
-const PASSWORD="13022006";
+const PASSWORD = "13022006";
 
 /* 🔐 Lock screen */
-const lockScreen=document.getElementById("lockScreen");
-const mainContent=document.getElementById("mainContent");
-const unlockBtn=document.getElementById("unlockBtn");
-const passwordInput=document.getElementById("passwordInput");
-const errorText=document.getElementById("errorText");
+const lockScreen = document.getElementById("lockScreen");
+const mainContent = document.getElementById("mainContent");
+const unlockBtn = document.getElementById("unlockBtn");
+const passwordInput = document.getElementById("passwordInput");
+const errorText = document.getElementById("errorText");
 
 /* 🎶 Background music */
-const bgMusic=document.getElementById("bgMusic");
+const bgMusic = document.getElementById("bgMusic");
 
-/* Sections & navigation */
-const sections=[...document.querySelectorAll("section")];
-const startBtn=document.getElementById("startBtn");
-const nextBtn=document.getElementById("nextBtn");
-const nextWrapper=document.getElementById("nextWrapper");
+/* Sections */
+const sections = [...document.querySelectorAll("section")];
+let currentIndex = 0;
 
 /* 🎵 Special song */
-const specialSong=document.getElementById("specialSong");
-const songToggleBtn=document.getElementById("songToggleBtn");
+const specialSong = document.getElementById("specialSong");
+const songToggleBtn = document.getElementById("songToggleBtn");
 
-/* 🎧 Voice messages */
-const voicePlayer=document.getElementById("voicePlayer");
-const playBtns=document.querySelectorAll(".playBtn");
+/* 🎧 Voice */
+const voicePlayer = document.getElementById("voicePlayer");
+const playBtns = document.querySelectorAll(".playBtn");
 
-/* Final & overlay */
-const openFinalBtn=document.getElementById("openFinalBtn");
-const finalEnd=document.getElementById("finalEnd");
-const dimOverlay=document.getElementById("dimOverlay");
+/* Final */
+const openFinalBtn = document.getElementById("openFinalBtn");
+const finalEnd = document.getElementById("finalEnd");
+const dimOverlay = document.getElementById("dimOverlay");
 
-/* Floating particles */
-const floatingContainer=document.getElementById("floating-container");
-
-/* 🎂 Cake */
-const cutBtn=document.getElementById("cutCakeBtn");
-const cakeLeft=document.querySelector(".cake-left");
-const cakeRight=document.querySelector(".cake-right");
-const cakeName=document.getElementById("cakeName");
-const smokes=document.querySelectorAll(".smoke");
-
-/* Fun elements */
-const fakeBug=document.getElementById("fakeBug");
-const dontClickBtn=document.getElementById("dontClickBtn");
-const dontClickMsg=document.getElementById("dontClickMsg");
+/* Cake */
+const cutBtn = document.getElementById("cutCakeBtn");
+const cakeLeft = document.querySelector(".cake-left");
+const cakeRight = document.querySelector(".cake-right");
+const cakeName = document.getElementById("cakeName");
+const smokes = document.querySelectorAll(".smoke");
 
 /* Grandma */
-const loveMessageSection=document.getElementById("loveMessageSection");
-const toGrandmaBtn=document.getElementById("toGrandmaBtn");
-const grandmaSection=document.getElementById("grandmaSection");
+const loveMessageSection = document.getElementById("loveMessageSection");
+const toGrandmaBtn = document.getElementById("toGrandmaBtn");
+const grandmaSection = document.getElementById("grandmaSection");
 
-let index=0;
-let cakeFireworksActive=false;
-let currentVoiceBtn=null;
+/* Floating particles */
+const floatingContainer = document.getElementById("floating-container");
 
-/* 🔐 Unlock */
-unlockBtn.onclick=()=>{
-  if(passwordInput.value===PASSWORD){
-
+/* ---------------- UNLOCK ---------------- */
+unlockBtn.onclick = () => {
+  if (passwordInput.value === PASSWORD) {
     errorText.classList.add("hidden");
 
-    bgMusic.volume=0.35;
-    bgMusic.currentTime=0;
-    bgMusic.play().catch(()=>{});
+    bgMusic.volume = 0.35;
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(() => {});
 
     lockScreen.classList.add("lock-exit");
 
-    setTimeout(()=>{
-      lockScreen.style.display="none";
+    setTimeout(() => {
+      lockScreen.style.display = "none";
       mainContent.classList.remove("hidden");
-      requestAnimationFrame(()=>{
-        mainContent.classList.add("main-show");
-      });
-    },900);
-
-  }else{
+      mainContent.classList.add("main-show");
+    }, 900);
+  } else {
     errorText.classList.remove("hidden");
     lockScreen.classList.remove("shake");
     void lockScreen.offsetWidth;
@@ -83,51 +68,61 @@ unlockBtn.onclick=()=>{
   }
 };
 
-/* ▶ Start — INIT BOOK MODE */
-startBtn.onclick = () => {
+/* ---------------- INITIAL STATE ---------------- */
+sections.forEach((sec, i) => {
+  if (i !== 0) sec.classList.add("hidden");
+});
 
-  // 🔑 IMPORTANT: do NOT use page-hidden at all
-  sections.forEach(sec=>{
-    sec.classList.add("hidden");
-  });
-
-  index = 1; // Letter page
-
-  const firstPage = sections[index];
-  firstPage.classList.remove("hidden");
-
-  startBtn.style.display = "none";
-  nextWrapper.classList.remove("hidden");
-
-  // Place next button after the visible section
-  firstPage.after(nextWrapper);
-
-  firstPage.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-
+/* ---------------- START BUTTON ---------------- */
+document.getElementById("startBtn").onclick = () => {
+  goToSection(1);
   initReveal("letterCard");
 };
 
-/* ➡ Next — PAGE TURN (FINAL & COMPLETE FIX) */
-nextBtn.onclick = () => {
-  const current = sections[index];
-  const next = sections[index + 1];
+/* ---------------- SWIPE HANDLING ---------------- */
+let touchStartY = 0;
+let touchEndY = 0;
 
-  if (!next) return;
-
-  current.classList.add("hidden");
-  next.classList.remove("hidden");
-next.scrollIntoView({
-  behavior: "smooth",
-  block: "start"
+document.addEventListener("touchstart", e => {
+  touchStartY = e.changedTouches[0].screenY;
 });
 
-  index++;
+document.addEventListener("touchend", e => {
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipe();
+});
 
-  // 📸 Images animation
-  if (next.id === "imagesSection") {
+function handleSwipe() {
+  const delta = touchStartY - touchEndY;
+  const currentSection = sections[currentIndex];
+
+  const atTop = currentSection.scrollTop === 0;
+  const atBottom =
+    Math.ceil(currentSection.scrollTop + currentSection.clientHeight) >=
+    currentSection.scrollHeight;
+
+  // Swipe up → next
+  if (delta > 60 && atBottom) {
+    swipeNext();
+  }
+
+  // Swipe down → previous
+  if (delta < -60 && atTop) {
+    swipePrev();
+  }
+}
+
+/* ---------------- NAVIGATION ---------------- */
+function goToSection(index) {
+  if (index < 0 || index >= sections.length) return;
+
+  sections[currentIndex].classList.add("hidden");
+  currentIndex = index;
+  sections[currentIndex].classList.remove("hidden");
+  sections[currentIndex].scrollTop = 0;
+
+  // Images animation
+  if (sections[currentIndex].id === "imagesSection") {
     const imgs = document.querySelectorAll(".gallery img");
     imgs.forEach(img => img.classList.remove("show"));
 
@@ -144,128 +139,101 @@ next.scrollIntoView({
       }, i * 2000);
     });
   }
+}
 
-  // 🛑 REMOVE NEXT BUTTON AFTER VOICE SECTION
-  if (next.id === "voiceSection") {
-    nextWrapper.remove();
-  }
-};
+function swipeNext() {
+  // Stop swipe-based navigation after voice section
+  if (sections[currentIndex].id === "voiceSection") return;
+  if (sections[currentIndex].id === "cakeSection") return;
+  if (sections[currentIndex].id === "grandmaSection") return;
+  if (sections[currentIndex].id === "finalEnd") return;
 
-/* 🎵 Special song */
-songToggleBtn.onclick=()=>{
+  goToSection(currentIndex + 1);
+}
+
+function swipePrev() {
+  if (currentIndex === 0) return;
+  goToSection(currentIndex - 1);
+}
+
+/* ---------------- SONG ---------------- */
+songToggleBtn.onclick = () => {
   bgMusic.pause();
   voicePlayer.pause();
   resetVoiceButtons();
 
-  if(specialSong.paused){
-    specialSong.volume=0.7;
+  if (specialSong.paused) {
+    specialSong.volume = 0.7;
     specialSong.play();
-    songToggleBtn.textContent="Pause ⏸️";
-  }else{
+    songToggleBtn.textContent = "Pause ⏸️";
+  } else {
     specialSong.pause();
-    songToggleBtn.textContent="Play ▶️";
+    songToggleBtn.textContent = "Play ▶️";
   }
 };
 
-specialSong.onended=()=>songToggleBtn.textContent="Play ▶️";
+specialSong.onended = () => {
+  songToggleBtn.textContent = "Play ▶️";
+};
 
-/* 🎧 Voice messages */
-playBtns.forEach(btn=>{
-  btn.onclick=()=>{
-    const src=btn.dataset.audio;
+/* ---------------- VOICE ---------------- */
+playBtns.forEach(btn => {
+  btn.onclick = () => {
+    const src = btn.dataset.audio;
 
     bgMusic.pause();
     specialSong.pause();
-    songToggleBtn.textContent="Play ▶️";
+    songToggleBtn.textContent = "Play ▶️";
 
-    if(currentVoiceBtn===btn && !voicePlayer.paused){
+    if (voicePlayer.src.includes(src) && !voicePlayer.paused) {
       voicePlayer.pause();
-      btn.textContent="Play ▶️";
-      btn.parentElement.classList.remove("playing");
-      currentVoiceBtn=null;
+      resetVoiceButtons();
       return;
     }
 
     resetVoiceButtons();
-
-    voicePlayer.src=src;
-    voicePlayer.volume=0.8;
+    voicePlayer.src = src;
+    voicePlayer.volume = 0.8;
     voicePlayer.play();
 
-    btn.textContent="Pause ⏸️";
+    btn.textContent = "Pause ⏸️";
     btn.parentElement.classList.add("playing");
-    currentVoiceBtn=btn;
   };
 });
 
-voicePlayer.onended=resetVoiceButtons;
+voicePlayer.onended = resetVoiceButtons;
 
-function resetVoiceButtons(){
-  playBtns.forEach(b=>{
-    b.textContent="Play ▶️";
+function resetVoiceButtons() {
+  playBtns.forEach(b => {
+    b.textContent = "Play ▶️";
     b.parentElement.classList.remove("playing");
   });
-  currentVoiceBtn=null;
 }
 
-/* 🎂 Cut Cake */
-cutBtn.onclick=()=>{
+/* ---------------- CAKE ---------------- */
+cutBtn.onclick = () => {
   cakeLeft.classList.add("cut-left");
   cakeRight.classList.add("cut-right");
   cakeName.classList.add("glow");
 
-  smokes.forEach((s,i)=>setTimeout(()=>s.classList.add("show"),i*200));
+  smokes.forEach((s, i) => setTimeout(() => s.classList.add("show"), i * 200));
 
-  cakeFireworksActive=true;
-  const end=Date.now()+3500;
-
-  (function blast(){
-    if(!cakeFireworksActive) return;
-    confetti({particleCount:120,spread:180,startVelocity:70,origin:{y:0.6}});
-    if(Date.now()<end) requestAnimationFrame(blast);
-  })();
-
-  fakeBug.classList.remove("hidden");
-  setTimeout(()=>fakeBug.classList.add("hidden"),2600);
-  setTimeout(()=>dontClickBtn.classList.remove("hidden"),2800);
-
-  setTimeout(()=>{
+  setTimeout(() => {
     loveMessageSection.classList.remove("hidden");
     loveMessageSection.classList.add("show");
-  },4200);
+  }, 4200);
 };
 
-/* 😈 Don't click */
-dontClickBtn.onclick=()=>{
-  dontClickBtn.classList.add("hidden");
-  dontClickMsg.classList.remove("hidden");
-};
-
-/* 💌 Grandma */
+/* ---------------- GRANDMA ---------------- */
 toGrandmaBtn.onclick = () => {
-  cakeFireworksActive = false;
-
-  grandmaSection.classList.remove("hidden");
-  grandmaSection.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-
+  goToSection(sections.indexOf(grandmaSection));
   initReveal("grandmaCard");
 };
 
-
-
-/* 🌟 Final message */
+/* ---------------- FINAL ---------------- */
 openFinalBtn.onclick = () => {
-  document.body.style.overflow = "hidden";
   dimOverlay.classList.add("active");
-
-  finalEnd.classList.remove("hidden");
-  finalEnd.scrollIntoView({
-    behavior: "smooth",
-    block: "center"
-  });
+  goToSection(sections.indexOf(finalEnd));
 
   const end = Date.now() + 3500;
   (function blast() {
@@ -281,43 +249,41 @@ openFinalBtn.onclick = () => {
   setTimeout(() => {
     finalEnd.classList.add("showFinal");
     dimOverlay.classList.remove("active");
-    document.body.style.overflow = "auto";
   }, 3000);
 };
 
+/* ---------------- TEXT REVEAL ---------------- */
+function initReveal(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card || card.dataset.revealed) return;
 
-/* ✍️ Reveal text */
-function initReveal(cardId){
-  const card=document.getElementById(cardId);
-  if(!card || card.dataset.revealed) return;
+  card.dataset.revealed = "true";
+  const caret = card.querySelector(".caret");
+  const content = card.querySelector(".text-content");
+  const blocks = content.innerHTML.split("<br><br>");
+  content.innerHTML = "";
 
-  card.dataset.revealed="true";
-  const caret=card.querySelector(".caret");
-  const content=card.querySelector(".text-content");
-  const blocks=content.innerHTML.split("<br><br>");
-  content.innerHTML="";
+  setTimeout(() => caret && caret.remove(), 2000);
 
-  setTimeout(()=>caret && caret.remove(),2000);
-
-  blocks.forEach((block,i)=>{
-    const line=document.createElement("div");
-    line.className="reveal-line";
-    line.innerHTML=block;
+  blocks.forEach((block, i) => {
+    const line = document.createElement("div");
+    line.className = "reveal-line";
+    line.innerHTML = block;
     content.appendChild(line);
-    setTimeout(()=>line.classList.add("show"),2200+i*700);
+    setTimeout(() => line.classList.add("show"), 2200 + i * 700);
   });
 }
 
-/* ✨ Floating particles */
-const particles=["💖","🎈","✨","💜","🎉"];
-setInterval(()=>{
-  const p=document.createElement("span");
-  p.textContent=particles[Math.floor(Math.random()*particles.length)];
-  p.style.left=Math.random()*100+"vw";
-  p.style.fontSize=(Math.random()*22+16)+"px";
-  p.style.animationDuration=(Math.random()*10+12)+"s";
+/* ---------------- FLOATING PARTICLES ---------------- */
+const particles = ["💖", "🎈", "✨", "💜", "🎉"];
+setInterval(() => {
+  const p = document.createElement("span");
+  p.textContent = particles[Math.floor(Math.random() * particles.length)];
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.fontSize = Math.random() * 22 + 16 + "px";
+  p.style.animationDuration = Math.random() * 10 + 12 + "s";
   floatingContainer.appendChild(p);
-  setTimeout(()=>p.remove(),20000);
-},900);
+  setTimeout(() => p.remove(), 20000);
+}, 900);
 
 });
