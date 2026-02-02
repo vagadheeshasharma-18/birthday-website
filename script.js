@@ -1,66 +1,82 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-const PASSWORD = "13022006";
+const PASSWORD="13022006";
 
 /* 🔐 Lock screen */
-const lockScreen = document.getElementById("lockScreen");
-const mainContent = document.getElementById("mainContent");
-const unlockBtn = document.getElementById("unlockBtn");
-const passwordInput = document.getElementById("passwordInput");
-const errorText = document.getElementById("errorText");
+const lockScreen=document.getElementById("lockScreen");
+const mainContent=document.getElementById("mainContent");
+const unlockBtn=document.getElementById("unlockBtn");
+const passwordInput=document.getElementById("passwordInput");
+const errorText=document.getElementById("errorText");
 
 /* 🎶 Background music */
-const bgMusic = document.getElementById("bgMusic");
+const bgMusic=document.getElementById("bgMusic");
 
-/* Sections */
-const sections = [...document.querySelectorAll("section")];
-let currentIndex = 0;
+/* Sections & navigation */
+const sections=document.querySelectorAll("section");
+const startBtn=document.getElementById("startBtn");
+const nextBtn=document.getElementById("nextBtn");
+const nextWrapper=document.getElementById("nextWrapper");
 
 /* 🎵 Special song */
-const specialSong = document.getElementById("specialSong");
-const songToggleBtn = document.getElementById("songToggleBtn");
+const specialSong=document.getElementById("specialSong");
+const songToggleBtn=document.getElementById("songToggleBtn");
 
-/* 🎧 Voice */
-const voicePlayer = document.getElementById("voicePlayer");
-const playBtns = document.querySelectorAll(".playBtn");
+/* 🎧 Voice messages */
+const voicePlayer=document.getElementById("voicePlayer");
+const playBtns=document.querySelectorAll(".playBtn");
 
-/* Final */
-const openFinalBtn = document.getElementById("openFinalBtn");
-const finalEnd = document.getElementById("finalEnd");
-const dimOverlay = document.getElementById("dimOverlay");
-
-/* Cake */
-const cutBtn = document.getElementById("cutCakeBtn");
-const cakeLeft = document.querySelector(".cake-left");
-const cakeRight = document.querySelector(".cake-right");
-const cakeName = document.getElementById("cakeName");
-const smokes = document.querySelectorAll(".smoke");
-
-/* Grandma */
-const loveMessageSection = document.getElementById("loveMessageSection");
-const toGrandmaBtn = document.getElementById("toGrandmaBtn");
-const grandmaSection = document.getElementById("grandmaSection");
+/* Final & overlay */
+const openFinalBtn=document.getElementById("openFinalBtn");
+const finalEnd=document.getElementById("finalEnd");
+const dimOverlay=document.getElementById("dimOverlay");
 
 /* Floating particles */
-const floatingContainer = document.getElementById("floating-container");
+const floatingContainer=document.getElementById("floating-container");
 
-/* ---------------- UNLOCK ---------------- */
-unlockBtn.onclick = () => {
-  if (passwordInput.value === PASSWORD) {
+/* 🎂 Cake */
+const cutBtn=document.getElementById("cutCakeBtn");
+const cakeLeft=document.querySelector(".cake-left");
+const cakeRight=document.querySelector(".cake-right");
+const cakeName=document.getElementById("cakeName");
+const smokes=document.querySelectorAll(".smoke");
+
+/* Fun elements */
+const fakeBug=document.getElementById("fakeBug");
+const dontClickBtn=document.getElementById("dontClickBtn");
+const dontClickMsg=document.getElementById("dontClickMsg");
+
+/* Grandma */
+const loveMessageSection=document.getElementById("loveMessageSection");
+const toGrandmaBtn=document.getElementById("toGrandmaBtn");
+const grandmaSection=document.getElementById("grandmaSection");
+
+let index=0;
+let cakeFireworksActive=false;
+let currentVoiceBtn=null;
+
+/* 🔐 Unlock */
+unlockBtn.onclick=()=>{
+  if(passwordInput.value===PASSWORD){
+
     errorText.classList.add("hidden");
 
-    bgMusic.volume = 0.35;
-    bgMusic.currentTime = 0;
-    bgMusic.play().catch(() => {});
+    /* 🎶 START BG MUSIC */
+    bgMusic.volume=0.35;
+    bgMusic.currentTime=0;
+    bgMusic.play().catch(()=>{});
 
     lockScreen.classList.add("lock-exit");
 
-    setTimeout(() => {
-      lockScreen.style.display = "none";
+    setTimeout(()=>{
+      lockScreen.style.display="none";
       mainContent.classList.remove("hidden");
-      mainContent.classList.add("main-show");
-    }, 900);
-  } else {
+      requestAnimationFrame(()=>{
+        mainContent.classList.add("main-show");
+      });
+    },900);
+
+  }else{
     errorText.classList.remove("hidden");
     lockScreen.classList.remove("shake");
     void lockScreen.offsetWidth;
@@ -68,228 +84,226 @@ unlockBtn.onclick = () => {
   }
 };
 
-/* ---------------- INITIAL STATE ---------------- */
-sections.forEach((sec, i) => {
-  if (i !== 0) sec.classList.add("hidden");
-});
-
-/* ---------------- START BUTTON ---------------- */
-document.getElementById("startBtn").onclick = () => {
-  goToSection(1);
+/* ▶ Start */
+startBtn.onclick=()=>{
+  index=1;
+  sections[index].classList.remove("hidden");
+  startBtn.style.display="none";
+  nextWrapper.classList.remove("hidden");
+  sections[index].after(nextWrapper);
+  sections[index].scrollIntoView({behavior:"smooth"});
   initReveal("letterCard");
 };
 
-/* ---------------- SWIPE HANDLING ---------------- */
-let touchStartY = 0;
-let touchEndY = 0;
+/* ➡ Next */
+nextBtn.onclick=()=>{
+  index++;
+  if(index<sections.length){
+    sections[index].classList.remove("hidden");
+    sections[index].after(nextWrapper);
+    sections[index].scrollIntoView({behavior:"smooth"});
 
-document.addEventListener("touchstart", e => {
-  touchStartY = e.changedTouches[0].screenY;
-});
+    /* 📸 IMAGE SECTION */
+    if(sections[index].id==="imagesSection"){
 
-document.addEventListener("touchend", e => {
-  touchEndY = e.changedTouches[0].screenY;
-  handleSwipe();
-});
+      const imgs=document.querySelectorAll(".gallery img");
 
-function handleSwipe() {
-  const delta = touchStartY - touchEndY;
-  const currentSection = sections[currentIndex];
+      imgs.forEach(img=>{
+        img.classList.remove("show");
+      });
 
-  const scrollable = currentSection.scrollHeight > currentSection.clientHeight;
+      imgs.forEach((img,i)=>{
+        setTimeout(()=>{
+          img.scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+          });
+          img.classList.add("show");
 
-  const atTop =
-    currentSection.scrollTop <= 2;
+          /* 🛑 STOP BG MUSIC AFTER LAST IMAGE */
+          if(i===imgs.length-1){
+            setTimeout(()=>{
+              bgMusic.pause();
+              bgMusic.currentTime=0;
+            },2000);
+          }
 
-  const atBottom =
-    !scrollable ||
-    currentSection.scrollTop + currentSection.clientHeight >=
-    currentSection.scrollHeight - 2;
+        },i*2000);
+      });
+    }
 
-  // Swipe UP → next section
-  if (delta > 60 && atBottom) {
-    swipeNext();
+  }else{
+    nextWrapper.style.display="none";
   }
+};
 
-  // Swipe DOWN → previous section
-  if (delta < -60 && atTop) {
-    swipePrev();
-  }
-}
-
-
-/* ---------------- NAVIGATION ---------------- */
-function goToSection(index) {
-  if (index < 0 || index >= sections.length) return;
-
-  sections[currentIndex].classList.add("hidden");
-  currentIndex = index;
-  sections[currentIndex].classList.remove("hidden");
-  sections[currentIndex].scrollTop = 0;
-
-  // Images animation
-  if (sections[currentIndex].id === "imagesSection") {
-    const imgs = document.querySelectorAll(".gallery img");
-    imgs.forEach(img => img.classList.remove("show"));
-
-    imgs.forEach((img, i) => {
-      setTimeout(() => {
-        img.classList.add("show");
-
-        if (i === imgs.length - 1) {
-          setTimeout(() => {
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-          }, 2000);
-        }
-      }, i * 2000);
-    });
-  }
-}
-
-function swipeNext() {
-  // Stop swipe-based navigation after voice section
-  if (sections[currentIndex].id === "voiceSection") return;
-  if (sections[currentIndex].id === "cakeSection") return;
-  if (sections[currentIndex].id === "grandmaSection") return;
-  if (sections[currentIndex].id === "finalEnd") return;
-
-  goToSection(currentIndex + 1);
-}
-
-function swipePrev() {
-  if (currentIndex === 0) return;
-  goToSection(currentIndex - 1);
-}
-
-/* ---------------- SONG ---------------- */
-songToggleBtn.onclick = () => {
+/* 🎵 Special song */
+songToggleBtn.onclick=()=>{
   bgMusic.pause();
   voicePlayer.pause();
   resetVoiceButtons();
 
-  if (specialSong.paused) {
-    specialSong.volume = 0.7;
+  if(specialSong.paused){
+    specialSong.volume=0.7;
     specialSong.play();
-    songToggleBtn.textContent = "Pause ⏸️";
-  } else {
+    songToggleBtn.textContent="Pause ⏸️";
+  }else{
     specialSong.pause();
-    songToggleBtn.textContent = "Play ▶️";
+    songToggleBtn.textContent="Play ▶️";
   }
 };
 
-specialSong.onended = () => {
-  songToggleBtn.textContent = "Play ▶️";
+specialSong.onended=()=>{
+  songToggleBtn.textContent="Play ▶️";
 };
 
-/* ---------------- VOICE ---------------- */
-playBtns.forEach(btn => {
-  btn.onclick = () => {
-    const src = btn.dataset.audio;
+/* 🎧 Voice messages */
+playBtns.forEach(btn=>{
+  btn.onclick=()=>{
+    const src=btn.dataset.audio;
 
     bgMusic.pause();
     specialSong.pause();
-    songToggleBtn.textContent = "Play ▶️";
+    songToggleBtn.textContent="Play ▶️";
 
-    if (voicePlayer.src.includes(src) && !voicePlayer.paused) {
+    if(currentVoiceBtn===btn && !voicePlayer.paused){
       voicePlayer.pause();
-      resetVoiceButtons();
+      btn.textContent="Play ▶️";
+      btn.parentElement.classList.remove("playing");
+      currentVoiceBtn=null;
       return;
     }
 
     resetVoiceButtons();
-    voicePlayer.src = src;
-    voicePlayer.volume = 0.8;
+
+    voicePlayer.src=src;
+    voicePlayer.volume=0.8;
     voicePlayer.play();
 
-    btn.textContent = "Pause ⏸️";
+    btn.textContent="Pause ⏸️";
     btn.parentElement.classList.add("playing");
+    currentVoiceBtn=btn;
   };
 });
 
-voicePlayer.onended = resetVoiceButtons;
+voicePlayer.onended=()=>{
+  resetVoiceButtons();
+};
 
-function resetVoiceButtons() {
-  playBtns.forEach(b => {
-    b.textContent = "Play ▶️";
+function resetVoiceButtons(){
+  playBtns.forEach(b=>{
+    b.textContent="Play ▶️";
     b.parentElement.classList.remove("playing");
   });
+  currentVoiceBtn=null;
 }
 
-/* ---------------- CAKE ---------------- */
-cutBtn.onclick = () => {
+/* 🎂 Cut Cake */
+cutBtn.onclick=()=>{
   cakeLeft.classList.add("cut-left");
   cakeRight.classList.add("cut-right");
   cakeName.classList.add("glow");
 
-  smokes.forEach((s, i) => setTimeout(() => s.classList.add("show"), i * 200));
+  smokes.forEach((s,i)=>{
+    setTimeout(()=>s.classList.add("show"),i*200);
+  });
 
-  setTimeout(() => {
+  cakeFireworksActive=true;
+  const end=Date.now()+3500;
+
+  (function blast(){
+    if(!cakeFireworksActive) return;
+    confetti({
+      particleCount:120,
+      spread:180,
+      startVelocity:70,
+      origin:{y:0.6}
+    });
+    if(Date.now()<end) requestAnimationFrame(blast);
+  })();
+
+  fakeBug.classList.remove("hidden");
+  setTimeout(()=>fakeBug.classList.add("hidden"),2600);
+  setTimeout(()=>dontClickBtn.classList.remove("hidden"),2800);
+
+  setTimeout(()=>{
     loveMessageSection.classList.remove("hidden");
     loveMessageSection.classList.add("show");
-  }, 4200);
+  },4200);
 };
 
-/* ---------------- GRANDMA ---------------- */
-toGrandmaBtn.onclick = () => {
-  goToSection(sections.indexOf(grandmaSection));
+/* 😈 Don't click */
+dontClickBtn.onclick=()=>{
+  dontClickBtn.classList.add("hidden");
+  dontClickMsg.classList.remove("hidden");
+};
+
+/* 💌 Grandma */
+toGrandmaBtn.onclick=()=>{
+  cakeFireworksActive=false;
+  grandmaSection.classList.remove("hidden");
+  grandmaSection.scrollIntoView({behavior:"smooth"});
   initReveal("grandmaCard");
 };
 
-/* ---------------- FINAL ---------------- */
-openFinalBtn.onclick = () => {
+/* 🌟 Final message */
+openFinalBtn.onclick=()=>{
+  document.body.style.overflow="hidden";
   dimOverlay.classList.add("active");
-  goToSection(sections.indexOf(finalEnd));
+  finalEnd.classList.remove("hidden");
+  finalEnd.scrollIntoView({behavior:"smooth"});
 
-  const end = Date.now() + 3500;
-  (function blast() {
+  const end=Date.now()+3500;
+  (function blast(){
     confetti({
-      particleCount: 90,
-      spread: 180,
-      startVelocity: 65,
-      origin: { y: 0.6 }
+      particleCount:90,
+      spread:180,
+      startVelocity:65,
+      origin:{y:0.6}
     });
-    if (Date.now() < end) requestAnimationFrame(blast);
+    if(Date.now()<end) requestAnimationFrame(blast);
   })();
 
-  setTimeout(() => {
+  setTimeout(()=>{
     finalEnd.classList.add("showFinal");
     dimOverlay.classList.remove("active");
-  }, 3000);
+    document.body.style.overflow="auto";
+  },3000);
 };
 
-/* ---------------- TEXT REVEAL ---------------- */
-function initReveal(cardId) {
-  const card = document.getElementById(cardId);
-  if (!card || card.dataset.revealed) return;
+/* ✍️ Reveal text */
+function initReveal(cardId){
+  const card=document.getElementById(cardId);
+  if(!card || card.dataset.revealed) return;
 
-  card.dataset.revealed = "true";
-  const caret = card.querySelector(".caret");
-  const content = card.querySelector(".text-content");
-  const blocks = content.innerHTML.split("<br><br>");
-  content.innerHTML = "";
+  card.dataset.revealed="true";
 
-  setTimeout(() => caret && caret.remove(), 2000);
+  const caret=card.querySelector(".caret");
+  const content=card.querySelector(".text-content");
+  const blocks=content.innerHTML.split("<br><br>");
+  content.innerHTML="";
 
-  blocks.forEach((block, i) => {
-    const line = document.createElement("div");
-    line.className = "reveal-line";
-    line.innerHTML = block;
+  setTimeout(()=>caret && caret.remove(),2000);
+
+  blocks.forEach((block,i)=>{
+    const line=document.createElement("div");
+    line.className="reveal-line";
+    line.innerHTML=block;
     content.appendChild(line);
-    setTimeout(() => line.classList.add("show"), 2200 + i * 700);
+    setTimeout(()=>line.classList.add("show"),2200+i*700);
   });
 }
 
-/* ---------------- FLOATING PARTICLES ---------------- */
-const particles = ["💖", "🎈", "✨", "💜", "🎉"];
-setInterval(() => {
-  const p = document.createElement("span");
-  p.textContent = particles[Math.floor(Math.random() * particles.length)];
-  p.style.left = Math.random() * 100 + "vw";
-  p.style.fontSize = Math.random() * 22 + 16 + "px";
-  p.style.animationDuration = Math.random() * 10 + 12 + "s";
+/* ✨ Floating particles */
+const particles=["💖","🎈","✨","💜","🎉"];
+setInterval(()=>{
+  const p=document.createElement("span");
+  p.textContent=particles[Math.floor(Math.random()*particles.length)];
+  p.style.left=Math.random()*100+"vw";
+  p.style.fontSize=(Math.random()*22+16)+"px";
+  p.style.animationDuration=(Math.random()*10+12)+"s";
   floatingContainer.appendChild(p);
-  setTimeout(() => p.remove(), 20000);
-}, 900);
+  setTimeout(()=>p.remove(),20000);
+},900);
 
 });
