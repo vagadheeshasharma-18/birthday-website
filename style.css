@@ -125,6 +125,17 @@ button {
 }
 
 /* Envelope */
+/* Smooth paper reveal animation */
+#letter-paper {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#letter-paper.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 #envelope-wrapper {
   display: flex;
@@ -244,4 +255,8 @@ button {
   #letter-content {
     font-size: 1.05rem;
   }
+}
+#letter-content {
+  color: #000 !important;
+  opacity: 1 !important;
 }
