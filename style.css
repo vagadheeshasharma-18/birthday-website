@@ -16,6 +16,15 @@ html, body {
 /* ===============================
    SECTION 1 — ENTRY
 =============================== */
+.entry-content {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #entry {
   position: fixed;
