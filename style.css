@@ -1,20 +1,37 @@
+/* ===============================
+   RESET
+=============================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+html, body {
+  width: 100%;
+  height: 100%;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ff6ec4, #7873f5);
-  color: white;
 }
 
+/* ===============================
+   SECTION 1 — ENTRY
+=============================== */
+
 #entry {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  color: white;
+
+  z-index: 10;
+}
+
+#entry > div {
   width: 90%;
   max-width: 400px;
   text-align: center;
@@ -51,11 +68,13 @@ button {
   margin-top: 10px;
 }
 
-.hint, .volume {
+.hint,
+.volume {
   font-size: 0.9rem;
   margin-top: 6px;
 }
-/* Shake animation for wrong password */
+
+/* Shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   25% { transform: translateX(-6px); }
@@ -67,6 +86,7 @@ button {
 .shake {
   animation: shake 0.4s ease;
 }
+
 /* ===============================
    SECTION 2 — LONG LETTER
 =============================== */
@@ -74,23 +94,28 @@ button {
 #letter-section {
   min-height: 100vh;
   width: 100%;
-  padding: 24px 16px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(
-    to bottom,
-    #f7e7ce,
-    #f3d9b1
-  );
+  padding: 24px 16px;
+
+  background: linear-gradient(to bottom, #f7e7ce, #f3d9b1);
+
+  opacity: 0;
+  pointer-events: none;
 
   transition: opacity 1.2s ease;
 }
 
-/* ---------- Envelope ---------- */
+#letter-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Envelope */
 
 #envelope-wrapper {
   display: flex;
@@ -105,7 +130,6 @@ button {
   height: 170px;
 }
 
-/* Envelope body */
 .envelope-body {
   position: absolute;
   bottom: 0;
@@ -116,7 +140,6 @@ button {
   z-index: 1;
 }
 
-/* Envelope flap */
 .envelope-flap {
   position: absolute;
   top: 0;
@@ -129,7 +152,6 @@ button {
   z-index: 2;
 }
 
-/* Open state (JS will add this class) */
 #envelope.open .envelope-flap {
   transform: rotateX(180deg);
 }
@@ -140,7 +162,7 @@ button {
   opacity: 0.75;
 }
 
-/* ---------- Letter Paper ---------- */
+/* Letter paper */
 
 #letter-paper {
   width: 100%;
@@ -153,17 +175,17 @@ button {
   background: #fffdf8;
   border-radius: 12px;
 
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.12);
-
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   overflow-y: auto;
 
+  opacity: 0;
+  transform: translateY(20px);
   transition: opacity 1s ease, transform 1s ease;
 }
 
-#letter-paper.hidden {
-  opacity: 0;
-  transform: translateY(20px);
+#letter-paper:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #letter-content {
@@ -173,39 +195,38 @@ button {
   white-space: pre-wrap;
 }
 
-/* ---------- Memories Button ---------- */
+/* Memories button */
 
 #memories-btn {
   margin-top: 28px;
   padding: 14px 26px;
-
   border-radius: 30px;
   border: none;
 
   font-size: 1rem;
   font-weight: 600;
 
-  background: linear-gradient(
-    135deg,
-    #ff9a9e,
-    #fad0c4
-  );
-
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   color: #3b2f2f;
-  cursor: pointer;
 
+  cursor: pointer;
   box-shadow: 0 0 20px rgba(255, 154, 158, 0.6);
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
 
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-#memories-btn.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(10px);
+#memories-btn:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
-/* ---------- Desktop Enhancements ---------- */
+/* Desktop */
+
 @media (min-width: 768px) {
   #letter-paper {
     max-width: 520px;
@@ -215,13 +236,3 @@ button {
     font-size: 1.05rem;
   }
 }
-#letter-section {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#letter-section.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-

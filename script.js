@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  /* ===============================
+     SECTION 1 ELEMENTS
+  =============================== */
   const line1 = document.getElementById("line1");
   const line2 = document.getElementById("line2");
   const password = document.getElementById("password");
@@ -8,18 +11,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const error = document.getElementById("error");
   const entry = document.getElementById("entry");
 
+  /* ===============================
+     SECTION 2 ELEMENTS
+  =============================== */
+  const letterSection = document.getElementById("letter-section");
+  const envelope = document.getElementById("envelope");
+  const letterPaper = document.getElementById("letter-paper");
+  const letterContent = document.getElementById("letter-content");
+  const memoriesBtn = document.getElementById("memories-btn");
+
   const CORRECT_PASSWORD = "13022006";
   let bgMusic;
+  let envelopeOpened = false;
 
-  // Initial states
+  /* ===============================
+     INITIAL STATES (SECTION 1)
+  =============================== */
   [line1, line2, password, hint, button, volume, error].forEach(el => {
     el.style.opacity = "0";
     el.style.transition = "opacity 1s ease";
   });
 
-  // Step timings
-  setTimeout(() => line1.style.opacity = "1", 1000);
-  setTimeout(() => line2.style.opacity = "1", 2500);
+  /* ===============================
+     SECTION 1 TIMELINE
+  =============================== */
+  setTimeout(() => (line1.style.opacity = "1"), 1000);
+  setTimeout(() => (line2.style.opacity = "1"), 2500);
+
   setTimeout(() => {
     password.style.opacity = "1";
     hint.style.opacity = "1";
@@ -27,7 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
     volume.style.opacity = "1";
   }, 4000);
 
-  // Password logic
+  /* ===============================
+     PASSWORD LOGIC
+  =============================== */
   button.addEventListener("click", () => {
     const entered = password.value.trim();
     error.style.opacity = "1";
@@ -47,132 +67,82 @@ document.addEventListener("DOMContentLoaded", () => {
     button.textContent = "Unlocking…";
 
     // Start background music
-    bgMusic = new Audio("bg-music.mp3"); // put file in same folder
+    bgMusic = new Audio("./bg-music.mp3");
     bgMusic.loop = true;
     bgMusic.volume = 0.6;
-    bgMusic.play();
+    bgMusic.play().catch(() => {});
 
-    // Fade out Section 1
+    /* ===============================
+       TRANSITION TO SECTION 2
+    =============================== */
+    entry.style.transition = "opacity 1.2s ease";
+    entry.style.opacity = "0";
+
     setTimeout(() => {
-      entry.style.transition = "opacity 1.2s ease";
-      // Fade out Section 1
-entry.style.transition = "opacity 1.2s ease";
-entry.style.opacity = "0";
+      entry.style.display = "none";
 
-// After fade, show Section 2
-setTimeout(() => {
-  entry.style.display = "none";
-
-  // ACTIVATE SECTION 2
-  letterSection.classList.remove("hidden");
-  letterSection.classList.add("active");
-}, 1200);
-;
-    }, 600);
-
-    // Section 1 ends here
-    // Next section will be shown later
+      // Activate Section 2
+      letterSection.classList.remove("hidden");
+      letterSection.classList.add("active");
+    }, 1200);
   });
-});
-/* ===============================
-   SECTION 2 — LONG LETTER LOGIC
-=============================== */
 
-const letterSection = document.getElementById("letter-section");
-const envelope = document.getElementById("envelope");
-const letterPaper = document.getElementById("letter-paper");
-const letterContent = document.getElementById("letter-content");
-const memoriesBtn = document.getElementById("memories-btn");
+  /* ===============================
+     SECTION 2 — ENVELOPE LOGIC
+  =============================== */
+  envelope.addEventListener("click", () => {
+    if (envelopeOpened) return;
+    envelopeOpened = true;
 
-/* ---------------------------------
-   1️⃣ SHOW SECTION 2 (CROSSFADE)
----------------------------------- */
+    envelope.classList.add("open");
 
-// This function should be called
-// AFTER Section 1 fades out
-function showSection2() {
-  // Make section 2 participate in layout
-  letterSection.classList.remove("hidden");
+    setTimeout(() => {
+      letterPaper.classList.remove("hidden");
+      startLetterTyping();
+    }, 800);
+  });
 
-  // Small delay for smooth crossfade
-  setTimeout(() => {
-    letterSection.style.opacity = "1";
-  }, 50);
-}
-
-/* ⚠️ IMPORTANT:
-   In Section 1 JS, after entry fades out,
-   CALL this function like:
-
-   showSection2();
-*/
-
-/* ---------------------------------
-   2️⃣ ENVELOPE TAP → OPEN
----------------------------------- */
-
-let envelopeOpened = false;
-
-envelope.addEventListener("click", () => {
-  if (envelopeOpened) return;
-  envelopeOpened = true;
-
-  // Open envelope flap
-  envelope.classList.add("open");
-
-  // Reveal letter paper after envelope opens
-  setTimeout(() => {
-    letterPaper.classList.remove("hidden");
-    startLetterTyping();
-  }, 800);
-});
-
-/* ---------------------------------
-   3️⃣ LOAD LETTER.TXT
----------------------------------- */
-
-async function loadLetterText() {
-  const response = await fetch("letter.txt");
-  const text = await response.text();
-  return text;
-}
-
-/* ---------------------------------
-   4️⃣ TYPEWRITER EFFECT (SLOW)
----------------------------------- */
-
-async function startLetterTyping() {
-  const fullText = await loadLetterText();
-
-  let index = 0;
-  const speed = 35; // slow & emotional
-
-  function typeNextChar() {
-    if (index < fullText.length) {
-      letterContent.textContent += fullText.charAt(index);
-      index++;
-
-      setTimeout(typeNextChar, speed);
-    } else {
-      enableScrollCheck();
-    }
+  /* ===============================
+     LOAD LETTER.TXT
+  =============================== */
+  async function loadLetterText() {
+    const response = await fetch("letter.txt");
+    return await response.text();
   }
 
-  typeNextChar();
-}
+  /* ===============================
+     TYPEWRITER EFFECT
+  =============================== */
+  async function startLetterTyping() {
+    const fullText = await loadLetterText();
+    let index = 0;
+    const speed = 35;
 
-/* ---------------------------------
-   5️⃣ SCROLL TO BOTTOM → SHOW BUTTON
----------------------------------- */
-
-function enableScrollCheck() {
-  letterPaper.addEventListener("scroll", () => {
-    const nearBottom =
-      letterPaper.scrollTop + letterPaper.clientHeight >=
-      letterPaper.scrollHeight - 10;
-
-    if (nearBottom) {
-      memoriesBtn.classList.remove("hidden");
+    function typeChar() {
+      if (index < fullText.length) {
+        letterContent.textContent += fullText.charAt(index);
+        index++;
+        setTimeout(typeChar, speed);
+      } else {
+        enableScrollCheck();
+      }
     }
-  });
-}
+
+    typeChar();
+  }
+
+  /* ===============================
+     SCROLL → SHOW BUTTON
+  =============================== */
+  function enableScrollCheck() {
+    letterPaper.addEventListener("scroll", () => {
+      const nearBottom =
+        letterPaper.scrollTop + letterPaper.clientHeight >=
+        letterPaper.scrollHeight - 10;
+
+      if (nearBottom) {
+        memoriesBtn.classList.remove("hidden");
+      }
+    });
+  }
+});
