@@ -628,4 +628,179 @@ button {
 }
 #song-section {
   padding-top: 40px;
+}/* ===============================
+   SECTION 6 — VOICE NOTES
+=============================== */
+
+#voice-section {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px 16px;
+
+  background: radial-gradient(
+    circle at top,
+    #0f2027,
+    #203a43,
+    #2c5364
+  );
+
+  color: #fff;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
 }
+
+#voice-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== Section Heading ===== */
+
+.voice-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.voice-subtitle {
+  font-size: 1.05rem;
+  opacity: 0.85;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+/* ===== Voice Cards Wrapper ===== */
+
+.voice-grid {
+  width: 100%;
+  max-width: 420px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* ===== Individual Voice Card ===== */
+
+.voice-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+
+  border-radius: 18px;
+  padding: 18px 16px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 0 1px rgba(255,255,255,0.25);
+
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.voice-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.45),
+    inset 0 0 1px rgba(255,255,255,0.35);
+}
+
+/* ===== Card Heading ===== */
+
+.voice-heading {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 0.3px;
+}
+
+/* ===== Audio Player ===== */
+
+.voice-card audio {
+  width: 100%;
+  outline: none;
+  border-radius: 12px;
+}
+
+/* ===== Different Mood Accents ===== */
+
+.voice-card.funny {
+  border-left: 4px solid #ff9a9e;
+}
+
+.voice-card.study {
+  border-left: 4px solid #a1c4fd;
+}
+
+.voice-card.singing {
+  border-left: 4px solid #fbc2eb;
+}
+
+.voice-card.aesthetic {
+  border-left: 4px solid #c2ffd8;
+}
+
+/* ===== Floating Music Icons ===== */
+
+.floating-music {
+  position: fixed;
+  bottom: -40px;
+  z-index: 9;
+  pointer-events: none;
+
+  font-size: 20px;
+  opacity: 0.85;
+
+  animation: floatUpMusic 9s linear forwards;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
+}
+
+@keyframes floatUpMusic {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* ===== Desktop Enhancement ===== */
+
+@media (min-width: 768px) {
+  .voice-title {
+    font-size: 2.6rem;
+  }
+
+  .voice-grid {
+    max-width: 520px;
+  }
+
+  .voice-heading {
+    font-size: 1.2rem;
+  }
+}
+#song-next {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#song-next:not(.hidden) {
+  opacity: 1;
+  transform: translateY(0);
+}
+

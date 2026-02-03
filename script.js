@@ -300,6 +300,15 @@ video.addEventListener("ended", () => {
   videoSection.classList.remove("hidden");
   videoSection.classList.add("active");
 }
+videoContinue.addEventListener("click", () => {
+  videoSection.style.opacity = "0";
+
+  setTimeout(() => {
+    videoSection.classList.remove("active");
+    videoSection.classList.add("hidden");
+    showSongSection();
+  }, 1200);
+});
 
 
 
@@ -367,15 +376,16 @@ songPlayBtn.addEventListener("click", () => {
   if (songAudio.paused) {
     songAudio.play();
     songSection.classList.add("playing");
-    songPlayBtn.textContent = "⏸";
-    startMusicFloating();
+
+    // ✅ SHOW NEXT BUTTON IMMEDIATELY
+    songNextBtn.classList.remove("hidden");
+
   } else {
     songAudio.pause();
     songSection.classList.remove("playing");
-    songPlayBtn.textContent = "▶";
-    stopMusicFloating();
   }
 });
+
 
 
 /* ---------- Next Button ---------- */
@@ -393,18 +403,58 @@ songNextBtn.addEventListener("click", () => {
 });
 
 /* ---------- CONNECT VIDEO → SONG ---------- */
-videoContinue.addEventListener("click", () => {
-  videoSection.style.opacity = "0";
+
+
+// Show next button after 10 sec of song playing
+
+
+// Move to Voice Notes
+songNextBtn.addEventListener("click", () => {
+  songAudio.pause();
+  songAudio.currentTime = 0;
+  showVoiceSection();
+});
+
+/* ===============================
+   SECTION 6 — VOICE NOTES
+=============================== */
+
+const voiceSection = document.getElementById("voice-section");
+const voiceAudios = voiceSection.querySelectorAll("audio");
+
+/* Show Voice Notes Section */
+function showVoiceSection() {
+  // Hide song section smoothly
+  songSection.style.opacity = "0";
 
   setTimeout(() => {
-    videoSection.classList.remove("active");
-    videoSection.classList.add("hidden");
-    showSongSection(); // 🔥 THIS LINE IS THE KEY
+    songSection.classList.remove("active");
+    songSection.classList.add("hidden");
+
+    // Show voice notes
+    voiceSection.classList.remove("hidden");
+    voiceSection.classList.add("active");
+    voiceSection.style.opacity = "1";
   }, 1200);
+}
+
+/* 🔒 Allow only ONE voice to play at a time */
+voiceAudios.forEach(currentAudio => {
+  currentAudio.addEventListener("play", () => {
+    voiceAudios.forEach(otherAudio => {
+      if (otherAudio !== currentAudio) {
+        otherAudio.pause();
+        otherAudio.currentTime = 0;
+      }
+    });
+  });
 });
+
+/* Optional: stop all voices when leaving section */
+function stopAllVoices() {
+  voiceAudios.forEach(audio => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+}
 })
-songAudio.addEventListener("timeupdate", () => {
-  if (songAudio.currentTime > 12) {
-    songNextBtn.classList.remove("hidden");
-  }
-});
