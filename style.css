@@ -1,6 +1,6 @@
-/******************************************
-  GLOBAL RESET & BASE
-******************************************/
+/* ======================================================
+   RESET & BASE
+====================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -14,32 +14,32 @@ html, body {
 }
 
 body {
-  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, #0b0b1e, #15152f);
+  font-family: "Poppins", system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   color: #ffffff;
   overflow-x: hidden;
   text-align: center;
 }
 
-/******************************************
-  SECTION HANDLING
-******************************************/
+/* ======================================================
+   SECTION CONTROL
+====================================================== */
 .section {
   display: none;
   min-height: 100vh;
   width: 100%;
-  padding: 24px 16px;
-  animation: fadeIn 0.8s ease-in-out;
+  padding: 28px 16px;
+  animation: sectionFade 0.9s ease forwards;
 }
 
 .section.active {
   display: block;
 }
 
-@keyframes fadeIn {
+@keyframes sectionFade {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -47,9 +47,9 @@ body {
   }
 }
 
-/******************************************
-  ENTRY / PASSWORD SECTION
-******************************************/
+/* ======================================================
+   ENTRY / PASSWORD
+====================================================== */
 .center {
   margin-top: 22vh;
   display: flex;
@@ -59,15 +59,16 @@ body {
 }
 
 #entry h1 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ffecd2, #fcb69f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #entry h2 {
   font-size: 1.1rem;
-  opacity: 0.85;
-  font-weight: 400;
+  opacity: 0.9;
 }
 
 input[type="password"] {
@@ -79,36 +80,39 @@ input[type="password"] {
   outline: none;
   font-size: 1rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .hint {
   font-size: 0.85rem;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
+/* ======================================================
+   BUTTONS (GLOBAL)
+====================================================== */
 button {
-  padding: 14px 28px;
+  padding: 14px 30px;
   border-radius: 40px;
   border: none;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   color: #fff;
-  background: linear-gradient(135deg, #ff6ec4, #7873f5);
-  box-shadow: 0 0 18px rgba(255, 110, 196, 0.45);
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  box-shadow: 0 0 22px rgba(255, 81, 47, 0.55);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 28px rgba(255, 110, 196, 0.7);
+  transform: scale(1.06);
+  box-shadow: 0 0 34px rgba(255, 81, 47, 0.85);
 }
 
 .volume {
@@ -117,48 +121,48 @@ button:hover {
 }
 
 #error {
-  color: #ff8b8b;
+  color: #ff9a9a;
   font-size: 0.9rem;
   min-height: 18px;
 }
 
-/* Shake animation for wrong password */
+/* Shake animation */
 .shake {
   animation: shake 0.4s;
 }
 
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-6px); }
   100% { transform: translateX(0); }
 }
 
-/******************************************
-  LETTER SECTION
-******************************************/
+/* ======================================================
+   LONG LETTER
+====================================================== */
 .letter-box {
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
-  padding: 28px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  border-radius: 20px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 45px rgba(0, 0, 0, 0.45);
 }
 
 pre {
   white-space: pre-wrap;
   text-align: left;
   font-size: 1rem;
-  line-height: 1.7;
-  color: #f3f3f3;
+  line-height: 1.75;
+  color: #f9f9f9;
 }
 
-/******************************************
-  IMAGES SECTION
-******************************************/
+/* ======================================================
+   IMAGES (POLAROID FEEL)
+====================================================== */
 #images {
   display: flex;
   flex-direction: column;
@@ -170,53 +174,64 @@ pre {
   width: 85%;
   max-width: 360px;
   border-radius: 16px;
+  background: #fff;
+  padding: 10px;
   margin-bottom: 20px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
-  animation: photoFade 1.2s ease-in-out;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  animation: photoPop 1.2s ease-in-out;
 }
 
-@keyframes photoFade {
+@keyframes photoPop {
   from {
     opacity: 0;
-    transform: translateY(15px) scale(0.96);
+    transform: scale(0.95) translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale(1) translateY(0);
   }
 }
 
-/******************************************
-  VIDEO SECTION
-******************************************/
+/* ======================================================
+   VIDEO
+====================================================== */
 #video video {
   width: 90%;
   max-width: 720px;
-  border-radius: 18px;
+  border-radius: 20px;
   margin: 20px auto;
-  box-shadow: 0 0 45px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 55px rgba(0, 0, 0, 0.65);
 }
 
 .special-text {
-  font-size: 1.1rem;
-  opacity: 0.85;
+  font-size: 1.15rem;
   margin-bottom: 10px;
+  background: linear-gradient(90deg, #a1ffce, #faffd1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/******************************************
-  SONG SECTION
-******************************************/
+/* ======================================================
+   SONG
+====================================================== */
+#song p {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+
 #song audio {
   width: 90%;
   max-width: 400px;
-  margin: 16px auto;
 }
 
-/******************************************
-  VOICE SECTION
-******************************************/
+/* ======================================================
+   VOICE NOTES
+====================================================== */
 #voice h2 {
   margin-bottom: 16px;
+  background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #voice p {
@@ -230,46 +245,42 @@ pre {
   margin-top: 8px;
 }
 
-/******************************************
-  CAKE SECTION
-******************************************/
+/* ======================================================
+   CAKE
+====================================================== */
 .cake {
   font-size: 5rem;
   margin: 20px 0;
-  animation: floatCake 2.5s ease-in-out infinite;
+  animation: cakeFloat 2.6s ease-in-out infinite;
 }
 
-@keyframes floatCake {
+@keyframes cakeFloat {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-14px); }
   100% { transform: translateY(0); }
 }
 
 #wish {
   margin-top: 12px;
   font-size: 1.1rem;
-  color: #ffd1ec;
+  color: #ffd6f3;
 }
 
-/******************************************
-  FUN SECTION
-******************************************/
-#funBtn {
-  margin-top: 14px;
-}
-
+/* ======================================================
+   FUN SECTION
+====================================================== */
 #funText {
   margin-top: 14px;
   font-size: 1.05rem;
 }
 
-/******************************************
-  GRANDMA SECTION
-******************************************/
+/* ======================================================
+   GRANDMA (RESPECTFUL, SOFT)
+====================================================== */
 #grandma img {
   width: 75%;
   max-width: 300px;
-  border-radius: 18px;
+  border-radius: 20px;
   margin-bottom: 20px;
   filter: brightness(0.95);
 }
@@ -277,24 +288,24 @@ pre {
 .grandma-text {
   white-space: pre-wrap;
   text-align: left;
-  max-width: 720px;
+  max-width: 740px;
   margin: 0 auto;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: #f1f1f1;
 }
 
-/******************************************
-  FINAL SECTION
-******************************************/
+/* ======================================================
+   FINAL MESSAGE
+====================================================== */
 .final-text {
   font-size: 1.2rem;
-  line-height: 1.7;
-  opacity: 0.9;
+  line-height: 1.8;
+  opacity: 0.95;
 }
 
 .heart {
-  font-size: 3.5rem;
+  font-size: 3.8rem;
   margin-top: 18px;
   animation: heartPulse 1.6s infinite;
 }
@@ -305,27 +316,27 @@ pre {
   100% { transform: scale(1); }
 }
 
-/******************************************
-  UTILITIES
-******************************************/
+/* ======================================================
+   UTILITIES
+====================================================== */
 .hidden {
   display: none;
 }
 
-/******************************************
-  DESKTOP ENHANCEMENTS
-******************************************/
+/* ======================================================
+   DESKTOP ENHANCEMENTS
+====================================================== */
 @media (min-width: 768px) {
   body {
     font-size: 18px;
   }
 
   #entry h1 {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
   }
 
   .letter-box {
-    padding: 40px;
+    padding: 42px;
   }
 
   #slideshow {
