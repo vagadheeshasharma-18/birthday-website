@@ -50,6 +50,8 @@ body.lock-scroll {
   align-items: center;
 }
 
+/* ---- text, inputs, buttons ---- */
+
 h1 {
   font-size: 1.8rem;
   margin-bottom: 12px;
@@ -248,50 +250,22 @@ button {
 
   opacity: 0.7;
   animation: floatUp 6s linear forwards;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
-}
-
-.floating.heart {
-  color: rgba(255, 90, 160, 0.85);
-  font-size: 20px;
-}
-
-.floating.sparkle {
-  color: rgba(255, 215, 120, 0.85);
-  font-size: 18px;
-}
-
-.floating.camera {
-  color: rgba(200, 220, 255, 0.85);
-  font-size: 22px;
-  filter: drop-shadow(0 0 8px rgba(160, 180, 255, 0.4));
 }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(0.9);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-120vh) scale(1.35);
-    opacity: 0;
-  }
+  0% { transform: translateY(0) scale(0.9); opacity: 0; }
+  15% { opacity: 0.8; }
+  100% { transform: translateY(-120vh) scale(1.35); opacity: 0; }
 }
 
 /* ===============================
-   SECTION 3 — IMAGES (CINEMATIC)
+   SECTION 3 — IMAGES
 =============================== */
 
 #images-section {
   position: fixed;
   inset: 0;
   z-index: 5;
-
-  min-height: 100vh;
-  width: 100%;
 
   display: flex;
   align-items: center;
@@ -309,56 +283,8 @@ button {
   pointer-events: auto;
 }
 
-.images-wrapper {
-  width: 90%;
-  max-width: 360px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#memory-image {
-  width: 100%;
-  border-radius: 14px;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 1.2s ease, transform 1.6s ease;
-}
-
-#memory-image.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-#memory-image.last {
-  box-shadow:
-    0 0 30px rgba(255, 200, 255, 0.35),
-    0 0 60px rgba(180, 120, 255, 0.25);
-}
-
 /* ===============================
-   DESKTOP TWEAKS
-=============================== */
-
-@media (min-width: 768px) {
-  #letter-paper {
-    max-width: 520px;
-  }
-
-  #letter-content {
-    font-size: 1.05rem;
-  }
-
-  .images-wrapper {
-    max-width: 420px;
-  }
-}
-/* ===============================
-   SECTION 4 — VIDEO (PHONE FRAME)
+   SECTION 4 — VIDEO
 =============================== */
 
 #video-section {
@@ -367,7 +293,6 @@ button {
   z-index: 6;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -382,28 +307,189 @@ button {
   pointer-events: auto;
 }
 
-/* Phone frame */
-.video-frame {
-  position: relative;
-  width: 88%;
-  max-width: 380px;
-  aspect-ratio: 9 / 16;
+/* ===============================
+   SECTION 5 — SONG
+=============================== */
 
-  border-radius: 28px;
-  overflow: hidden;
+#song-section {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: radial-gradient(
+    circle at top,
+    #ff6ec7,
+    #7f5cff,
+    #2b1055
+  );
+
+  color: #fff;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+
+#song-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Title text */
+.song-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.song-sub {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Album / Glow circle */
+.song-visual {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle at center,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.08)
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 32px;
 
   box-shadow:
-    0 20px 60px rgba(0,0,0,0.7),
-    inset 0 0 0 2px rgba(255,255,255,0.08);
+    0 0 40px rgba(255, 180, 255, 0.45),
+    inset 0 0 30px rgba(255,255,255,0.25);
+
+  transition: transform 0.6s ease;
 }
 
-.video-frame video {
+/* Pulse while playing */
+#song-section.playing .song-visual {
+  animation: pulseGlow 1.8s ease-in-out infinite;
+}
+
+/* Play button */
+#song-play {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: none;
+
+  font-size: 28px;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.92);
+  color: #222;
+
+  box-shadow:
+    0 0 25px rgba(255,255,255,0.55);
+}
+
+/* Next button */
+#song-next {
+  margin-top: 28px;
+  padding: 14px 32px;
+
+  border-radius: 30px;
+  border: none;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  background: linear-gradient(
+    135deg,
+    #ffd1dc,
+    #ffe6a7
+  );
+
+  color: #222;
+  cursor: pointer;
+
+  box-shadow:
+    0 0 22px rgba(255, 220, 170, 0.6);
+
+  transition: transform 0.4s ease;
+}
+
+#song-next:hover {
+  transform: translateY(-2px);
+}
+
+/* Glow pulse animation */
+@keyframes pulseGlow {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 0 30px rgba(255,180,255,0.4),
+      inset 0 0 20px rgba(255,255,255,0.25);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 60px rgba(255,180,255,0.75),
+      inset 0 0 35px rgba(255,255,255,0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 30px rgba(255,180,255,0.4),
+      inset 0 0 20px rgba(255,255,255,0.25);
+  }
+}
+
+/* Desktop tweak */
+@media (min-width: 768px) {
+  .song-visual {
+    width: 220px;
+    height: 220px;
+  }
+}
+/* ===============================
+   FIX — IMAGE SIZE CONTROL
+=============================== */
+
+.images-wrapper {
+  width: 90%;
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#memory-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-/* Overlay */
+/* Desktop */
+@media (min-width: 768px) {
+  .images-wrapper {
+    max-width: 420px;
+  }
+}
+
+/* ===============================
+   FIX — VIDEO PLAY OVERLAY
+=============================== */
 .video-overlay {
   position: absolute;
   inset: 0;
@@ -412,93 +498,52 @@ button {
   align-items: center;
   justify-content: center;
 
-  background: rgba(0,0,0,0.55);
-  transition: opacity 0.6s ease;
+  background: rgba(0,0,0,0.25);
 }
 
-.video-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.play-btn {
-  width: 72px;
-  height: 72px;
+#video-play {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  border: none;
-
   font-size: 26px;
   cursor: pointer;
-
-  background: rgba(255,255,255,0.9);
-  color: #111;
-
-  box-shadow: 0 0 30px rgba(255,255,255,0.35);
 }
-
-/* Continue button */
-#video-continue {
-  margin-top: 26px;
-  padding: 14px 28px;
-
-  border-radius: 30px;
-  border: none;
-
-  font-size: 1rem;
-  font-weight: 600;
-
-  background: linear-gradient(135deg, #ffd1dc, #ffe6a7);
-  color: #222;
-
-  cursor: pointer;
-  box-shadow: 0 0 22px rgba(255, 220, 170, 0.6);
-
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-#video-continue:not(.hidden) {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Desktop */
-@media (min-width: 768px) {
-  .video-frame {
-    max-width: 420px;
-  }
-}
-/* ===============================
-   VIDEO CONTINUE BUTTON
-=============================== */
 #video-continue {
   position: absolute;
-  bottom: 40px;
   left: 50%;
+  bottom: 40px;
   transform: translateX(-50%);
+}
+#video-section {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
 
-  padding: 14px 28px;
-  border-radius: 30px;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  font-size: 1rem;
-  font-weight: 600;
-
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #3b2f2f;
-
-  box-shadow: 0 0 25px rgba(255, 154, 158, 0.6);
-  cursor: pointer;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease, transform 1s ease;
-  z-index: 20;
+  background: #000;
 }
 
-#video-continue:not(.hidden) {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(-6px);
+
+
+.video-frame {
+  position: relative;
+}
+
+
+.floating.heart {
+  color: rgba(255, 90, 160, 0.85);
+  font-size: 20px;
+}
+
+.floating.sparkle {
+  color: rgba(255, 215, 120, 0.85);
+  font-size: 18px;
+}
+
+.floating.camera {
+  color: rgba(200, 220, 255, 0.85);
+  font-size: 22px;
 }

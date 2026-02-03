@@ -46,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const CORRECT_PASSWORD = "13022006";
   let bgMusic;
   let envelopeOpened = false;
+// SECTION 5 — SONG ELEMENTS
+const songSection = document.getElementById("song-section");
+const songAudio = document.getElementById("fav-song");
+const songPlayBtn = document.getElementById("song-play");
+const songNextBtn = document.getElementById("song-next");
 
   /* ===============================
      SECTION 1 INITIAL STATE
@@ -115,21 +120,23 @@ document.addEventListener("DOMContentLoaded", () => {
      SCROLL → SHOW MEMORIES BUTTON
   =============================== */
   function enableScrollForButton() {
-    if (letterPaper.scrollHeight <= letterPaper.clientHeight + 5) {
-      memoriesBtn.classList.remove("hidden");
-      return;
-    }
-
-    letterPaper.addEventListener("scroll", () => {
-      const nearBottom =
-        letterPaper.scrollTop + letterPaper.clientHeight >=
-        letterPaper.scrollHeight - 15;
-
-      if (nearBottom) {
-        memoriesBtn.classList.remove("hidden");
-      }
-    });
+  // If content fits without scrolling → show immediately
+  if (letterPaper.scrollHeight <= letterPaper.clientHeight + 5) {
+    memoriesBtn.classList.remove("hidden");
+    return;
   }
+
+  letterPaper.addEventListener("scroll", () => {
+    const nearBottom =
+      letterPaper.scrollTop + letterPaper.clientHeight >=
+      letterPaper.scrollHeight - 10;
+
+    if (nearBottom) {
+      memoriesBtn.classList.remove("hidden");
+    }
+  });
+}
+
 
   /* ===============================
      TYPEWRITER EFFECT
@@ -227,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentImageIndex = 1;
 
   function showImagesSection() {
-    document.body.classList.add("lock-scroll");
+   
     stopFloatingEffects();
 
     letterSection.style.display = "none";
@@ -267,40 +274,100 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ===============================
      SECTION 4 — VIDEO
   =============================== */
-  function showVideoSection() {
-    imagesSection.classList.remove("active");
-    imagesSection.classList.add("hidden");
+  /* ---------- VIDEO PLAY BUTTON ---------- */
+videoPlayBtn.addEventListener("click", () => {
+  video.play();
+  videoOverlay.classList.add("hidden");
+});
 
-    videoSection.classList.remove("hidden");
-    videoSection.classList.add("active");
+/* ---------- VIDEO END ---------- */
+video.addEventListener("ended", () => {
+  video.pause();
+  videoOverlay.classList.add("hidden");   // no play icon after end
+  videoContinue.classList.remove("hidden");
+});
+
+  function showVideoSection() {
+  imagesSection.classList.remove("active");
+  imagesSection.classList.add("hidden");
+
+  // RESET VIDEO STATE 👇
+  video.pause();
+  video.currentTime = 0;
+  videoOverlay.classList.remove("hidden");
+  videoContinue.classList.add("hidden");
+
+  videoSection.classList.remove("hidden");
+  videoSection.classList.add("active");
+}
+
+
+
+video.addEventListener("ended", () => {
+  video.pause();
+
+  // hide overlay play icon
+  videoOverlay.classList.add("hidden");
+
+  // show continue button only
+  videoContinue.classList.remove("hidden");
+});
+
+
+/* ===============================
+   SECTION 5 — SONG SECTION
+=============================== */
+
+// Show Song Section (called after video)
+function showSongSection() {
+  // Stop background music completely
+  if (bgMusic) {
+    bgMusic.pause();
+    bgMusic.currentTime = 0;
   }
 
-  videoPlayBtn.addEventListener("click", () => {
-    videoOverlay.classList.add("hidden");
-    video.play();
-  });
+  // Reset song state
+  songAudio.pause();
+  songAudio.currentTime = 0;
 
-  video.addEventListener("click", () => {
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-      videoOverlay.classList.remove("hidden");
-    }
-  });
+  // Show song section
+  songSection.classList.remove("hidden");
+  songSection.classList.add("active");
+}
 
-  video.addEventListener("ended", () => {
-    video.pause();
-    videoContinue.classList.remove("hidden");
-  });
-
-  videoContinue.addEventListener("click", () => {
-    videoSection.style.opacity = "0";
-
-    setTimeout(() => {
-      videoSection.classList.remove("active");
-      videoSection.classList.add("hidden");
-    }, 1200);
-  });
-
+/* ---------- Play / Pause ---------- */
+songPlayBtn.addEventListener("click", () => {
+  if (songAudio.paused) {
+    songAudio.play();
+    songSection.classList.add("playing");
+  } else {
+    songAudio.pause();
+    songSection.classList.remove("playing");
+  }
 });
+
+/* ---------- Next Button ---------- */
+songNextBtn.addEventListener("click", () => {
+  songAudio.pause();
+  songAudio.currentTime = 0;
+
+  songSection.style.opacity = "0";
+
+  setTimeout(() => {
+    songSection.classList.remove("active");
+    songSection.classList.add("hidden");
+    // 🔜 Next section (voice notes) will be connected here
+  }, 1200);
+});
+
+/* ---------- CONNECT VIDEO → SONG ---------- */
+videoContinue.addEventListener("click", () => {
+  videoSection.style.opacity = "0";
+
+  setTimeout(() => {
+    videoSection.classList.remove("active");
+    videoSection.classList.add("hidden");
+    showSongSection(); // 🔥 THIS LINE IS THE KEY
+  }, 1200);
+});
+})
