@@ -6,6 +6,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body.lock-scroll {
+  overflow: hidden;
+}
 
 html, body {
   width: 100%;
@@ -13,9 +16,28 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
+/* Utility */
+.hidden {
+  display: none;
+}
+
 /* ===============================
    SECTION 1 — ENTRY
 =============================== */
+
+#entry {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  color: white;
+}
+
 .entry-content {
   width: 90%;
   max-width: 400px;
@@ -24,26 +46,6 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-#entry {
-  position: fixed;
-  inset: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: linear-gradient(135deg, #ff6ec4, #7873f5);
-  color: white;
-
-  z-index: 10;
-}
-
-#entry > div {
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
 }
 
 h1 {
@@ -110,12 +112,10 @@ button {
   justify-content: center;
 
   padding: 24px 16px;
-
   background: linear-gradient(to bottom, #f7e7ce, #f3d9b1);
 
   opacity: 0;
   pointer-events: none;
-
   transition: opacity 1.2s ease;
 }
 
@@ -125,17 +125,6 @@ button {
 }
 
 /* Envelope */
-/* Smooth paper reveal animation */
-#letter-paper {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-#letter-paper.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 #envelope-wrapper {
   display: flex;
@@ -199,11 +188,11 @@ button {
   overflow-y: auto;
 
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(25px);
   transition: opacity 1s ease, transform 1s ease;
 }
 
-#letter-paper:not(.hidden) {
+#letter-paper.show {
   opacity: 1;
   transform: translateY(0);
 }
@@ -245,7 +234,107 @@ button {
   transform: translateY(0);
 }
 
-/* Desktop */
+/* ===============================
+   FLOATING HEARTS & SPARKLES
+=============================== */
+
+.floating {
+  position: fixed;
+  bottom: -30px;
+  pointer-events: none;
+
+  opacity: 0.7;
+  animation: floatUp 6s linear forwards;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+}
+
+.floating.heart {
+  color: rgba(255, 90, 160, 0.85);
+  font-size: 20px;
+}
+
+.floating.sparkle {
+  color: rgba(255, 215, 120, 0.85);
+  font-size: 18px;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.9);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* ===============================
+   SECTION 3 — IMAGES (CINEMATIC)
+=============================== */
+#images-section {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+}
+
+#images-section {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: radial-gradient(circle at top, #1b1f3b, #090a1a);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease;
+}
+
+#images-section.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.images-wrapper {
+  width: 90%;
+  max-width: 360px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#memory-image {
+  width: 100%;
+  border-radius: 14px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 1.2s ease, transform 1.6s ease;
+}
+
+#memory-image.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#memory-image.last {
+  box-shadow:
+    0 0 30px rgba(255, 200, 255, 0.35),
+    0 0 60px rgba(180, 120, 255, 0.25);
+}
+
+/* ===============================
+   DESKTOP TWEAKS
+=============================== */
 
 @media (min-width: 768px) {
   #letter-paper {
@@ -255,8 +344,8 @@ button {
   #letter-content {
     font-size: 1.05rem;
   }
-}
-#letter-content {
-  color: #000 !important;
-  opacity: 1 !important;
+
+  .images-wrapper {
+    max-width: 420px;
+  }
 }
