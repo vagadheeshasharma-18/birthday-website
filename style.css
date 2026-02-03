@@ -1,345 +1,57 @@
-/* ======================================================
-   RESET & BASE
-====================================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  scroll-behavior: smooth;
-}
-
 body {
-  font-family: "Poppins", system-ui, sans-serif;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  color: #ffffff;
-  overflow-x: hidden;
-  text-align: center;
-}
-
-/* ======================================================
-   SECTION CONTROL
-====================================================== */
-.section {
-  display: none;
   min-height: 100vh;
-  width: 100%;
-  padding: 28px 16px;
-  animation: sectionFade 0.9s ease forwards;
-}
-
-.section.active {
-  display: block;
-}
-
-@keyframes sectionFade {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ======================================================
-   ENTRY / PASSWORD
-====================================================== */
-.center {
-  margin-top: 22vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-
-#entry h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  background: linear-gradient(90deg, #ffecd2, #fcb69f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-#entry h2 {
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-input[type="password"] {
-  width: 85%;
-  max-width: 320px;
-  padding: 14px 18px;
-  border-radius: 30px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  backdrop-filter: blur(12px);
-}
-
-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.hint {
-  font-size: 0.85rem;
-  opacity: 0.75;
-}
-
-/* ======================================================
-   BUTTONS (GLOBAL)
-====================================================== */
-button {
-  padding: 14px 30px;
-  border-radius: 40px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  color: #fff;
-  background: linear-gradient(135deg, #ff512f, #dd2476);
-  box-shadow: 0 0 22px rgba(255, 81, 47, 0.55);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-button:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 34px rgba(255, 81, 47, 0.85);
-}
-
-.volume {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
-#error {
-  color: #ff9a9a;
-  font-size: 0.9rem;
-  min-height: 18px;
-}
-
-/* Shake animation */
-.shake {
-  animation: shake 0.4s;
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
-}
-
-/* ======================================================
-   LONG LETTER
-====================================================== */
-.letter-box {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 32px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-  border-radius: 20px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 0 45px rgba(0, 0, 0, 0.45);
-}
-
-pre {
-  white-space: pre-wrap;
-  text-align: left;
-  font-size: 1rem;
-  line-height: 1.75;
-  color: #f9f9f9;
-}
-
-/* ======================================================
-   IMAGES (POLAROID FEEL)
-====================================================== */
-#images {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+  color: white;
 }
 
-#slideshow {
-  width: 85%;
-  max-width: 360px;
-  border-radius: 16px;
-  background: #fff;
-  padding: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
-  animation: photoPop 1.2s ease-in-out;
-}
-
-@keyframes photoPop {
-  from {
-    opacity: 0;
-    transform: scale(0.95) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* ======================================================
-   VIDEO
-====================================================== */
-#video video {
+#entry {
   width: 90%;
-  max-width: 720px;
-  border-radius: 20px;
-  margin: 20px auto;
-  box-shadow: 0 0 55px rgba(0, 0, 0, 0.65);
+  max-width: 400px;
+  text-align: center;
 }
 
-.special-text {
-  font-size: 1.15rem;
-  margin-bottom: 10px;
-  background: linear-gradient(90deg, #a1ffce, #faffd1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ======================================================
-   SONG
-====================================================== */
-#song p {
-  font-size: 1.05rem;
+h1 {
+  font-size: 1.8rem;
   margin-bottom: 12px;
 }
 
-#song audio {
-  width: 90%;
-  max-width: 400px;
-}
-
-/* ======================================================
-   VOICE NOTES
-====================================================== */
-#voice h2 {
-  margin-bottom: 16px;
-  background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-#voice p {
-  margin-top: 18px;
-  font-weight: 500;
-}
-
-#voice audio {
-  width: 90%;
-  max-width: 380px;
-  margin-top: 8px;
-}
-
-/* ======================================================
-   CAKE
-====================================================== */
-.cake {
-  font-size: 5rem;
-  margin: 20px 0;
-  animation: cakeFloat 2.6s ease-in-out infinite;
-}
-
-@keyframes cakeFloat {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
-  100% { transform: translateY(0); }
-}
-
-#wish {
-  margin-top: 12px;
+h2 {
   font-size: 1.1rem;
-  color: #ffd6f3;
-}
-
-/* ======================================================
-   FUN SECTION
-====================================================== */
-#funText {
-  margin-top: 14px;
-  font-size: 1.05rem;
-}
-
-/* ======================================================
-   GRANDMA (RESPECTFUL, SOFT)
-====================================================== */
-#grandma img {
-  width: 75%;
-  max-width: 300px;
-  border-radius: 20px;
   margin-bottom: 20px;
-  filter: brightness(0.95);
 }
 
-.grandma-text {
-  white-space: pre-wrap;
-  text-align: left;
-  max-width: 740px;
-  margin: 0 auto;
-  font-size: 1rem;
-  line-height: 1.75;
-  color: #f1f1f1;
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
-/* ======================================================
-   FINAL MESSAGE
-====================================================== */
-.final-text {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  opacity: 0.95;
+button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.heart {
-  font-size: 3.8rem;
-  margin-top: 18px;
-  animation: heartPulse 1.6s infinite;
-}
-
-@keyframes heartPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.35); }
-  100% { transform: scale(1); }
-}
-
-/* ======================================================
-   UTILITIES
-====================================================== */
-.hidden {
-  display: none;
-}
-
-/* ======================================================
-   DESKTOP ENHANCEMENTS
-====================================================== */
-@media (min-width: 768px) {
-  body {
-    font-size: 18px;
-  }
-
-  #entry h1 {
-    font-size: 2.6rem;
-  }
-
-  .letter-box {
-    padding: 42px;
-  }
-
-  #slideshow {
-    max-width: 420px;
-  }
+.hint, .volume {
+  font-size: 0.9rem;
+  margin-top: 6px;
 }
