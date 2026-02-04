@@ -1051,6 +1051,10 @@ overflow-y: auto;
 
   white-space: pre-wrap;
   margin-bottom: 26px;
+  font-family: "Dancing Script", cursive;
+  font-size: 1.2rem;      /* handwriting needs to be slightly bigger */
+  line-height: 1.45;      /* tighter lines, more natural */
+  letter-spacing: 0.4px;
 }
 
 

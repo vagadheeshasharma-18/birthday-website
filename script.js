@@ -165,10 +165,9 @@ const songNextBtn = document.getElementById("song-next");
 =============================== */
 
 const grandmaTextEl = document.getElementById("grandma-text");
-
-const grandmaLetter = 
+const grandmaNextBtn = document.getElementById("grandma-next");
+const grandmaLetter =
 `Meri pyari bacchi Madiha 💗,
-
 Tum mujhe yaad karti ho,
 aur main tumhe hamesha mehsoos karti hoon.
 
@@ -189,7 +188,7 @@ Tum hamesha meri duaon mein rahogi.
 
 Nee meeda naa ashirwaadam eppudu untundi ra bangaram.
 
-— Tumhari
+— Tumhari  
 Makhtumbee Dadi Amma 🤍`;
 
 function startGrandmaTypewriter() {
@@ -197,7 +196,7 @@ function startGrandmaTypewriter() {
   grandmaNextBtn.classList.add("hidden");
 
   let index = 0;
-  const speed = 45; // slow, emotional
+  const speed = 42; // emotional pace
 
   function type() {
     if (index < grandmaLetter.length) {
@@ -205,10 +204,9 @@ function startGrandmaTypewriter() {
       index++;
       setTimeout(type, speed);
     } else {
-      // show button only after letter ends
       setTimeout(() => {
         grandmaNextBtn.classList.remove("hidden");
-      }, 1200);
+      }, 1000);
     }
   }
 
@@ -646,8 +644,6 @@ function showGrandmaSection() {
     setTimeout(startGrandmaTypewriter, 800);
   }, 1200);
 }
-
-const grandmaNextBtn = document.getElementById("grandma-next");
 
 grandmaNextBtn.addEventListener("click", () => {
   const grandmaSection = document.getElementById("grandma-section");
