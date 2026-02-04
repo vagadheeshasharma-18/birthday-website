@@ -1,4 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+/* ===============================
+   GLOBAL MOBILE SCROLL FIX
+=============================== */
+
+// Allow scroll for content-heavy sections
+function enableMobileScroll(section) {
+  section.style.overflowY = "auto";
+  section.style.webkitOverflowScrolling = "touch";
+}
+
+// Disable scroll for cinematic sections
+function disableMobileScroll(section) {
+  section.style.overflow = "hidden";
+}
 
   /* ===============================
      SECTION 1 ELEMENTS
@@ -55,6 +69,13 @@ const songNextBtn = document.getElementById("song-next");
   /* ===============================
      SECTION 1 INITIAL STATE
   =============================== */
+  function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
   [line1, line2, password, hint, button, volume, error].forEach(el => {
     el.style.opacity = "0";
     el.style.transition = "opacity 1s ease";
@@ -111,6 +132,13 @@ const songNextBtn = document.getElementById("song-next");
   /* ===============================
      LOAD LETTER.TXT
   =============================== */
+  function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
   async function loadLetterText() {
     const response = await fetch("./letter.txt");
     return await response.text();
@@ -310,12 +338,12 @@ finalRestartBtn.addEventListener("click", () => {
     heartInterval = setInterval(() => {
       createFloatingElement("heart");
       if (Math.random() > 0.5) createFloatingElement("heart");
-    }, 1400);
+    }, 2200);
 
     sparkleInterval = setInterval(() => {
       createFloatingElement("sparkle");
       if (Math.random() > 0.6) createFloatingElement("sparkle");
-    }, 1200);
+    }, 2000);
   }
 
   function stopFloatingEffects() {
@@ -326,7 +354,7 @@ finalRestartBtn.addEventListener("click", () => {
   function startCameraFloating() {
     cameraInterval = setInterval(() => {
       createFloatingElement("camera");
-    }, 1800);
+    }, 2600);
   }
 
   function stopCameraFloating() {
@@ -356,6 +384,13 @@ finalRestartBtn.addEventListener("click", () => {
   /* ===============================
      SECTION 3 — IMAGE SEQUENCE
   =============================== */
+  function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
   const totalImages = 15;
   let currentImageIndex = 1;
 
@@ -400,6 +435,13 @@ finalRestartBtn.addEventListener("click", () => {
   /* ===============================
      SECTION 4 — VIDEO
   =============================== */
+  function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
   /* ---------- VIDEO PLAY BUTTON ---------- */
 videoPlayBtn.addEventListener("click", () => {
   video.play();
@@ -452,6 +494,13 @@ video.addEventListener("ended", () => {
 /* ===============================
    SECTION 5 — SONG SECTION
 =============================== */
+function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
 
 // Show Song Section (called after video)
 function showSongSection() {
@@ -489,7 +538,7 @@ function createMusicNote() {
 }
 
 function startMusicFloating() {
-  musicInterval = setInterval(createMusicNote, 700); // MORE
+  musicInterval = setInterval(createMusicNote, 1400); // MORE
 }
 
 function stopMusicFloating() {
@@ -544,6 +593,12 @@ songNextBtn.addEventListener("click", () => {
 /* ===============================
    SECTION 6 — VOICE NOTES
 =============================== */
+function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
 
 const voiceSection = document.getElementById("voice-section");
 const voiceAudios = voiceSection.querySelectorAll("audio");
@@ -563,6 +618,12 @@ function showVoiceSection() {
     voiceSection.style.opacity = "1";
   }, 1200);
 }
+enableMobileScroll(voiceSection);
+
+// ensure bottom button is reachable
+setTimeout(() => {
+  notesToCakeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+}, 600);
 
 /* 🔒 Allow only ONE voice to play at a time */
 voiceAudios.forEach(currentAudio => {
@@ -599,6 +660,12 @@ notesToCakeBtn.addEventListener("click", () => {
 /* ===============================
    SECTION 7 — CAKE CUTTING
 =============================== */
+function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
 
 const cakeSection = document.getElementById("cake-section");
 const cake = document.getElementById("cake");
@@ -677,7 +744,7 @@ function startPaperBlast() {
     for (let i = 0; i < 12; i++) {
       createConfetti();
     }
-  }, 120);
+  }, 180);
 }
 
 function stopPaperBlast() {
@@ -697,10 +764,21 @@ function showCakeSection() {
     cakeSection.classList.add("active");
   }, 1200);
 }
+enableMobileScroll(cakeSection);
+setTimeout(() => {
+  cakeNextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+}, 2000);
+
 cakeNextBtn.addEventListener("click", () => {
   stopFloatingEffects();
   showGrandmaSection(); // ✅ THIS IS THE FIX
 });
+function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
 
 
 function showGrandmaSection() {
@@ -718,6 +796,8 @@ function showGrandmaSection() {
     setTimeout(startGrandmaTypewriter, 800);
   }, 1200);
 }
+const grandmaSection = document.getElementById("grandma-section");
+enableMobileScroll(grandmaSection);
 
 grandmaNextBtn.addEventListener("click", () => {
   const grandmaSection = document.getElementById("grandma-section");
@@ -729,6 +809,27 @@ grandmaNextBtn.addEventListener("click", () => {
     showFinalMessageSection(); // 🔥 FINAL SECTION
   }, 1200);
 });
+enableMobileScroll(finalSection);
+finalRestartBtn.scrollIntoView({ behavior: "smooth" });
 
+/* ===============================
+   MOBILE VIEWPORT STABILITY
+=============================== */
+function stopAllAnimations() {
+  clearInterval(heartInterval);
+  clearInterval(sparkleInterval);
+  clearInterval(cameraInterval);
+  clearInterval(musicInterval);
+}
+
+function fixMobileVH() {
+  document.documentElement.style.setProperty(
+    "--vh",
+    `${window.innerHeight * 0.01}px`
+  );
+}
+
+fixMobileVH();
+window.addEventListener("resize", fixMobileVH);
 
 })

@@ -1,6 +1,18 @@
 /* ===============================
    RESET
 =============================== */
+/* ===============================
+   GLOBAL MOBILE SAFETY FIX
+=============================== */
+
+.section {
+  min-height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 80px; /* space for buttons */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -640,9 +652,9 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;   /* ⬅ KEY FIX */
 
-  padding: 24px 16px;
+  padding: 32px 16px 90px;       /* ⬅ bottom space for button */
 
   background: radial-gradient(
     circle at top,
@@ -653,11 +665,13 @@ button {
 
   color: #fff;
 
+  overflow-y: auto;              /* ⬅ ALLOW SCROLL */
+  -webkit-overflow-scrolling: touch;
+
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.2s ease;
 }
-
 #voice-section.active {
   opacity: 1;
   pointer-events: auto;
@@ -846,6 +860,7 @@ button {
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.2s ease;
+   padding: 32px 16px 80px; /* ⬅ bottom safety */
 }
 /* Cake cut animation */
 .cake.cut {
@@ -1009,6 +1024,9 @@ overflow-y: auto;
   padding: 28px 18px;
   text-align: center;
 
+  padding: 32px 18px 90px;
+
+
   background: linear-gradient(
     to bottom,
     #fff6e5,
@@ -1123,7 +1141,7 @@ overflow-y: auto;
 
   padding: 40px 18px 80px;       /* extra bottom space for button */
   text-align: center;
-
+margin-bottom: 40px; /* more breathing room */
   background: linear-gradient(
     to bottom,
     #0f0c29,
