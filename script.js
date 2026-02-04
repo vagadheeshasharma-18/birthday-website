@@ -212,6 +212,80 @@ function startGrandmaTypewriter() {
 
   type();
 }
+/* ===============================
+   FINAL MESSAGE TYPEWRITER
+=============================== */
+
+const finalSection = document.getElementById("final-section");
+const finalTextEl = document.getElementById("final-text");
+const finalRestartBtn = document.getElementById("final-restart");
+
+const finalMessage =
+`If you’ve reached here,
+then you smiled,
+you felt,
+and maybe your eyes got a little heavy.
+
+This wasn’t just a website.
+It was a reminder.
+
+That you are loved.
+Deeply. Softly. Forever.
+
+No matter where life takes you,
+no matter how loud the world gets,
+remember this —
+you matter more than you know.
+
+Happy Birthday 🤍
+And thank you…
+for existing.`;
+function startFinalTypewriter() {
+  finalTextEl.textContent = "";
+  finalRestartBtn.classList.add("hidden"); // ⬅ hide button first
+
+  let index = 0;
+  const speed = 38;
+
+  function type() {
+    if (index < finalMessage.length) {
+      finalTextEl.textContent += finalMessage.charAt(index);
+      index++;
+      setTimeout(type, speed);
+    } else {
+      // ⬇️ show button only after message completes
+      setTimeout(() => {
+        finalRestartBtn.classList.remove("hidden");
+        finalRestartBtn.scrollIntoView({ behavior: "smooth" });
+      }, 800);
+    }
+  }
+
+  type();
+}
+
+
+
+/* Connect Grandma → Final */
+function showFinalMessageSection() {
+  const grandmaSection = document.getElementById("grandma-section");
+  grandmaSection.style.opacity = "0";
+
+  setTimeout(() => {
+    grandmaSection.classList.remove("active");
+    grandmaSection.classList.add("hidden");
+
+    finalSection.classList.remove("hidden");
+    finalSection.classList.add("active");
+
+    setTimeout(startFinalTypewriter, 700);
+  }, 1200);
+}
+
+/* Restart Button */
+finalRestartBtn.addEventListener("click", () => {
+  location.reload();
+});
 
   /* ===============================
      FLOATING ELEMENTS
